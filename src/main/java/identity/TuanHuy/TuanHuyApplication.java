@@ -8,6 +8,7 @@ public class TuanHuyApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(TuanHuyApplication.class, args);
+		System.out.println("hello world");
 	}
 
 }
