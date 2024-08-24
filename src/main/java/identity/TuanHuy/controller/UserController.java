@@ -5,6 +5,7 @@ import identity.TuanHuy.dto.request.UserCreationRequest;
 import identity.TuanHuy.dto.request.UserUpdateRequest;
 import identity.TuanHuy.entity.User;
 import identity.TuanHuy.service.UserService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,7 +20,7 @@ public class UserController {
     private UserService userService;
 
     @PostMapping()
-    User CreateUser(@RequestBody UserCreationRequest request) {
+    User CreateUser(@RequestBody @Valid UserCreationRequest request) {
        return userService.CreateUser(request);
     }
 
