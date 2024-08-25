@@ -1,6 +1,7 @@
 package identity.TuanHuy.controller;
 
 
+import identity.TuanHuy.dto.reponse.ApiResponse;
 import identity.TuanHuy.dto.request.UserCreationRequest;
 import identity.TuanHuy.dto.request.UserUpdateRequest;
 import identity.TuanHuy.entity.User;
@@ -8,9 +9,7 @@ import identity.TuanHuy.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
-import java.util.UUID;
 
 @RestController
 @RequestMapping("/users")
@@ -21,12 +20,16 @@ public class UserController {
 
     @PostMapping()
     User CreateUser(@RequestBody @Valid UserCreationRequest request) {
-       return userService.CreateUser(request);
+        return userService.CreateUser(request);
     }
 
     @GetMapping()
-    List<User> GetAllUsers() {
-        return userService.GetAllUsers();
+    ApiResponse<List> GetAllUsers() {
+        ApiResponse<List> response = ApiResponse.<List>builder()
+                .code(200)
+                .message("oke")
+                .result(userService.GetAllUsers()).build();
+        return response;
     }
 
     @GetMapping("/{userId}")

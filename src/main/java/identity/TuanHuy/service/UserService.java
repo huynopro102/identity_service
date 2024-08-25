@@ -3,6 +3,8 @@ package identity.TuanHuy.service;
 import identity.TuanHuy.dto.request.UserCreationRequest;
 import identity.TuanHuy.dto.request.UserUpdateRequest;
 import identity.TuanHuy.entity.User;
+import identity.TuanHuy.exception.AppException;
+import identity.TuanHuy.exception.ErrorCode;
 import identity.TuanHuy.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,7 +20,7 @@ public class UserService {
     public User CreateUser(UserCreationRequest request) {
                 User user = new User();
                 if(userRepository.existsByUsername(request.getUsername())){
-                    throw new RuntimeException("Username already exists");
+                    throw new AppException(ErrorCode.USER_EXITED);
                 }
                 user.setUsername(request.getUsername());
                 user.setPassword(request.getPassword());
