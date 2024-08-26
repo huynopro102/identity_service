@@ -1,12 +1,17 @@
 package identity.TuanHuy.exception;
 
-
 import identity.TuanHuy.dto.reponse.ApiResponse;
+import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.ErrorResponse;
+import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
@@ -21,15 +26,37 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(value = MethodArgumentNotValidException.class)
-    ResponseEntity<ApiResponse> handllingValidationException(MethodArgumentNotValidException e) {
-        String enumkey = e.getBindingResult().getFieldError().getDefaultMessage();
-        ErrorCode errorCode = ErrorCode.valueOf(enumkey);
-        ApiResponse apiResponse =  ApiResponse.builder()
-                .message(errorCode.getMessage())
-                .code(errorCode.getCode())
+    ResponseEntity<List<ApiResponse<Void>>> handllingValidationException(MethodArgumentNotValidException e) {
+        List<FieldError> fieldErrors = e.getBindingResult().getFieldErrors();
+        List<ApiResponse<Void>> apiResponses = new ArrayList<>();
+        for (FieldError fieldError : fieldErrors) {
+            ErrorCode errorCode;
+            try {
+                String enumkey = fieldError.getDefaultMessage();
+                errorCode = ErrorCode.valueOf(enumkey);
+            } catch (IllegalArgumentException exception) {
+                // Nếu không tìm thấy enum key hợp lệ, sử dụng INVALID_KEY_ENUM
+                errorCode = ErrorCode.UNCATEGORIZED_EXCEPTION;
+            }
+            ApiResponse<Void> apiResponse = ApiResponse.<Void>builder()
+                    .message(errorCode.getMessage())
+                    .code(errorCode.getCode())
+                    .build();
+            apiResponses.add(apiResponse);
+        }
+        return ResponseEntity.badRequest().body(apiResponses);
+    }
+
+    @ExceptionHandler(value = HttpMessageNotReadableException.class)
+    ResponseEntity<ApiResponse> handleHttpMessageNotReadableExceptionDOB(HttpMessageNotReadableException e) {
+        ApiResponse apiResponse = ApiResponse.builder()
+                .message(ErrorCode.INVALID_DATE_FORMAT.getMessage())
+                .code(ErrorCode.INVALID_DATE_FORMAT.getCode())
                 .build();
         return ResponseEntity.badRequest().body(apiResponse);
     }
+
+
 
     @ExceptionHandler(value = AppException.class)
     ResponseEntity<ApiResponse> handleRuntimeExceptionMyapp(AppException e) {
