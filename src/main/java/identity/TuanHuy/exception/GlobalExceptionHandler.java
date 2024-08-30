@@ -1,14 +1,15 @@
 package identity.TuanHuy.exception;
 
 import identity.TuanHuy.dto.reponse.ApiResponse;
-import org.springframework.context.support.DefaultMessageSourceResolvable;
+import jakarta.persistence.NoResultException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver;
+import org.springframework.web.servlet.resource.NoResourceFoundException;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,14 +17,7 @@ import java.util.List;
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
-    @ExceptionHandler(value = Exception.class)
-    ResponseEntity<ApiResponse> handleExceptionGlobal(Exception e) {
-        ApiResponse apiResponse = ApiResponse.builder()
-                .code(ErrorCode.UNCATEGORIZED_EXCEPTION.getCode())
-                .message(ErrorCode.USER_EXITED.getMessage())
-                .build();
-        return ResponseEntity.badRequest().body(apiResponse);
-    }
+
 
     @ExceptionHandler(value = MethodArgumentNotValidException.class)
     ResponseEntity<List<ApiResponse<Void>>> handllingValidationException(MethodArgumentNotValidException e) {
@@ -57,13 +51,46 @@ public class GlobalExceptionHandler {
     }
 
 
-
+// validation
     @ExceptionHandler(value = AppException.class)
     ResponseEntity<ApiResponse> handleRuntimeExceptionMyapp(AppException e) {
         ErrorCode errorCode = e.getErrorCode();
+        System.out.println(e.getErrorCode().getMessage());
         ApiResponse apiResponse = ApiResponse.builder()
                 .code(errorCode.getCode())
                 .message(errorCode.getMessage())
+                .build();
+        return ResponseEntity.badRequest().body(apiResponse);
+    }
+
+
+// lỗi này là sai đường dẫn url khi gửi request
+@ExceptionHandler(value = NoResourceFoundException.class)
+ResponseEntity<ApiResponse> handleNoResultException(NoResourceFoundException e) {
+    ApiResponse apiResponse = ApiResponse.builder()
+            .code(ErrorCode.PATH_REQUEST_INVALID.getCode())
+            .message(ErrorCode.PATH_REQUEST_INVALID.getMessage())
+            .build();
+    return ResponseEntity.badRequest().body(apiResponse);
+}
+    // Bắt email ko tìm thấy trong database
+    @ExceptionHandler(value = NullPointerException.class)
+    ResponseEntity<ApiResponse> handleNullPointerException(NullPointerException e) {
+        ApiResponse apiResponse = ApiResponse.builder()
+                .code(ErrorCode.USER_NOT_FOUND.getCode())
+                .message(ErrorCode.USER_NOT_FOUND.getMessage())
+                .build();
+        return ResponseEntity.badRequest().body(apiResponse);
+    }
+
+
+
+
+    @ExceptionHandler(value = Exception.class)
+    ResponseEntity<ApiResponse> handleExceptionGlobal(Exception e) {
+        ApiResponse apiResponse = ApiResponse.builder()
+                .code(ErrorCode.UNCATEGORIZED_EXCEPTION.getCode())
+                .message(ErrorCode.UNCATEGORIZED_EXCEPTION.getMessage())
                 .build();
         return ResponseEntity.badRequest().body(apiResponse);
     }

@@ -1,12 +1,11 @@
 package identity.TuanHuy.dto.reponse;
 
+
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
-@Getter
-@Setter
+@Data
 @Builder
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ApiResponse<H> {

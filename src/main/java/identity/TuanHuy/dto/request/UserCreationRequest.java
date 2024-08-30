@@ -1,24 +1,25 @@
 package identity.TuanHuy.dto.request;
 
 import jakarta.validation.constraints.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
 
 import java.time.LocalDate;
-@Getter
-@Setter
+@Builder
+@Data
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class UserCreationRequest {
     @NotNull(message = "USERNAME_NOT_NULL")
     @Size(min = 4, message = "USER_INVALID")
-    private String username;
+    String username;
 
     @NotNull(message = "PASSWORD_NOT_NULL")
     @Size(min = 8 , message = "PASSWORD_INVALID")
-    private String password;
+    String password;
 
     @NotNull(message = "DOB_NOT_NULL")
-    private LocalDate dob;
+    LocalDate dob;
 
     @NotNull(message = "EMAIL_NOT_NULL")
-    private String email;
+    String email;
 }
