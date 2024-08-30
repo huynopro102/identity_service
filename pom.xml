@@ -92,6 +92,20 @@
 			<artifactId>spring-security-crypto</artifactId>
 			<version>6.3.1</version>
 		</dependency>
+<!--		dùng thư viện của nimbusds làm jwt , trong modul spring-boot-starter-oauth2-resource-server đã bao gồm nimbus luôn rồi nên xóa cái modul này đi-->
+		<!-- https://mvnrepository.com/artifact/com.nimbusds/nimbus-jose-jwt -->
+<!--		<dependency>-->
+<!--			<groupId>com.nimbusds</groupId>-->
+<!--			<artifactId>nimbus-jose-jwt</artifactId>-->
+<!--			<version>9.40</version>-->
+<!--		</dependency>-->
+<!--		thư viện spring scurity -->
+		<!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-oauth2-resource-server -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-oauth2-resource-server</artifactId>
+			<version>3.3.2</version>
+		</dependency>
 
 	</dependencies>
 	<build>
