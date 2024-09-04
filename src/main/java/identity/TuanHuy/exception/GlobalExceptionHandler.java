@@ -73,6 +73,8 @@ ResponseEntity<ApiResponse> handleNoResultException(NoResourceFoundException e) 
             .build();
     return ResponseEntity.badRequest().body(apiResponse);
 }
+
+
     // Bắt email ko tìm thấy trong database
     @ExceptionHandler(value = NullPointerException.class)
     ResponseEntity<ApiResponse> handleNullPointerException(NullPointerException e) {
