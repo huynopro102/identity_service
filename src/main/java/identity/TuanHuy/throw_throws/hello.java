@@ -1,8 +1,5 @@
 package identity.TuanHuy.throw_throws;
-
-import ch.qos.logback.core.encoder.EchoEncoder;
-import jakarta.transaction.SystemException;
-
+import identity.TuanHuy.static_learning.hinhvuong;
 import java.util.Scanner;
 
 public class hello {
@@ -13,6 +10,9 @@ public class hello {
         int a = sc.nextInt();
         System.out.println("nhap so nguyen b");
         int b = sc.nextInt();
+        hinhvuong hv = new hinhvuong(3);
+        hinhvuong.printName("huy r ");
+
         try {
             System.out.println("nhap so nguyen c " + a/b);
         }catch(my_exception e){
