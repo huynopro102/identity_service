@@ -9,5 +9,6 @@ public class main {
         System.out.println("hello jenkin lan 2");
         System.out.println("hello jenkin lan 3");
         System.out.println("hello jenkin lan 4");
+        System.out.println("hello jenkin lan 5");
     }
 }
