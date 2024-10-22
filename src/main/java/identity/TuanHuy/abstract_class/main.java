@@ -6,5 +6,6 @@ public class main {
         dv.ngu();
         dv.noi();
         System.out.println("hello jenkin");
+        System.out.println("hello jenkin lan 2");
     }
 }
