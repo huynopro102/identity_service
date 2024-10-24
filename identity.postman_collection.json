@@ -1,0 +1,95 @@
+{
+	"info": {
+		"_postman_id": "e8ca4545-1076-4b9f-b6dc-8c8901074749",
+		"name": "identity",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "39194069"
+	},
+	"item": [
+		{
+			"name": "hello",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodXluZ3V5ZW4tbmdpbngiLCJzdWIiOiJuZ3V5ZW52YW5kQGdtYWlsLmNvbSIsImV4cCI6MTcyOTYxMTM0NSwiY3VzdG9tQ2xhaW0iOiLEkcOieSBsw6AgY2xhaW0gdOG7sSBjdXN0b20iLCJpYXQiOjE3Mjk2MTEyODV9.0teQ7XnnfakoJ80Xs1HmMRyRtmd3XExD6VgwEUD03PY"
+					}
+				},
+				"method": "GET",
+				"header": [],
+				"url": "localhost:8080/hello"
+			},
+			"response": []
+		},
+		{
+			"name": "getUsers",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodXluZ3V5ZW4tbmdpbngiLCJzdWIiOiJuZ3V5ZW52YW5kQGdtYWlsLmNvbSIsImV4cCI6MTcyOTYxMjAxMSwiY3VzdG9tQ2xhaW0iOiLEkcOieSBsw6AgY2xhaW0gdOG7sSBjdXN0b20iLCJpYXQiOjE3Mjk2MTE5NTF9.c06YRyktr9XBgtvzvIgfK8_WsnHGw8OWRVX9LgHcC4I"
+					}
+				},
+				"method": "GET",
+				"header": [],
+				"url": "localhost:8080/users"
+			},
+			"response": []
+		},
+		{
+			"name": "getUserById",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodXluZ3V5ZW4tbmdpbngiLCJzdWIiOiJuZ3V5ZW52YW5kQGdtYWlsLmNvbSIsImV4cCI6MTcyOTYxMTM0NSwiY3VzdG9tQ2xhaW0iOiLEkcOieSBsw6AgY2xhaW0gdOG7sSBjdXN0b20iLCJpYXQiOjE3Mjk2MTEyODV9.0teQ7XnnfakoJ80Xs1HmMRyRtmd3XExD6VgwEUD03PY"
+					}
+				},
+				"method": "GET",
+				"header": [],
+				"url": "localhost:8080/users/0689138c-505f-4c05-9051-25046eee664f"
+			},
+			"response": []
+		},
+		{
+			"name": "createUser",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\":\"nguyen van a\",\r\n    \"password\":\"123456asd\",\r\n    \"dob\":\"2003-04-12\",\r\n    \"email\":\"nguyenvand@gmail.com\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "localhost:8080/users"
+			},
+			"response": []
+		},
+		{
+			"name": "login",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {}
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\":\"nguyen van d\",\r\n    \"password\":\"123456asd\",\r\n    \"email\":\"nguyenvand@gmail.com\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "localhost:8080/authentication/login"
+			},
+			"response": []
+		}
+	]
+}

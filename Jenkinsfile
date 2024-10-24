@@ -7,6 +7,12 @@ pipeline {
                 git branch: 'main', url: 'https://github.com/huynopro102/identity_service.git'
             }
         }
+           stage('Run Tests') {
+                    steps {
+                        // Chạy kiểm thử với Newman
+                        sh 'newman run identity.postman_collection.json'
+                    }
+                }
     }
     post {
         always {
