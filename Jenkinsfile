@@ -4,12 +4,10 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                // Lấy mã nguồn từ repository
-                git 'https://github.com/huynopro102/identity_service'
+                git branch: 'main', url: 'https://github.com/huynopro102/identity_service.git'
             }
         }
     }
-
     post {
         always {
             // Cleanup hoặc thông báo
