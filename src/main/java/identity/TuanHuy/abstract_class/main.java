@@ -13,5 +13,6 @@ public class main {
         System.out.println("hello jenkin lan 6");
         System.out.println("hello jenkin lan 7");
         System.out.println("hello jenkin lan 8");
+        System.out.println("hello jenkin lan 9");
     }
 }
