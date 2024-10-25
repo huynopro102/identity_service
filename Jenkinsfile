@@ -11,8 +11,8 @@ pipeline {
                     steps {
                         withDockerRegistry(credentialsId: 'id_docker_hub', url: 'https://index.docker.io/v1/') {
                             // build and push image
-                            sh 'docker build -t accgamepro1028/springboot_postgreSql:v1 .'
-                            sh 'docker push accgamepro1028/springboot_postgreSql:v1 '
+                            sh 'docker build -t accgamepro1028/springboot_postgresql:v1 .'
+                            sh 'docker push accgamepro1028/springboot_postgresql:v1 '
                         }
                     }
                 }
