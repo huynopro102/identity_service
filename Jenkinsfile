@@ -32,7 +32,7 @@ pipeline {
                         // Push the images
                         sh 'docker-compose push'
                         sh 'docker push accgamepro1028/springboot_postgresql:v2'
-                        sh 'docker push accgamepro1028/springboot_postgresql:latest'
+//                         sh 'docker push accgamepro1028/springboot_postgresql:latest'
                     }
                 }
             }
