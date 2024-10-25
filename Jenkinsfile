@@ -19,13 +19,20 @@ pipeline {
 
 
 
-stage('Build and Push Docker Images') {
+ stage('Build and Push Docker Images') {
             steps {
                 script {
                     withDockerRegistry(credentialsId: 'id_docker_hub', url: 'https://index.docker.io/v1/') {
-                        // Build and push the images using docker-compose
+                        // Build the images using docker-compose
                         sh 'docker-compose build'
+
+                        // Tagging images with both 'latest' and 'v2'
+                        sh 'docker tag accgamepro1028/springboot_postgresql:latest accgamepro1028/springboot_postgresql:v2'
+
+                        // Push the images
                         sh 'docker-compose push'
+                        sh 'docker push accgamepro1028/springboot_postgresql:v2'
+                        sh 'docker push accgamepro1028/springboot_postgresql:latest'
                     }
                 }
             }
