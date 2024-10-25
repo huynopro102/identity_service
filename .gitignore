@@ -1,5 +1,10 @@
 HELP.md
-target/
+# Ignore everything in target directory
+target/*
+
+# Don't ignore the jar file
+!target/TuanHuy-0.0.1-SNAPSHOT.jar
+
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/

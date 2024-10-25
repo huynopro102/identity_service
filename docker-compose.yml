@@ -10,10 +10,8 @@ services:
       SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/mydb
       SPRING_DATASOURCE_USERNAME: postgres
       SPRING_DATASOURCE_PASSWORD: 12345
-    depends_on:
+    depends_on: # Docker Compose sẽ khởi động dịch vụ db trước, sau đó mới khởi động dịch vụ app.
       - db
-    networks:
-      - app-network
 
   db: # Dịch vụ PostgreSQL
     image: postgres:14
@@ -26,12 +24,5 @@ services:
       - '5432:5432'
     volumes:
       - pgdata:/var/lib/postgresql/data
-    networks:
-      - app-network
-
 volumes:
-  pgdata:
-
-networks:
-  app-network: # Định nghĩa mạng app-network
-    driver: bridge
+  pgdata: # Định nghĩa volume pgdata
