@@ -7,15 +7,37 @@ pipeline {
                 git branch: 'main', url: 'https://github.com/huynopro102/identity_service.git'
             }
         }
-          stage('login dockerhub') {
-                    steps {
-                        withDockerRegistry(credentialsId: 'id_docker_hub', url: 'https://index.docker.io/v1/') {
-                            // build and push image
-                            sh 'docker build -t accgamepro1028/springboot_postgresql:v1 .'
-                            sh 'docker push accgamepro1028/springboot_postgresql:v1 '
-                        }
+//           stage('login dockerhub') {
+//                     steps {
+//                         withDockerRegistry(credentialsId: 'id_docker_hub', url: 'https://index.docker.io/v1/') {
+//                             // build and push image
+//                             sh 'docker build -t accgamepro1028/springboot_postgresql:v1 .'
+//                             sh 'docker push accgamepro1028/springboot_postgresql:v1 '
+//                         }
+//                     }
+//                 }
+
+
+
+stage('Build and Push Docker Images') {
+            steps {
+                script {
+                    withDockerRegistry(credentialsId: 'id_docker_hub', url: 'https://index.docker.io/v1/') {
+                        // Build and push the images using docker-compose
+                        sh 'docker-compose build'
+                        sh 'docker-compose push'
                     }
                 }
+            }
+        }
+        stage('Run Services') {
+            steps {
+                script {
+                    // Run the services using docker-compose
+                    sh 'docker-compose up -d'
+                }
+            }
+        }
     }
     post {
         always {
