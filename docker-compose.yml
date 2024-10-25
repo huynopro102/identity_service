@@ -6,6 +6,7 @@ services:
     container_name: springboot_app
     ports:
       - '8080:8080'
+    image: accgamepro1028/springboot_postgresql:latest
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/mydb
       SPRING_DATASOURCE_USERNAME: postgres
