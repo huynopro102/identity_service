@@ -12,7 +12,7 @@
 				"auth": {
 					"type": "bearer",
 					"bearer": {
-						"token": "eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodXluZ3V5ZW4tbmdpbngiLCJzdWIiOiJuZ3V5ZW52YW5kQGdtYWlsLmNvbSIsImV4cCI6MTcyOTYxMTM0NSwiY3VzdG9tQ2xhaW0iOiLEkcOieSBsw6AgY2xhaW0gdOG7sSBjdXN0b20iLCJpYXQiOjE3Mjk2MTEyODV9.0teQ7XnnfakoJ80Xs1HmMRyRtmd3XExD6VgwEUD03PY"
+						"token": "eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodXluZ3V5ZW4tbmdpbngiLCJzdWIiOiJuZ3V5ZW52YW5kQGdtYWlsLmNvbSIsImV4cCI6MTcyOTgyODUwNSwiY3VzdG9tQ2xhaW0iOiLEkcOieSBsw6AgY2xhaW0gdOG7sSBjdXN0b20iLCJpYXQiOjE3Mjk4Mjg0NDV9.Yh0E4rblLS59Y4mB6ayZBwk8g9zSlIpKEMCoh_LKMUo"
 					}
 				},
 				"method": "GET",
@@ -27,7 +27,7 @@
 				"auth": {
 					"type": "bearer",
 					"bearer": {
-						"token": "eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodXluZ3V5ZW4tbmdpbngiLCJzdWIiOiJuZ3V5ZW52YW5kQGdtYWlsLmNvbSIsImV4cCI6MTcyOTYxMjAxMSwiY3VzdG9tQ2xhaW0iOiLEkcOieSBsw6AgY2xhaW0gdOG7sSBjdXN0b20iLCJpYXQiOjE3Mjk2MTE5NTF9.c06YRyktr9XBgtvzvIgfK8_WsnHGw8OWRVX9LgHcC4I"
+						"token": "eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodXluZ3V5ZW4tbmdpbngiLCJzdWIiOiJuZ3V5ZW52YW5kQGdtYWlsLmNvbSIsImV4cCI6MTcyOTgyODUwNSwiY3VzdG9tQ2xhaW0iOiLEkcOieSBsw6AgY2xhaW0gdOG7sSBjdXN0b20iLCJpYXQiOjE3Mjk4Mjg0NDV9.Yh0E4rblLS59Y4mB6ayZBwk8g9zSlIpKEMCoh_LKMUo"
 					}
 				},
 				"method": "GET",
@@ -42,12 +42,12 @@
 				"auth": {
 					"type": "bearer",
 					"bearer": {
-						"token": "eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodXluZ3V5ZW4tbmdpbngiLCJzdWIiOiJuZ3V5ZW52YW5kQGdtYWlsLmNvbSIsImV4cCI6MTcyOTYxMTM0NSwiY3VzdG9tQ2xhaW0iOiLEkcOieSBsw6AgY2xhaW0gdOG7sSBjdXN0b20iLCJpYXQiOjE3Mjk2MTEyODV9.0teQ7XnnfakoJ80Xs1HmMRyRtmd3XExD6VgwEUD03PY"
+						"token": "eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodXluZ3V5ZW4tbmdpbngiLCJzdWIiOiJuZ3V5ZW52YW5kQGdtYWlsLmNvbSIsImV4cCI6MTcyOTgyODUwNSwiY3VzdG9tQ2xhaW0iOiLEkcOieSBsw6AgY2xhaW0gdOG7sSBjdXN0b20iLCJpYXQiOjE3Mjk4Mjg0NDV9.Yh0E4rblLS59Y4mB6ayZBwk8g9zSlIpKEMCoh_LKMUo"
 					}
 				},
 				"method": "GET",
 				"header": [],
-				"url": "localhost:8080/users/0689138c-505f-4c05-9051-25046eee664f"
+				"url": "localhost:8080/users/8058b4a5-c893-41e1-ac39-97010bb72f5b"
 			},
 			"response": []
 		},
