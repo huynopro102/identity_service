@@ -27,6 +27,7 @@
                             request
                                     .requestMatchers(HttpMethod.POST,PUBLIC_ENDPOINTS).permitAll()
                                     .requestMatchers(HttpMethod.GET ,"/mienphi").permitAll()
+                                    .requestMatchers(HttpMethod.GET ,"/mienphi2").permitAll()
                                     .anyRequest().authenticated()
                             )
                             .csrf().disable();
