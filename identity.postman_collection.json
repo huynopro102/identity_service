@@ -12,7 +12,22 @@
 				"auth": {
 					"type": "bearer",
 					"bearer": {
-						"token": "eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodXluZ3V5ZW4tbmdpbngiLCJzdWIiOiJuZ3V5ZW52YW5kQGdtYWlsLmNvbSIsImV4cCI6MTcyOTgyODUwNSwiY3VzdG9tQ2xhaW0iOiLEkcOieSBsw6AgY2xhaW0gdOG7sSBjdXN0b20iLCJpYXQiOjE3Mjk4Mjg0NDV9.Yh0E4rblLS59Y4mB6ayZBwk8g9zSlIpKEMCoh_LKMUo"
+						"token": "eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodXluZ3V5ZW4tbmdpbngiLCJzdWIiOiJuZ3V5ZW52YW5mQGdtYWlsLmNvbSIsImV4cCI6MTcyOTgzOTYyMiwiY3VzdG9tQ2xhaW0iOiLEkcOieSBsw6AgY2xhaW0gdOG7sSBjdXN0b20iLCJpYXQiOjE3Mjk4Mzk1NjJ9.Uej8jW9N1__I5lqlZ_Ho1u4tGQ06fdDbIkj8pxL4We4"
+					}
+				},
+				"method": "GET",
+				"header": [],
+				"url": "localhost:8080/hello"
+			},
+			"response": []
+		},
+		{
+			"name": "mienphi",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodXluZ3V5ZW4tbmdpbngiLCJzdWIiOiJuZ3V5ZW52YW5mQGdtYWlsLmNvbSIsImV4cCI6MTcyOTgzOTYyMiwiY3VzdG9tQ2xhaW0iOiLEkcOieSBsw6AgY2xhaW0gdOG7sSBjdXN0b20iLCJpYXQiOjE3Mjk4Mzk1NjJ9.Uej8jW9N1__I5lqlZ_Ho1u4tGQ06fdDbIkj8pxL4We4"
 					}
 				},
 				"method": "GET",
@@ -80,7 +95,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"username\":\"nguyen van d\",\r\n    \"password\":\"123456asd\",\r\n    \"email\":\"nguyenvand@gmail.com\"\r\n}",
+					"raw": "{\r\n    \"username\":\"nguyen van c\",\r\n    \"password\":\"123456asd\",\r\n    \"email\":\"nguyenvand@gmail.com\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
