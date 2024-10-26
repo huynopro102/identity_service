@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git branch: 'main', url: 'https://github.com/huynopro102/identity_service.git'
+                git branch: 'main', credentialsId: 'id_docker_hub', url: 'https://github.com/huynopro102/identity_service.git'
             }
         }
           stage('login dockerhub') {
