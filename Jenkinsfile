@@ -1,33 +1,61 @@
 pipeline {
     agent any
 
+    environment {
+        DOCKER_IMAGE = 'accgamepro1028/springboot_postgresql:v2'
+        GITHUB_REPO = 'https://github.com/huynopro102/identity_service.git'
+    }
+
     stages {
-        stage('Checkout') {
+        stage('Clean Workspace') {
             steps {
-                git branch: 'main', credentialsId: 'id_docker_hub', url: 'https://github.com/huynopro102/identity_service.git'
+                cleanWs()
             }
         }
-          stage('login dockerhub') {
-                    steps {
-                        withDockerRegistry(credentialsId: 'id_docker_hub', url: 'https://index.docker.io/v1/') {
-                            // build and push image
-                            sh 'docker build -t accgamepro1028/springboot_postgresql:v2 .'
-                            sh 'docker push accgamepro1028/springboot_postgresql:v2 '
-                        }
-                    }
-          }
 
+        stage('Checkout') {
+            steps {
+                script {
+                    // Thêm logging để debug
+                    sh 'git --version'
+                    sh 'pwd'
+
+                    checkout([$class: 'GitSCM',
+                        branches: [[name: '*/main']],
+                        extensions: [],
+                        userRemoteConfigs: [[
+                            credentialsId: 'id_docker_hub',
+                            url: env.GITHUB_REPO
+                        ]]
+                    ])
+                }
+            }
+        }
+
+        stage('Build and Push Docker Image') {
+            steps {
+                script {
+                    withDockerRegistry(credentialsId: 'id_docker_hub', url: 'https://index.docker.io/v1/') {
+                        sh """
+                            docker build -t ${env.DOCKER_IMAGE} .
+                            docker push ${env.DOCKER_IMAGE}
+                        """
+                    }
+                }
+            }
+        }
     }
+
     post {
         always {
-            // Cleanup hoặc thông báo
             echo 'Pipeline execution finished.'
+            sh 'docker logout'
         }
         success {
-            echo 'All tests passed!'
+            echo 'Pipeline succeeded!'
         }
         failure {
-            echo 'Tests failed!'
+            echo 'Pipeline failed!'
         }
     }
 }
