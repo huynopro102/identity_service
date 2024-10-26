@@ -26,7 +26,7 @@
                     httpSecurity.authorizeHttpRequests(request ->
                             request
                                     .requestMatchers(HttpMethod.POST,PUBLIC_ENDPOINTS).permitAll()
-
+                                    .requestMatchers(HttpMethod.GET ,"/mienphi").permitAll()
                                     .anyRequest().authenticated()
                             )
                             .csrf().disable();
