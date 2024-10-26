@@ -6,13 +6,13 @@ services:
     container_name: springboot_app
     ports:
       - '8080:8080'
-    image: accgamepro1028/springboot_postgresql:latest
+    image: accgamepro1028/springboot_postgresql:v2
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/mydb
       SPRING_DATASOURCE_USERNAME: postgres
       SPRING_DATASOURCE_PASSWORD: 12345
     depends_on: # Docker Compose sẽ khởi động dịch vụ db trước, sau đó mới khởi động dịch vụ app.
-      - db
+      - db # name service db
 
   db: # Dịch vụ PostgreSQL
     image: postgres:14

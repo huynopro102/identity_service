@@ -11,7 +11,10 @@ public class helloController {
     public String hello() {
         return "hello world";
     }
-
+    @GetMapping("/mienphi")
+    public String mienphi() {
+        return "hello world mien phi";
+    }
 
 
 }
