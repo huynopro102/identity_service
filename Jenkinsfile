@@ -15,7 +15,7 @@ pipeline {
                             sh 'docker push accgamepro1028/springboot_postgresql:v2 '
                         }
                     }
-                }
+          }
 
     }
     post {
