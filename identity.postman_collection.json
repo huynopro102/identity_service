@@ -12,7 +12,7 @@
 				"auth": {
 					"type": "bearer",
 					"bearer": {
-						"token": "eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodXluZ3V5ZW4tbmdpbngiLCJzdWIiOiJuZ3V5ZW52YW5mQGdtYWlsLmNvbSIsImV4cCI6MTcyOTgzOTYyMiwiY3VzdG9tQ2xhaW0iOiLEkcOieSBsw6AgY2xhaW0gdOG7sSBjdXN0b20iLCJpYXQiOjE3Mjk4Mzk1NjJ9.Uej8jW9N1__I5lqlZ_Ho1u4tGQ06fdDbIkj8pxL4We4"
+						"token": "eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodXluZ3V5ZW4tbmdpbngiLCJzdWIiOiJuZ3V5ZW52YW5iQGdtYWlsLmNvbSIsImV4cCI6MTczMDAxODYxNSwiY3VzdG9tQ2xhaW0iOiLEkcOieSBsw6AgY2xhaW0gdOG7sSBjdXN0b20iLCJpYXQiOjE3MzAwMTg1NTV9.QvSJYBtRKlCig1Nde5I6KU6sbGl4GIbLGqpfbXYQ3z8"
 					}
 				},
 				"method": "GET",

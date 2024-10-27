@@ -1,29 +1,31 @@
 services:
-  app: # Dịch vụ Spring Boot
-    build:
-      context: . # Đường dẫn tới thư mục chứa Dockerfile
-      dockerfile: Dockerfile # Tên file Dockerfile
-    container_name: springboot_app
-    ports:
-      - '8080:8080'
-    image: accgamepro1028/springboot_postgresql:v2
-    environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/mydb
-      SPRING_DATASOURCE_USERNAME: postgres
-      SPRING_DATASOURCE_PASSWORD: 12345
-    depends_on: # Docker Compose sẽ khởi động dịch vụ db trước, sau đó mới khởi động dịch vụ app.
-      - db # name service db
+    app:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        container_name: springboot_app
+        depends_on:
+            - db
+        environment:
+            SPRING_DATASOURCE_PASSWORD: 12345
+            SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/mydb
+            SPRING_DATASOURCE_USERNAME: postgres
+        # Uncomment the image line if you want to use a prebuilt image instead of building from Dockerfile
+        # image: accgamepro1028/springboot_postgresql:v2
+        ports:
+            - "8080:8080"
+    db:
+        container_name: postgres-db
+        environment:
+            POSTGRES_DB: mydb
+            POSTGRES_PASSWORD: 12345
+            POSTGRES_USER: postgres
+        image: postgres:14
+        ports:
+            - "5432:5432"
+        volumes:
+            - pgdata:/var/lib/postgresql/data
+            - /var/
 
-  db: # Dịch vụ PostgreSQL
-    image: postgres:14
-    container_name: postgres-db
-    environment:
-      POSTGRES_DB: mydb
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: 12345
-    ports:
-      - '5432:5432'
-    volumes:
-      - pgdata:/var/lib/postgresql/data
 volumes:
-  pgdata: # Định nghĩa volume pgdata
+    pgdata:

@@ -7,6 +7,7 @@ public class NewmanRunner {
     public static void main(String[] args){
         System.out.println("hello newman");
         System.out.println("hello newman lan 2");
+        System.out.println("hello newman lan 3");
         // Đường dẫn đến file collection
         String collectionPath = "E:\\intellij_repo\\TuanHuy identity\\TuanHuy\\identity.postman_collection.json";
 
