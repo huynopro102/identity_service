@@ -1,8 +1,6 @@
-package identity.TuanHuy;
-
+package javase;
 import identity.TuanHuy.supper_add_add.SieuNhan;
 import identity.TuanHuy.supper_add_add.SieuNhanDo;
-
 import java.util.ArrayList;
 
 public class arraylist_in_java {

@@ -1,8 +1,6 @@
 package identity.TuanHuy.entity;
 import jakarta.persistence.*;
 import java.time.LocalDate;
-import java.util.UUID;
-
 import lombok.Builder;
 import lombok.Data;
 import lombok.Getter;
