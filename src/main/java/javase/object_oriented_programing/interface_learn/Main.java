@@ -5,6 +5,9 @@ import java.util.ArrayList;
 interface DONGVAT{
     public static final String mau_long = "YELLOW";
     public abstract void hanh_dong();
+    default void keu(){
+        System.out.println("động vật keu");
+    }
 }
 
 class MEO implements DONGVAT{
@@ -22,13 +25,12 @@ class CUN implements DONGVAT {
 }
 
 public class Main {
-    public static void Main(String args[]){
+    public static void main(String[] args){
         ArrayList<DONGVAT> arrayList_dv = new ArrayList<>();
         arrayList_dv.add(new CUN());
         arrayList_dv.add(new MEO());
         for (DONGVAT idol: arrayList_dv){
             idol.hanh_dong();
         }
-
     }
 }

@@ -14,10 +14,9 @@ import org.springframework.web.servlet.resource.NoResourceFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
-@ControllerAdvice
+
+@ControllerAdvice(basePackages = "identity.TuanHuy/")
 public class GlobalExceptionHandler {
-
-
 
     @ExceptionHandler(value = MethodArgumentNotValidException.class)
     ResponseEntity<List<ApiResponse<Void>>> handllingValidationException(MethodArgumentNotValidException e) {

@@ -6,6 +6,7 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
+
 public enum ErrorCode {
     INVALID_KEY_ENUM(1000,"KEY IN ENUM INVALID"),
     UNCATEGORIZED_EXCEPTION(9999,"UNCATEGORIZED_EXCEPTION"),

@@ -13,3 +13,4 @@ public class ApiResponse<H> {
     private int code;
     private H result;
 }
+
