@@ -14,6 +14,6 @@
             model.addAttribute("age",17);
             model.addAttribute("type","radio");
             model.addAttribute("message","đây là message");
-            return "/home/index";
+            return "home/index";
         }
     }
