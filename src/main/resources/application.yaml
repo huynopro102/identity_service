@@ -4,7 +4,7 @@ spring:
   server:
     port: 8080
   datasource: # chỉ dùng jdbc để kết nối đến db , orm hoặc ... thì dùng cấu hình hibernate và jpa
-    url: jdbc:postgresql://15.235.197.40:5432/identity_service
+    url: jdbc:postgresql://localhost:5432/identity_service
     username: postgres
     password: 12345
     driver-class-name: org.postgresql.Driver # Chỉ định rõ driver JDBC cho PostgreSQL
@@ -13,7 +13,7 @@ spring:
       ddl-auto: update # Điều này sẽ tự động tạo bảng hoặc cập nhật cấu trúc bảng nếu cần.
     properties: # tương tụ như , cấu hình chi tiết hơn
       dialect: org.hibernate.dialect.PostgreSQLDialect # Cấu hình dialect Hibernate cho PostgreSQL, giúp Hibernate hiểu cách làm việc với PostgreSQL.
-      packages-to-scan: identity.TuanHuy.UI.entity # Tham số này giúp Spring Boot biết nơi để tìm các lớp Entity. Mặc định, Spring Boot sẽ tìm các lớp Entity trong package gốc của ứng dụng và các package con. Tuy nhiên, nếu các Entity của bạn nằm trong một package riêng biệt, bạn có thể chỉ định rõ package đó trong cấu hình.
+      # có thể cấu hình ở file application : packages-to-scan: identity.TuanHuy.UI.entity # Tham số này giúp Spring Boot biết nơi để tìm các lớp Entity. Mặc định, Spring Boot sẽ tìm các lớp Entity trong package gốc của ứng dụng và các package con. Tuy nhiên, nếu các Entity của bạn nằm trong một package riêng biệt, bạn có thể chỉ định rõ package đó trong cấu hình.
     show-log: true  # Hiển thị các câu lệnh SQL trong log
   jwt:
     signerKey: "ZQM5hQ9xYRxNzMA/PsJggsQllKFiOz6mDyd372mZ52OwLlj/MbpzB6DTtCp4aWuv"

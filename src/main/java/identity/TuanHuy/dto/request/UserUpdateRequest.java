@@ -8,6 +8,8 @@ import lombok.Setter;
 import java.time.LocalDate;
 @Builder
 @Data
+@Setter
+@Getter
 public class UserUpdateRequest {
     private String username;
     private String password;

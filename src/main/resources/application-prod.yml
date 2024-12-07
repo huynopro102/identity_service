@@ -1,0 +1,31 @@
+spring:
+  application:
+    name: TuanHuy
+  server:
+    port: 8080
+  datasource: # chỉ dùng jdbc để kết nối đến db , orm hoặc ... thì dùng cấu hình hibernate và jpa
+    url:
+    username:
+    password:
+    driver-class-name: org.postgresql.Driver # Chỉ định rõ driver JDBC cho PostgreSQL
+  jpa:
+    hibernate:
+      ddl-auto: update # Điều này sẽ tự động tạo bảng hoặc cập nhật cấu trúc bảng nếu cần.
+    properties: # tương tụ như , cấu hình chi tiết hơn
+      dialect: org.hibernate.dialect.PostgreSQLDialect # Cấu hình dialect Hibernate cho PostgreSQL, giúp Hibernate hiểu cách làm việc với PostgreSQL.
+      # có thể cấu hình ở file application : packages-to-scan: identity.TuanHuy.UI.entity # Tham số này giúp Spring Boot biết nơi để tìm các lớp Entity. Mặc định, Spring Boot sẽ tìm các lớp Entity trong package gốc của ứng dụng và các package con. Tuy nhiên, nếu các Entity của bạn nằm trong một package riêng biệt, bạn có thể chỉ định rõ package đó trong cấu hình.
+    show-log: true  # Hiển thị các câu lệnh SQL trong log
+  jwt:
+    signerKey: ""
+  #  mvc:
+  #    pathmatch:
+  #      matching-strategy: ant_path_matcher
+  #      prefix: /api # Thêm tiền tố /api cho tất cả các API , ví dụ các anotation là @RestController
+  thymeleaf:
+    enabled: true
+    cache: false # Trong quá trình phát triển, trình duyệt có thể cache kết quả cũ. Hãy xóa cache hoặc sử dụng chế độ Incognito/Private Browsing khi kiểm tra lại ứng dụng.
+    prefix: "classpath:/templates/" # Cấu hình Thymeleaf cho UI, không cần tiền tố , có thể hiểu là : khi render ra là templates/home/index.{suffix}
+    suffix: ".html" # this is suffix
+  logging:
+    level:
+      org.springframework.security: DEBUG

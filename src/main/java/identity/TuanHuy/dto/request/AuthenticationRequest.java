@@ -5,10 +5,12 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.experimental.FieldDefaults;
 
-@Builder
-@Data
+
 @FieldDefaults(level = AccessLevel.PRIVATE)
+@Data
+@Builder
 public class AuthenticationRequest {
-    String email;
-    String password;
+    private String email;
+    private String password;
+    // Lombok will automatically generate getEmail() and getPassword()
 }

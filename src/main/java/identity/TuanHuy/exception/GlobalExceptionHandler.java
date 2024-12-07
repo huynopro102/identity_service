@@ -50,7 +50,7 @@ public class GlobalExceptionHandler {
     }
 
 
-// validation
+    // validation
     @ExceptionHandler(value = AppException.class)
     ResponseEntity<ApiResponse> handleRuntimeExceptionMyapp(AppException e) {
         ErrorCode errorCode = e.getErrorCode();
@@ -63,15 +63,15 @@ public class GlobalExceptionHandler {
     }
 
 
-// lỗi này là sai đường dẫn url khi gửi request
-@ExceptionHandler(value = NoResourceFoundException.class)
-ResponseEntity<ApiResponse> handleNoResultException(NoResourceFoundException e) {
-    ApiResponse apiResponse = ApiResponse.builder()
-            .code(ErrorCode.PATH_REQUEST_INVALID.getCode())
-            .message(ErrorCode.PATH_REQUEST_INVALID.getMessage())
-            .build();
-    return ResponseEntity.badRequest().body(apiResponse);
-}
+    // lỗi này là sai đường dẫn url khi gửi request
+    @ExceptionHandler(value = NoResourceFoundException.class)
+    ResponseEntity<ApiResponse> handleNoResultException(NoResourceFoundException e) {
+        ApiResponse apiResponse = ApiResponse.builder()
+                .code(ErrorCode.PATH_REQUEST_INVALID.getCode())
+                .message(ErrorCode.PATH_REQUEST_INVALID.getMessage())
+                .build();
+        return ResponseEntity.badRequest().body(apiResponse);
+    }
 
 
     // Bắt email ko tìm thấy trong database

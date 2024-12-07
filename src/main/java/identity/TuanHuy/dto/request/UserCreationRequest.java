@@ -7,6 +7,8 @@ import lombok.experimental.FieldDefaults;
 import java.time.LocalDate;
 @Builder
 @Data
+@Getter
+@Setter
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class UserCreationRequest {
     @NotNull(message = "USERNAME_NOT_NULL")
