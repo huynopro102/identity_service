@@ -1,5 +1,8 @@
 HELP.md
 
+# ignore file .env
+.env
+
 # ignore application.yml
 src/main/resources/application.yaml
 
