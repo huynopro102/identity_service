@@ -11,7 +11,8 @@
     <!--thay vì dùng <link rel="stylesheet" href="../../static/css/style.css"> thì dùng @{}-->
 
     <!-- load javascript by me   -->
-    <link rel="stylesheet" th:href="@{/css/dashboardmusic.js}">
+    <script th:src="@{/js/dashboardmusic.js}"></script>
+
 
 
     <!-- icon font awesome   -->
@@ -32,13 +33,73 @@
 
 </head>
 <body>
-    <div th:insert="fragments/header :: header"></div>
+<div th:insert="~{fragments/header :: header}"></div>
+
+
 
 
 <main>
-    <h1>hello world this is a dashboard</h1>
-
     <div class="container-xl">
+        <div>
+            <main>
+                <h1>Google Drive File Management</h1>
+
+                <!-- Modal -->
+                <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                    <img id="large-preview" src="" alt="Preview Image" style="width: 100%; max-width: 1800px; height: auto;" >
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-primary">Save changes</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- preview image choose-->
+                <div class="card" style="width: 18rem;">
+                    <img for="file-input" class="card-img-top" id="file-upload-trigger" src="https://placehold.co/600x400" alt="Card image cap " style="cursor: pointer" >
+                    <div class="card-body">
+                        <h5 class="card-title" id="preview_title"  >Card title</h5>
+                        <p class="card-text">lựa chọn ảnh theo phong cách riêng của bạn </p>
+                        <a href="#" class="btn btn-primary">create</a>
+                        <a href="#" id="upload_image" class="btn btn-primary">upload image</a>
+                        <a href="#" id="btn-preview-large" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">preview large</a>
+                    </div>
+                </div>
+                <!-- Form Upload File -->
+                <form th:action="@{/ui/upload}" method="post" enctype="multipart/form-data" hidden>
+                        <input type="file" id="file-input" name="file" class="form-control-file" required>
+                    <button type="submit" class="btn btn-success">Upload File</button>
+                </form>
+
+
+                <br>
+
+                <!-- Form Delete File -->
+                <form th:action="@{/ui/delete}" method="post">
+                <div class="form-group">
+                        <label for="fileId">Enter File ID to Delete:</label>
+                        <input type="text" id="fileId" name="fileId" class="form-control" required>
+                    </div>
+                    <button type="submit" class="btn btn-danger">Delete File</button>
+                </form>
+
+                <!-- Hiển thị thông báo -->
+                <div th:if="${message}" class="alert alert-info" role="alert">
+                    <p th:text="${message}"></p>
+                </div>
+            </main>
+
+        </div>
         <div class="table-responsive">
             <div class="table-wrapper">
                 <div class="table-title">
@@ -257,9 +318,12 @@
             </div>
         </div>
     </div>
+
+
 </main>
 
-<div th:insert="fragments/footer :: footer"></div>
+<div th:insert="~{fragments/footer :: footer}"></div>
+
 
 </body>
 </html>
