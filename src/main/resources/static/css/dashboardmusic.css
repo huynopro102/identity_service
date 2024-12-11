@@ -225,8 +225,8 @@ table.table .avatar {
 
 
 /* css preview large image*/
-.modal-content {
-    transform: scale(2.9, 1.9); /* Gấp 2 lần chiều ngang và 1.5 lần chiều dọc */
+#model-content-preview-large {
+    transform: scale(3.2); /* Gấp 2 lần chiều ngang và 1.5 lần chiều dọc */
     width: auto; /* Đảm bảo kích thước tự động */
     height: auto; /* Giữ chiều cao phù hợp */
     max-width: none; /* Loại bỏ giới hạn chiều rộng */

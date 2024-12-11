@@ -30,6 +30,7 @@
         const upload_image = document.getElementById("upload_image")
         const btn_preview_large = document.getElementById("btn-preview-large")
         const large_preview = document.getElementById("large-preview")
+        const btn_create = document.getElementById("create-btn")
 
         upload_image.addEventListener("click",(e)=>{
             fileInput.click()
@@ -52,5 +53,11 @@
         // onclick preview image
         btn_preview_large.addEventListener("click",(e)=>{
             large_preview.src = image.src
+        })
+
+        // onclick button create
+        btn_create.addEventListener("click",(e)=>{
+            e.preventDefault() // ngăn chặn hành động mặc đinh cuả thẻ button
+            document.getElementById("upload-file-form").submit()
         })
     });
