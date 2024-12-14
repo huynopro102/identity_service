@@ -1,0 +1,34 @@
+spring:
+  application:
+    name: TuanHuy
+  server:
+    port: 8080
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://15.235.197.40:5432/identity_service}
+    username: ${SPRING_DATASOURCE_USERNAME:postgres} # Đọc từ biến môi trường, nếu không có thì dùng giá trị mặc định là 'postgres'
+    password: ${SPRING_DATASOURCE_PASSWORD:12345}    # Đọc từ biến môi trường, nếu không có thì dùng giá trị mặc định là '12345'
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+    show-sql: true
+  thymeleaf:
+    enabled: true
+    cache: false
+    prefix: "classpath:/templates/"
+    suffix: ".html"
+  logging:
+    level:
+      org.springframework.security: DEBUG
+  jwt:
+    signerKey: ${JWT_SIGNER_KEY:defaultKey} # Lưu private key của JWT signer vào biến môi trường
+
+google:
+  oauth:
+    client-id: ${CLIENT_ID:default_client_id}
+    client-secret: ${CLIENT_SECRET:default_client_secret}
+    redirect-uri: ${REDIRECT_URI:https://developers.google.com/oauthplayground}
+    refresh-token: ${REFRESH_TOKEN:default_refresh_token}
