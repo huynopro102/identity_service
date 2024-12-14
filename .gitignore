@@ -7,8 +7,7 @@ HELP.md
 #src/main/resources/application.yaml
 
 # Ignore everything in target directory
-target/*
-!target/*.jar
+
 
 
 # Don't ignore the jar file
