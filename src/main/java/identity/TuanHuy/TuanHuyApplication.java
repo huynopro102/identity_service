@@ -11,5 +11,4 @@ public class TuanHuyApplication {
 		SpringApplication.run(TuanHuyApplication.class, args);
 		System.out.println("hello world");
 	}
-
 }
