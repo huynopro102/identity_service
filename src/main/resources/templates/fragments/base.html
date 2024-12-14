@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>AdminLTE 3</title>
+
+    <!-- Google Font -->
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <!-- Font Awesome Icons -->
+    <link th:href="@{/plugins/fontawesome-free/css/all.min.css}" rel="stylesheet">
+    <!-- IonIcons -->
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <!-- Theme style -->
+    <link th:href="@{/dist/css/adminlte.min.css}" rel="stylesheet">
+</head>
+<body class="hold-transition sidebar-mini">
+<div class="wrapper">
+
+    <!-- Header -->
+    <th:block th:replace="fragments/navbarAdmin :: navbarAdmin"></th:block>
+
+    <!-- Sidebar (nếu có, không bắt buộc) -->
+    <th:block th:replace="fragments/asideAdmin :: asideAdmin"></th:block>
+
+    <!-- Main content -->    <!-- Nội dung trang (sẽ thay thế bằng file quản lý file) -->
+    <div class="content-wrapper">
+        <th:block th:insert="${content}"></th:block>
+    </div>
+
+    <!--  controll side bar  -->
+    <th:block th:replace="fragments/controllSidebar"></th:block>
+
+    <!-- Footer -->
+    <th:block th:replace="fragments/mainfooterAdmin :: mainfooterAdmin"></th:block>
+
+</div>
+
+<!-- REQUIRED SCRIPTS -->
+
+<!-- jQuery -->
+<script th:src="@{/plugins/jquery/jquery.min.js}"></script>
+<!-- Bootstrap -->
+<script th:src="@{/plugins/bootstrap/js/bootstrap.bundle.min.js}"></script>
+<!-- AdminLTE -->
+<script th:src="@{/dist/js/adminlte.js}"></script>
+
+<!-- OPTIONAL SCRIPTS -->
+<script th:src="@{/plugins/chart.js/Chart.min.js}"></script>
+<!-- AdminLTE for demo purposes -->
+<script th:src="@{/dist/js/demo.js}"></script>
+<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
+<script th:src="@{/dist/js/pages/dashboard3.js}"></script>
+</body>
+</html>

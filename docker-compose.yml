@@ -1,0 +1,45 @@
+services:
+    # service 1
+    app:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        container_name: springboot_app
+        depends_on:
+            - db # name for service
+        environment:
+            SPRING_DATASOURCE_PASSWORD: 12345
+            SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/mydb # trong môi trường docker ko dùng localhost jdbc:postgresql://localhost:5432/mydb
+            SPRING_DATASOURCE_USERNAME: postgres
+        # Uncomment the image line if you want to use a prebuilt image instead of building from Dockerfile
+        # image: accgamepro1028/springboot_postgresql:v2
+        ports:
+            - "8080:8080"
+    # service 2
+    db:
+        container_name: postgres-db
+        environment:
+            POSTGRES_DB: mydb
+            POSTGRES_PASSWORD: 12345
+            POSTGRES_USER: postgres
+        image: postgres:14
+        ports:
+            - "5432:5432"
+        volumes:
+            - data_identity_service:/var/lib/postgresql/data
+
+    # service 3
+    jenkins:
+        container_name: jenkins
+        image: jenkins/jenkins:lts
+        environment:
+            JENKINS_OPTS: "--httpPort=8080"  # Cấu hình cổng HTTP của Jenkins
+        depends_on:
+            -   db
+        ports:
+            -   "8081:8080"
+        volumes:
+            - jenkins_have_docker:/var/jenkins_home
+volumes:
+    data_identity_service:
+    jenkins_have_docker:
