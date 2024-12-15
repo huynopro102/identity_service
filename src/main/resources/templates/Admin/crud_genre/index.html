@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Genre Management</title>
+</head>
+<body>
+<div class="container">
+    <h2 class="text-center mb-4">Genre Management</h2>
+
+    <form id="genreForm">
+        <div class="row">
+            <div class="col-md-8">
+                <input type="text" id="genreName" class="form-control" placeholder="Enter Genre Name" required>
+            </div>
+            <div class="col-md-4">
+                <button type="submit" class="btn btn-primary w-100">Add Genre</button>
+            </div>
+        </div>
+        <input type="hidden" id="editGenreId">
+    </form>
+
+    <table class="table table-striped" id="genreTable">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody id="genreTableBody"></tbody>
+    </table>
+</div>
+
+<script src="/js/genre-script.js"></script>
+</body>
+</html>

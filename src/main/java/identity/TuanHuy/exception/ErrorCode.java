@@ -21,7 +21,8 @@ public enum ErrorCode {
     DOB_NOT_NULL(1007,"dob not null"),
     INVALID_DATE_FORMAT(1008,"Invalid date format , format year-month-day , example for: 2003-04-12 ,There must be a 0 before the numbers 1-9"),
     PATH_REQUEST_INVALID(1009,"path request invalid , đường đẫn gửi request sai"),
-    AUTHENTICATE_INVALID(1010,"authenticate invalid"),;
+    AUTHENTICATE_INVALID(1010,"authenticate invalid"),
+    GENRE_EXITED(1011,"genre is already exists"),
     ;
     private int code;
     private String message;

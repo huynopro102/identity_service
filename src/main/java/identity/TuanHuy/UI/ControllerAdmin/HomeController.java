@@ -1,4 +1,4 @@
-    package identity.TuanHuy.UI.Controllers;
+    package identity.TuanHuy.UI.ControllerAdmin;
     import org.springframework.stereotype.Controller;
     import org.springframework.ui.Model;
     import org.springframework.web.bind.annotation.GetMapping;

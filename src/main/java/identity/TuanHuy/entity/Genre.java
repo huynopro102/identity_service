@@ -1,24 +1,24 @@
 package identity.TuanHuy.entity;
-
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.List;
+import java.util.UUID;
 
+@Setter
+@Getter
 @Entity
 @Table(name = "Genre")
-@Getter
-@Setter
 public class Genre {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String name; // Tên thể loại
+    @Column(nullable = false, unique = true)
+    private String name;
 
-    @ManyToMany(mappedBy = "genres")
-    private List<Songs> songs; // Liên kết tới bài hát
-
+    // Constructors, Getters, and Setters
+    public Genre() {}
 
 }
+

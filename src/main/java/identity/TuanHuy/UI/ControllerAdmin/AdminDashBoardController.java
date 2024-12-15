@@ -1,4 +1,4 @@
-package identity.TuanHuy.UI.Controllers;
+package identity.TuanHuy.UI.ControllerAdmin;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,10 +12,7 @@ public class AdminDashBoardController {
 
     @GetMapping("/dashboard/index3")
     public String getDashboardv3(Model model){
-        // dashboard là tên thư mực .html ở trong folder fragments
-        // dashboard3 là fragments trong file dashboard
-        // dashboard_name là tên biến được truyền vào file html
-        model.addAttribute("content", "/admin/music");
+        model.addAttribute("content", "Admin/dashboard/index");
         return "fragments/base";
     }
 
