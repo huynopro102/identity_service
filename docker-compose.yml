@@ -3,14 +3,15 @@ version: '3.8'
 services:
     identity_service:
         build:
-            context: .
-            dockerfile: Dockerfile
+            context: .              # This specifies the build context (current directory)
+            dockerfile: Dockerfile   # Path to the Dockerfile (relative to context)
         container_name: app_identity_service
         environment:
-            # Cấu hình ứng dụng Spring Boot
-            SPRING_DATASOURCE_URL: jdbc:postgresql://15.235.197.40:5432:5432/identity_service
+            SPRING_DATASOURCE_URL: jdbc:postgresql://15.235.197.40:5432/identity_service
             SPRING_DATASOURCE_USERNAME: postgres
             SPRING_DATASOURCE_PASSWORD: 12345
         ports:
             - "8080:8080"
-
+        volumes:
+            - ./target:/app/target  # Mounts the target directory to the container, allowing for easier updates
+        restart: unless-stopped    # Restart policy in case the container stops unexpectedly
