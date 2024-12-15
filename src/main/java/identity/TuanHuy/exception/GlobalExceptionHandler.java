@@ -1,7 +1,6 @@
 package identity.TuanHuy.exception;
 
 import identity.TuanHuy.dto.reponse.ApiResponse;
-import jakarta.persistence.NoResultException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.FieldError;
@@ -14,8 +13,7 @@ import org.springframework.web.servlet.resource.NoResourceFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
-
-@ControllerAdvice(basePackages = "identity.TuanHuy/")
+@ControllerAdvice // Add this annotation to enable global exception handling , thêm annotation này để xử lý toàn cục
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(value = MethodArgumentNotValidException.class)
