@@ -11,7 +11,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/users") // Với cấu hình /api ở file .yaml , nó sẽ trở thành "/api/users"
-@CrossOrigin(origins = "http://15.235.197.40") // Allow requests from the specified domain
+@CrossOrigin(origins = "*") // Allow requests from the specified domain
 public class UserController extends baseApiController{
 
     @Autowired

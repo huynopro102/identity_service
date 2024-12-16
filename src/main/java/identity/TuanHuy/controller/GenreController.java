@@ -13,7 +13,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/genres")
-@CrossOrigin(origins = "http://15.235.197.40") // Allow requests from the specified domain
+@CrossOrigin(origins = "*") // Allow requests from the specified domain
 public class GenreController {
 
     @Autowired
