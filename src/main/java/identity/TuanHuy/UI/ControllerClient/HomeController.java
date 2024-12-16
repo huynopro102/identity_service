@@ -1,4 +1,4 @@
-    package identity.TuanHuy.UI.ControllerAdmin;
+    package identity.TuanHuy.UI.ControllerClient;
     import org.springframework.stereotype.Controller;
     import org.springframework.ui.Model;
     import org.springframework.web.bind.annotation.GetMapping;
@@ -14,7 +14,7 @@
             model.addAttribute("age",17);
             model.addAttribute("type","radio");
             model.addAttribute("message","đây là message");
-            return "home/index";
+            return "Client/home/index";
         }
 
     }

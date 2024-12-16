@@ -20,30 +20,17 @@
         <div class="container my-4">
             <h1 class="text-center">Array Visualization</h1>
 
-<!--            &lt;!&ndash; Original Array &ndash;&gt;-->
-<!--            <div class="mb-4">-->
-<!--                <h2>Original Array</h2>-->
-<!--                <div class="d-flex justify-content-start flex-wrap">-->
-<!--                    <div th:each="item : ${originalArray}" class="border rounded bg-primary text-white text-center mx-1 mb-2 p-2" style="width: 50px;">-->
-<!--                        <span th:text="${item}"></span>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--            </div>-->
-
-<!--            &lt;!&ndash; Sorted Array &ndash;&gt;-->
-<!--            <div class="mb-4">-->
-<!--                <h2>Sorted Array</h2>-->
-<!--                <div class="d-flex justify-content-start flex-wrap">-->
-<!--                    <div th:each="item : ${sortedArray}" class="border rounded bg-success text-white text-center mx-1 mb-2 p-2" style="width: 50px;">-->
-<!--                        <span th:text="${item}"></span>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--            </div>-->
-
             <!-- Array Sum -->
             <div class="mb-4">
                 <h2>Array Sum</h2>
                 <p class="fs-4 text-info" th:text="'Sum: ' + ${Sum}"></p>
+            </div>
+
+
+            <!-- Array Sum -->
+            <div class="mb-4">
+                <h2>Array Sum</h2>
+                <p class="fs-4 text-info" th:text="'base-url: ' + ${baseurl}"></p>
             </div>
 
         </div>

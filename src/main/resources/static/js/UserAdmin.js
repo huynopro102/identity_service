@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const cancelUpdateButton = document.getElementById("cancelUpdate");
     const userTable = document.getElementById("userTable");
 
-    const apiUrl = "http://localhost:8080/api/users";
+    const apiUrl = "/api/users";
 
     // Load danh sách người dùng
     function loadUsers() {

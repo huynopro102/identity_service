@@ -1,8 +1,9 @@
-package identity.TuanHuy.UI.ControllerAdmin;
+package identity.TuanHuy.UI.ControllerClient;
 
 
 import identity.TuanHuy.UI.Services.ArrayService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,9 +17,14 @@ public class ArrayController {
     ArrayService arrayService;
 
 
+    @Value("${api.base-url}")
+    private String base_url;
+
+
     @GetMapping("/array")
     public String getArray(Model model){
         model.addAttribute("Sum",arrayService.getArraySum());
-        return "array/array";
+        model.addAttribute("baseurl",base_url);
+        return "Client/array/array";
     }
 }
