@@ -1,4 +1,6 @@
 HELP.md
+remote_deploy.sh
+id_rsa
 
 # ignore file .env
 .env
