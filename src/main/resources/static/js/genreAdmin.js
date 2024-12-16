@@ -1,9 +1,7 @@
-// Base URL for your API
-const BASE_URL = 'http://localhost:8080/api/genres';
 
-// Fetch and display all genres
 async function fetchGenres() {
     try {
+
         const response = await fetch(BASE_URL);
         const genres = await response.json();
         const tableBody = document.getElementById('genreTableBody');

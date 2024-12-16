@@ -1,12 +1,19 @@
 <!DOCTYPE html>
-<html lang="en">
+<html  xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Genre Management</title>
+    <script>
+        let BASE_URL = "/api/genres";
+    </script>
 </head>
 <body>
 <div class="container">
-    <h2 class="text-center mb-4">Genre Management vps demo</h2>
+
+    <h1>Base URL: <span th:text="${BASE_URL}"></span></h1> <!-- This will print the BASE_URL -->
+
+
+    <h2 class="text-center mb-4">Genre Management vps demo </h2>
 
     <form id="genreForm">
         <div class="row">
@@ -32,6 +39,6 @@
     </table>
 </div>
 
-<script src="/js/genre-script.js"></script>
+<script src="/js/genreAdmin.js"></script>
 </body>
 </html>
