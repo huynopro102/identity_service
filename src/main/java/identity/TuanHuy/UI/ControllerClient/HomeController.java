@@ -10,11 +10,8 @@
 
         @GetMapping("/home")
         public String home(Model model) {
-            model.addAttribute("sinhvie");
-            model.addAttribute("age",17);
-            model.addAttribute("type","radio");
-            model.addAttribute("message","đây là message");
-            return "Client/home/index";
+            model.addAttribute("content","Client/home/index");
+            return "fragments/baseClient";
         }
 
     }

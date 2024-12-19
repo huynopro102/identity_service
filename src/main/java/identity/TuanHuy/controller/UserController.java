@@ -23,12 +23,8 @@ public class UserController extends baseApiController{
     }
 
     @GetMapping()
-    ApiResponse<List> GetAllUsers() {
-        ApiResponse<List> response = ApiResponse.<List>builder()
-                .code(200)
-                .message("oke")
-                .result(userService.GetAllUsers()).build();
-        return response;
+    List<Users> GetAllUsers() {
+        return userService.GetAllUsers();
     }
 
     @GetMapping("/{userId}")

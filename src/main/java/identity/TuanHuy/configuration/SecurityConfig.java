@@ -2,6 +2,7 @@
     import org.springframework.beans.factory.annotation.Value;
     import org.springframework.context.annotation.Bean;
     import org.springframework.context.annotation.Configuration;
+    import org.springframework.context.annotation.Scope;
     import org.springframework.http.HttpMethod;
     import org.springframework.security.config.annotation.web.builders.HttpSecurity;
     import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -18,10 +19,11 @@
         @Value("${spring.jwt.signerKey}")
         private String signerKey;
 
-        private final String[] PUBLIC_ENDPOINTS_API = {"/api/users", "/api/authentication/login", "/api/mienphi"};
+        private final String[] PUBLIC_ENDPOINTS_API = { "/api/authentication/login", "/api/mienphi","/api/cloudinary/image/upload","/api/users"};
         private final String[] PUBLIC_ENDPOINTS_UI = {"/ui/home"};
 
         @Bean
+
         public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
             httpSecurity
                     // Cho phép các endpoint công khai
