@@ -1,18 +1,32 @@
 package identity.TuanHuy;
-import io.github.cdimascio.dotenv.Dotenv;
+
+import identity.TuanHuy.configuration.CloudinaryConfig;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ApplicationContext;
 
 
 @SpringBootApplication
 public class TuanHuyApplication {
-	public static void main(String[] args) {
-		Dotenv dotenv = Dotenv.load();
 
-		System.setProperty("SPRING_DATASOURCE_URL", dotenv.get("SPRING_DATASOURCE_URL"));
-		System.setProperty("SPRING_DATASOURCE_USERNAME", dotenv.get("SPRING_DATASOURCE_USERNAME"));
-		System.setProperty("SPRING_DATASOURCE_PASSWORD", dotenv.get("SPRING_DATASOURCE_PASSWORD"));
-		SpringApplication.run(TuanHuyApplication.class, args);
+	@Value("${cloudinary.cloud_name}")
+	private String cloudName;
+
+	public static void main(String[] args) {
+		ApplicationContext context = SpringApplication.run(TuanHuyApplication.class, args);
+		TuanHuyApplication app = context.getBean(TuanHuyApplication.class);
+
 		System.out.println("hello world");
+		CloudinaryConfig c = context.getBean(CloudinaryConfig.class);
+		CloudinaryConfig c1 = context.getBean(CloudinaryConfig.class);
+
+		System.out.println(c);
+		System.out.println(c1);
+		System.out.println(app.getCloudName());
+	}
+
+	public String getCloudName() {
+		return cloudName;
 	}
 }

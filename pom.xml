@@ -143,6 +143,13 @@
 			<artifactId>java-dotenv</artifactId>
 			<version>5.1.3</version>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/com.cloudinary/cloudinary-http44 -->
+		<!-- thư viện cloudinary để curd images-->
+		<dependency>
+			<groupId>com.cloudinary</groupId>
+			<artifactId>cloudinary-http44</artifactId>
+			<version>1.39.0</version>
+		</dependency>
 
 
 	</dependencies>

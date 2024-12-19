@@ -5,16 +5,14 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-
 @Controller
 @RequestMapping("/ui")
-public class MusicController {
+public class SqlController {
 
-    @GetMapping("/music")
-    public String getDashboard(Model model){
-        model.addAttribute("content" , "Client/music/index");
+    @GetMapping("/sql")
+    public String sql(Model model){
+        model.addAttribute("content","Client/sql/index");
         return "fragments/baseClient";
     }
-
 
 }

@@ -24,7 +24,7 @@ spring:
     level:
       org.springframework.security: DEBUG
   jwt:
-    signerKey: ${JWT_SIGNER_KEY:defaultKey} # Lưu private key của JWT signer vào biến môi trường
+    signerKey: ${JWT_SIGNER_KEY:nO3a5m=U^P__4v#+yW919pVpWVcdhU$FX;FKSd@RxNvHA} # Lưu private key của JWT signer vào biến môi trường
 
 
 api:
@@ -38,3 +38,8 @@ google:
     redirect-uri: ${REDIRECT_URI:https://developers.google.com/oauthplayground}
     refresh-token: ${REFRESH_TOKEN:default_refresh_token}
 
+
+cloudinary:
+  cloud_name: ${CLOUDINARY_NAME:ducvyera2}
+  api_key: ${CLOUDINARY_API_KEY:912285735544359}
+  api_secret: ${CLOUDINARY_API_SECRET:AAHfKguEQSl_qoLdq4ktBJdyRtI}

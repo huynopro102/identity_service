@@ -3,7 +3,7 @@ package identity.TuanHuy.entity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.security.core.userdetails.User;
+
 
 import java.util.List;
 
