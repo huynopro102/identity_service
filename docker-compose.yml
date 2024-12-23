@@ -11,7 +11,7 @@ services:
             SPRING_DATASOURCE_USERNAME: postgres
             SPRING_DATASOURCE_PASSWORD: 12345
         ports:
-            - "8886:8886"
+            - "9000:9000"
         volumes:
             - ./target:/app/target  # Mounts the target directory to the container, allowing for easier updates
         restart: unless-stopped    # Restart policy in case the container stops unexpectedly
