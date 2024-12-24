@@ -16,3 +16,8 @@ services:
         volumes:
             - ./target:/app/target  # Mounts the target directory to the container, allowing for easier updates
         restart: unless-stopped    # Restart policy in case the container stops unexpectedly
+        networks:
+            - network_shared
+networks:
+    network_shared:
+        driver: bridge
