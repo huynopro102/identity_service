@@ -6,6 +6,7 @@ services:
             context: .              # This specifies the build context (current directory)
             dockerfile: Dockerfile   # Path to the Dockerfile (relative to context)
         container_name: app_identity_service
+        image: app_identity_service:latest
         environment:
             SPRING_DATASOURCE_URL: jdbc:postgresql://15.235.197.40:5432/identity_service
             SPRING_DATASOURCE_USERNAME: postgres
