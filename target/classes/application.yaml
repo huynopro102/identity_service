@@ -1,8 +1,11 @@
 spring:
+  devtools:
+    restart:
+      enabled: false
+  server:
+    port: 9000
   application:
     name: TuanHuy
-  server:
-    port: 8080
   datasource:
     url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://15.235.197.40:5432/identity_service}
     username: ${SPRING_DATASOURCE_USERNAME:postgres} # Đọc từ biến môi trường, nếu không có thì dùng giá trị mặc định là 'postgres'
@@ -28,7 +31,7 @@ spring:
 
 
 api:
-  base-url: ${API_BASE_URL:http://localhost:8080} # Giá trị mặc định cho development
+  base-url: ${API_BASE_URL:http://localhost:9000} # Giá trị mặc định cho development
 
 
 google:
