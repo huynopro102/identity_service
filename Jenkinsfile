@@ -11,7 +11,12 @@ pipeline {
         stage('ssh to server with user tuanhuy') {
             steps {
                 sshagent(['ssh-remote-user-tuanhuy']) {
-                    sh 'ssh -o StrictHostKeyChecking=no -l tuanhuy 15.235.197.40 touch jenins_pipeline.txt'
+                    sh '''
+                     ssh -o StrictHostKeyChecking=no -l tuanhuy 15.235.197.40 << 'EOF'
+                            cd /home/tuanhuy
+                            ./deploy_identity_service.sh
+                            EOF
+                    '''
                 }
             }
         }
