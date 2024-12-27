@@ -7,16 +7,6 @@ pipeline {
                 git branch: 'main', url: 'https://github.com/huynopro102/identity_service.git'
             }
         }
-        stage('Login to Docker Hub') {
-            steps {
-                script {
-                    docker.withRegistry('https://registry.hub.docker.com', 'dockerhub-credentials-id') {
-                        // Các lệnh liên quan đến Docker
-                        echo 'Logged in to Docker Hub.'
-                    }
-                }
-            }
-        }
     }
 
     post {
@@ -24,10 +14,10 @@ pipeline {
             echo 'Pipeline execution finished.'
         }
         success {
-            echo 'All tests passed!'
+            echo 'Code checkout completed successfully!'
         }
         failure {
-            echo 'Tests failed!'
+            echo 'Code checkout failed!'
         }
     }
 }
