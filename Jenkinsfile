@@ -2,11 +2,11 @@ pipeline {
     agent any
 
     stages {
-        stage('Checkout branch main') {
-            steps {
-                git branch: 'main', url: 'https://github.com/huynopro102/identity_service.git'
-            }
-        }
+//         stage('Checkout branch main') {
+//             steps {
+//                 git branch: 'main', url: 'https://github.com/huynopro102/identity_service.git'
+//             }
+//         }
 
         stage('ssh to server with user tuanhuy') {
             steps {
