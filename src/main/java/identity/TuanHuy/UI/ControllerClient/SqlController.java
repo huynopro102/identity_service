@@ -10,9 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class SqlController {
 
     @GetMapping("/sql")
-    public String sql(Model model){
-        model.addAttribute("content","Client/sql/index");
-        return "fragments/baseClient";
+    public String sql(){
+        return "Client/sql/index";
     }
 
 }

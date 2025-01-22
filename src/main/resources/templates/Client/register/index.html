@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+
+<head>
+    <meta charset="UTF-8">
+    <title>Markdown Live Preview</title>
+    <!-- Thêm Bootstrap CSS từ CDN , this is a css and js for layout include header and footer -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Thêm JS của Bootstrap từ CDN (Bootstrap yêu cầu jQuery và Popper.js cho một số tính năng như dropdown, modal) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.0/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <!--    -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/codemirror.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/theme/monokai.min.css" rel="stylesheet">
+    <!--    CodeMirror: Trình soạn thảo mã Markdown.-->
+    <!--    Marked.js: Chuyển đổi Markdown sang HTML để hiển thị kết quả trong chế độ xem trước.-->
+
+</head>
+
+<body>
+
+    <div th:insert="fragments/header :: header"></div>
+
+    <div class="container">
+        <div class="row justify-content-center ">
+
+            <form>
+                <h2>Register</h2>
+                <div class="mb-3">
+                    <label for="exampleInputEmail1" class="form-label">Email address</label>
+                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                    <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+                </div>
+                <div class="mb-3">
+                    <label for="exampleInputPassword1" class="form-label">Password</label>
+                    <input min="6" type="password" class="form-control" id="exampleInputPassword1">
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+
+
+        </div>
+    </div>
+
+    <div th:insert="fragments/footer :: footer"></div>
+
+</body>
+
+</html>
+

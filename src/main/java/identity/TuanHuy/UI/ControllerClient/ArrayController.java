@@ -22,9 +22,8 @@ public class ArrayController {
 
 
     @GetMapping("/array")
-    public String getArray(Model model){
-        model.addAttribute("Sum",arrayService.getArraySum());
-        model.addAttribute("baseurl",base_url);
+    public String getArray(){
+
         return "Client/array/array";
     }
 }

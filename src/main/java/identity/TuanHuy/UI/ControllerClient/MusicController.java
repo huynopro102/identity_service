@@ -11,9 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class MusicController {
 
     @GetMapping("/music")
-    public String getDashboard(Model model){
-        model.addAttribute("content" , "Client/music/index");
-        return "fragments/baseClient";
+    public String getDashboard(){
+        return "Client/music/index";
     }
 
 
