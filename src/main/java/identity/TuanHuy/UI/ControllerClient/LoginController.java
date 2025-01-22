@@ -1,19 +1,15 @@
 package identity.TuanHuy.UI.ControllerClient;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-
 @Controller
 @RequestMapping("/ui")
-public class MusicController {
+public class LoginController {
 
-    @GetMapping("/music")
-    public String getDashboard(){
-        return "Client/music/index";
+    @GetMapping("/login")
+    public String getlogin(){
+        return "Client/login/index";
     }
-
-
 }

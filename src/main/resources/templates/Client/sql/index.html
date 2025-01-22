@@ -1,43 +1,24 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
+    <!-- Thêm Bootstrap CSS từ CDN , this is a css and js for layout include header and footer -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Thêm JS của Bootstrap từ CDN (Bootstrap yêu cầu jQuery và Popper.js cho một số tính năng như dropdown, modal) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.0/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <!--  ------  -->
     <!--thư viện css của trang này là summernote -->
     <link href="https://cdn.jsdelivr.net/npm/summernote/dist/summernote.min.css" rel="stylesheet">
 </head>
 
 <body>
 
-<div id="carouselExampleIndicators" class="carousel slide">
-    <div class="carousel-indicators">
-        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
-        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
-    </div>
-    <div class="carousel-inner">
-        <div class="carousel-item active">
-            <img src="..." class="d-block w-100" alt="...">
-        </div>
-        <div class="carousel-item">
-            <img src="..." class="d-block w-100" alt="...">
-        </div>
-        <div class="carousel-item">
-            <img src="..." class="d-block w-100" alt="...">
-        </div>
-    </div>
-    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Previous</span>
-    </button>
-    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Next</span>
-    </button>
-
-</div>
-
 <div class="container mt-4">
     <textarea id="summernote"></textarea>
 </div>
+
+
 
 <!--thư viện jquery của trang này là summernote -->
 <script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>

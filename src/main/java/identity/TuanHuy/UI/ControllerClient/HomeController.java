@@ -9,9 +9,8 @@
     public class HomeController {
 
         @GetMapping("/home")
-        public String home(Model model) {
-            model.addAttribute("content","Client/home/index");
-            return "fragments/baseClient";
+        public String home() {
+            return "Client/home/index";
         }
 
     }

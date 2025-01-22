@@ -10,8 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class MarkdownPreviewController {
 
     @GetMapping("/markdown_preview")
-    public String markdown_preview(Model model){
-        model.addAttribute("content" , "/Client/markdown_preview/index");
-        return "fragments/baseClient";
+    public String markdown_preview(){
+        return "Client/markdown_preview/index";
     }
 }

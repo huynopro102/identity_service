@@ -1,78 +1,154 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home Website</title>
+    <title>Markdown Live Preview</title>
+    <!-- Thêm Bootstrap CSS từ CDN , this is a css and js for layout include header and footer -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Thêm JS của Bootstrap từ CDN (Bootstrap yêu cầu jQuery và Popper.js cho một số tính năng như dropdown, modal) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.0/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <!--    -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/codemirror.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/theme/monokai.min.css" rel="stylesheet">
+    <!--    CodeMirror: Trình soạn thảo mã Markdown.-->
+    <!--    Marked.js: Chuyển đổi Markdown sang HTML để hiển thị kết quả trong chế độ xem trước.-->
+
 </head>
+
 <body>
-<main>
-    <div class="container">
-        <div class="row">
-            <div class="col-4 mt-2">
-                <div class="card">
-                    <img src="https://placehold.co/600x400" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">có 2 cách load file .env trong spring boot</h5>
-                        <p class="card-text">1 Tự đọc .env trong Spring Boot</p>
-                        <p class="card-text"><dependency>
-                            <groupId>io.github.cdimascio</groupId>
-                            <artifactId>dotenv-spring-boot</artifactId>
-                            <version>3.1.0</version>
-                        </dependency>
-                        </p>
-                        <p class="card-text">2 Sử dụng thư viện dotenv-spring</p>
-                        <p class="card-text"><dependency>
-                            <groupId>io.github.cdimascio</groupId>
-                            <artifactId>java-dotenv</artifactId>
-                            <version>5.2.2</version>
-                        </dependency>
-                        </p>
-                        <a href="#" class="btn btn-primary">Go somewhere</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-4 mt-2">
-                <div class="card">
-                    <img src="https://placehold.co/600x400" class="card-img-top" style="max-height: 580px; width: 100%; object-fit: cover;" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">Card title</h5>
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                        <a href="#" class="btn btn-primary">Go somewhere</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-4 mt-2">
-                <div class="card">
-                    <img src="..." class="card-img-top" alt="...">
 
-                    <div class="card-body">
-                        <h5 class="card-title">Card title</h5>
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                        <a href="#" class="btn btn-primary">Go somewhere</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-4 mt-2">
-                <div class="card">
-                    <img src="..." class="card-img-top" alt="...">
+    <div th:insert="fragments/header :: header"></div>
 
-                    <div class="card-body">
-                        <h5 class="card-title">Card title</h5>
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content
-                            Some quick example text to build on the card title and make up the bulk of the card's content
-                            Some quick example text to build on the card title and make up the bulk of the card's content
-                            Some quick example text to build on the card title and make up the bulk of the card's content
-                            Some quick example text to build on the card title and make up the bulk of the card's content
-                            Some quick example text to build on the card title and make up the bulk of the card's content
-                            Some quick example text to build on the card title and make up the bulk of the card's content
-                        </p>
-                        <a href="#" class="btn btn-primary">Go somewhere</a>
-                    </div>
-                </div>
-            </div>
+
+    <div hidden class="hidden editor-container">
+        <div class="hidden editor">
+            <textarea id="markdown-editor" class="hidden">
+# Markdown syntax guide
+
+## Headers
+
+* ∞ (vô cực)
+* ≠ (không bằng)
+* ≈ (xấp xỉ)
+
+### Common Symbols
+* ✓ (check)
+* ✗ (cross)
+* ⚠ (cảnh báo)
+* ℹ (thông tin)
+* ⭐ (sao)
+* ☎ (điện thoại)
+* ✉ (email)
+* ⌛ (đồng hồ cát)
+* ♥ (tim)
+            </textarea>
         </div>
     </div>
-</main>
+
+
+    <div class="container">
+        <div class="row justify-content-center ">
+
+            <div class="col-md-4">
+                <div class="card">
+                    <img class="card-img-top" src="https://placehold.co/600x400" alt="Card image cap">
+                    <div class="card-body">
+                        <h5 class="card-title">Card title</h5>
+                        <div class="preview" ></div>
+                        <a href="#" class="btn btn-primary">Go somewhere</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card">
+                    <img class="card-img-top" src="https://placehold.co/600x400" alt="Card image cap">
+                    <div class="card-body">
+                        <h5 class="card-title">Card title</h5>
+                        <div class="preview" ></div>
+                        <a href="#" class="btn btn-primary">Go somewhere</a>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <div class="col-md-4">
+                <div class="card">
+                    <img class="card-img-top" src="https://placehold.co/600x400" alt="Card image cap">
+                    <div class="card-body">
+                        <h5 class="card-title">Card title</h5>
+                        <div class="preview" ></div>
+                        <a href="#" class="btn btn-primary">Go somewhere</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card">
+                    <img class="card-img-top" src="https://placehold.co/600x400" alt="Card image cap">
+                    <div class="card-body">
+                        <h5 class="card-title">Card title</h5>
+                        <div class="preview" ></div>
+                        <a href="#" class="btn btn-primary">Go somewhere</a>
+                    </div>
+                </div>
+            </div>
+
+
+
+        </div>
+    </div>
+
+
+
+
+
+    <!-- Replace Summernote with Markdown libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/codemirror.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/mode/markdown/markdown.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/4.0.2/marked.min.js"></script>
+
+    <script>
+        let editor;
+        let syncScroll = false;
+        const preview = document.getElementsByClassName('preview');
+
+        // Initialize CodeMirror editor
+        window.onload = function () {
+            editor = CodeMirror.fromTextArea(document.getElementById('markdown-editor'), {
+                mode: 'markdown',
+                theme: 'monokai',
+                lineNumbers: true,
+                lineWrapping: true
+            });
+
+            // Initial render
+            updatePreview();
+
+            // Update preview on change
+            editor.on('change', updatePreview);
+        };
+   
+        function updatePreview(item) {
+            for(let i=0;i<preview.length;i++){
+                if(preview[i]){
+                    preview[i].innerHTML = marked.parse(editor.getValue());
+                }
+            }
+
+        }
+
+
+    </script>
+
+    <div th:insert="fragments/footer :: footer"></div>
+
 </body>
+
 </html>
+
