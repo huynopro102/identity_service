@@ -4,9 +4,9 @@ pipeline {
     stages {
         stage('ssh to server with user tuanhuy') {
             steps {
-                sshagent(['ssh-remote-user-tuanhuy']) {
+                sshagent(['ssh-remote-user-ubuntu']) {
                     sh '''
-                        ssh -o StrictHostKeyChecking=no -l tuanhuy 15.235.197.40 "cd /home/tuanhuy && ./deploy_identity_service.sh"
+                        ssh -o StrictHostKeyChecking=no -l ubuntu 15.235.197.40 "cd /home/ubuntu && ./deploy_identity_service.sh"
                     '''
                 }
             }
