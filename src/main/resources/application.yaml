@@ -7,7 +7,7 @@ spring:
   application:
     name: TuanHuy
   datasource:
-    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://15.235.197.40:5432/identity_service}
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/identity_service}
     username: ${SPRING_DATASOURCE_USERNAME:postgres} # Đọc từ biến môi trường, nếu không có thì dùng giá trị mặc định là 'postgres'
     password: ${SPRING_DATASOURCE_PASSWORD:12345}    # Đọc từ biến môi trường, nếu không có thì dùng giá trị mặc định là '12345'
     driver-class-name: org.postgresql.Driver
@@ -20,7 +20,7 @@ spring:
     show-sql: true
   thymeleaf:
     enabled: true
-    cache: false
+    cache: true
     prefix: "classpath:/templates/"
     suffix: ".html"
   logging:

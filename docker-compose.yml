@@ -8,7 +8,7 @@ services:
         container_name: app_identity_service
         image: app_identity_service:latest
         environment:
-            SPRING_DATASOURCE_URL: jdbc:postgresql://15.235.197.40:5432/identity_service
+            SPRING_DATASOURCE_URL: jdbc:postgresql://localhost:5432/identity_service
             SPRING_DATASOURCE_USERNAME: postgres
             SPRING_DATASOURCE_PASSWORD: 12345
         ports:
@@ -18,6 +18,7 @@ services:
         restart: unless-stopped    # Restart policy in case the container stops unexpectedly
         networks:
             - network_shared
+
 
 networks:
     network_shared:

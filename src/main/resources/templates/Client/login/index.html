@@ -5,12 +5,14 @@
 <head>
     <meta charset="UTF-8">
     <title>Markdown Live Preview</title>
-    <!-- Thêm Bootstrap CSS từ CDN , this is a css and js for layout include header and footer -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <!-- Thêm JS của Bootstrap từ CDN (Bootstrap yêu cầu jQuery và Popper.js cho một số tính năng như dropdown, modal) -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.0/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+
+    <!-- Liên kết đến Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Liên kết đến Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    
     <!--    -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/codemirror.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/theme/monokai.min.css" rel="stylesheet">
@@ -48,15 +50,16 @@
     </div>
 
     <div th:insert="fragments/footer :: footer"></div>
+
     <script>
-        document.getElementById("loginForm").addEventListener("submit",function(e){
+        document.getElementById("loginForm").addEventListener("submit", function (e) {
             e.preventDefault();
             let email = document.getElementById("exampleInputEmail1").value;
             let password = document.getElementById("exampleInputPassword1").value;
-            fetch("/api/authentication/login",{
+            fetch("/api/authentication/login", {
                 method: "POST",
-                headers:{
-                    "Content-Type": "application/json" 
+                headers: {
+                    "Content-Type": "application/json"
                     // alert for server send data is json
                 },
                 body: JSON.stringify({
@@ -64,29 +67,32 @@
                     password: password.trim()
                 })
             })
-            .then(function(response){
-                if(response.status === 400){
-                    return response.json().then((error)=>{
-                        alert(error.message);
-                        throw new Error(error.message);
-                       
-                    })
-                }
-                return response.json();
-            })
-            .then(function(data){
-                if(data){
-                    document.cookie = `auth_token=${data.result.token}; max-age=30;  path=/ui;  secure;`;
-                    alert("Login success");
-                }
-            })
-            .catch(function(error){
-                console.log(error);
-            })
+                .then(function (response) {
+                    if (response.status === 400) {
+                        return response.json().then((error) => {
+                            alert(error.message);
+                            throw new Error(error.message);
+
+                        })
+                    }
+                    return response.json();
+                })
+                .then(function (data) {
+                    if (data) {
+                        document.cookie = `auth_token=${data.result.token}; max-age=30;  path=/ui;  secure;`;
+                        alert("Login success");
+                    }
+                })
+                .catch(function (error) {
+                    console.log(error);
+                })
 
         })
     </script>
+
+    <!-- Bundle include popper and min .js -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
 </body>
 
 </html>
-
