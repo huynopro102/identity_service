@@ -1,14 +1,18 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
     <title>Markdown Live Preview</title>
-    <!-- Thêm Bootstrap CSS từ CDN , this is a css and js for layout include header and footer -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <!-- Thêm JS của Bootstrap từ CDN (Bootstrap yêu cầu jQuery và Popper.js cho một số tính năng như dropdown, modal) -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.0/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+
+    <!-- Liên kết đến Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Liên kết đến Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+
+
     <!--  ------------  -->
     <!-- Replace Summernote with Markdown libraries -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/codemirror.min.css" rel="stylesheet">
@@ -48,7 +52,8 @@
             height: calc(100vh - 40px);
         }
 
-        .editor, .preview {
+        .editor,
+        .preview {
             width: 50%;
             overflow-y: auto;
             padding: 20px;
@@ -67,28 +72,48 @@
         }
 
         /* Markdown Preview Styles */
-        .preview h1 { font-size: 2em; margin-bottom: 0.5em; }
-        .preview h2 { font-size: 1.5em; margin-bottom: 0.5em; }
-        .preview h6 { font-size: 1em; color: #666; }
-        .preview p { margin-bottom: 1em; }
-        .preview ul, .preview ol { margin-left: 2em; margin-bottom: 1em; }
+        .preview h1 {
+            font-size: 2em;
+            margin-bottom: 0.5em;
+        }
+
+        .preview h2 {
+            font-size: 1.5em;
+            margin-bottom: 0.5em;
+        }
+
+        .preview h6 {
+            font-size: 1em;
+            color: #666;
+        }
+
+        .preview p {
+            margin-bottom: 1em;
+        }
+
+        .preview ul,
+        .preview ol {
+            margin-left: 2em;
+            margin-bottom: 1em;
+        }
     </style>
 </head>
+
 <body>
 
-<div th:insert="fragments/header :: header"></div>
+    <div th:insert="fragments/header :: header"></div>
 
-<div class="header">
-    <span>Markdown Live Preview</span>
-    <button onclick="resetEditor()">Reset</button>
-    <button onclick="copyContent()">Copy</button>
-    <label><input type="checkbox" onchange="toggleSync()"> Sync scroll</label>
-</div>
+    <div class="header">
+        <span>Markdown Live Preview</span>
+        <button onclick="resetEditor()">Reset</button>
+        <button onclick="copyContent()">Copy</button>
+        <label><input type="checkbox" onchange="toggleSync()"> Sync scroll</label>
+    </div>
 
-<div class="editor-container">
+    <div class="editor-container">
 
 
-    <div class="editor">
+        <div class="editor">
             <textarea id="markdown-editor">
 # Markdown syntax guide
 
@@ -271,69 +296,76 @@ Press <kbd>Ctrl</kbd> + <kbd>C</kbd>
 * 📅 (lịch)
 * 📎 (đính kèm)
             </textarea>
+        </div>
+
+
+        <div class="preview" id="preview"></div>
+
+
     </div>
 
+    <div th:insert="fragments/footer :: footer"></div>
 
-    <div class="preview" id="preview"></div>
+    <!-- Replace Summernote with Markdown libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/codemirror.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/mode/markdown/markdown.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/4.0.2/marked.min.js"></script>
 
+    <script>
+        let editor;
+        let syncScroll = false;
+        const preview = document.getElementById('preview');
 
-</div>
+        // Initialize CodeMirror editor
+        window.onload = function () {
+            editor = CodeMirror.fromTextArea(document.getElementById('markdown-editor'), {
+                mode: 'markdown',
+                theme: 'monokai',
+                lineNumbers: true,
+                lineWrapping: true
+            });
 
-<div th:insert="fragments/footer :: footer"></div>
+            // Initial render
+            updatePreview();
 
-<!-- Replace Summernote with Markdown libraries -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/codemirror.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/mode/markdown/markdown.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/marked/4.0.2/marked.min.js"></script>
+            // Update preview on change
+            editor.on('change', updatePreview);
+        };
 
-<script>
-    let editor;
-    let syncScroll = false;
-    const preview = document.getElementById('preview');
-
-    // Initialize CodeMirror editor
-    window.onload = function() {
-        editor = CodeMirror.fromTextArea(document.getElementById('markdown-editor'), {
-            mode: 'markdown',
-            theme: 'monokai',
-            lineNumbers: true,
-            lineWrapping: true
-        });
-
-        // Initial render
-        updatePreview();
-
-        // Update preview on change
-        editor.on('change', updatePreview);
-    };
-
-    function updatePreview() {
-        const markdown = editor.getValue();
-        preview.innerHTML = marked.parse(markdown);
-    }
-
-    function resetEditor() {
-        editor.setValue(editor.getTextArea().defaultValue);
-    }
-
-    function copyContent() {
-        navigator.clipboard.writeText(editor.getValue());
-    }
-
-    function toggleSync() {
-        syncScroll = !syncScroll;
-        if (syncScroll) {
-            editor.on('scroll', syncPreviewScroll);
-        } else {
-            editor.off('scroll', syncPreviewScroll);
+        function updatePreview() {
+            const markdown = editor.getValue();
+            preview.innerHTML = marked.parse(markdown);
         }
-    }
 
-    function syncPreviewScroll(cm) {
-        if (!syncScroll) return;
-        const percentage = cm.getScrollInfo().top / (cm.getScrollInfo().height - cm.getScrollInfo().clientHeight);
-        preview.scrollTop = percentage * (preview.scrollHeight - preview.clientHeight);
-    }
-</script>
+        function resetEditor() {
+            editor.setValue(editor.getTextArea().defaultValue);
+        }
+
+        function copyContent() {
+            navigator.clipboard.writeText(editor.getValue());
+        }
+
+        function toggleSync() {
+            syncScroll = !syncScroll;
+            if (syncScroll) {
+                editor.on('scroll', syncPreviewScroll);
+            } else {
+                editor.off('scroll', syncPreviewScroll);
+            }
+        }
+
+        function syncPreviewScroll(cm) {
+            if (!syncScroll) return;
+            const percentage = cm.getScrollInfo().top / (cm.getScrollInfo().height - cm.getScrollInfo().clientHeight);
+            preview.scrollTop = percentage * (preview.scrollHeight - preview.clientHeight);
+        }
+
+    </script>
+
+
+    <!-- Bundle include popper and min .js -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
 </body>
+
 </html>
