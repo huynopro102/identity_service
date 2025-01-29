@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage('ssh to server with user tuanhuy') {
             steps {
-                sshagent(['ssh-remote-user-ubuntu']) {
+                sshagent(['ssh-ubuntu-lan-2']) {
                     sh '''
                         ssh -o StrictHostKeyChecking=no -l ubuntu 15.235.197.40 "cd /home/ubuntu && ./deploy_identity_service.sh"
                     '''
