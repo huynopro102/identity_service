@@ -16,6 +16,11 @@ services:
         volumes:
             - ./target:/app/target  # Mounts the target directory to the container, allowing for easier updates
         restart: unless-stopped    # Restart policy in case the container stops unexpectedly
+        deploy:
+            resources:
+                limits:
+                    cpus: '0.3' # it means using limit 30% cpu
+                    memory: 300m # it means using limit 30% ram
         networks:
             - network_shared
 
