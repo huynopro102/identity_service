@@ -19,7 +19,7 @@ import java.text.ParseException;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/authentication")
-public class AuthenticationController extends baseApiController {
+public class AuthenticationController  {
     @Autowired
     AuthenticationService authenticationService;
 

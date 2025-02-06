@@ -2,7 +2,6 @@
     import org.springframework.beans.factory.annotation.Value;
     import org.springframework.context.annotation.Bean;
     import org.springframework.context.annotation.Configuration;
-    import org.springframework.context.annotation.Scope;
     import org.springframework.http.HttpMethod;
     import org.springframework.security.config.annotation.web.builders.HttpSecurity;
     import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -16,21 +15,34 @@
     @Configuration
     @EnableWebSecurity
     public class SecurityConfig {
+
         @Value("${spring.jwt.signerKey}")
         private String signerKey;
 
-        private final String[] PUBLIC_ENDPOINTS_API = { "/api/authentication/login", "/api/mienphi","/api/cloudinary/image/upload","/api/users"};
+        private final String[] PUBLIC_ENDPOINTS_API = { "/api/authentication/login",
+                "/api/mienphi",
+                "/api/cloudinary/image/upload",
+                "/api/users" ,
+                "/api/genres"
+        };
+
         private final String[] PUBLIC_ENDPOINTS_UI = {"/ui/home"};
 
         @Bean
-
         public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
             httpSecurity
                     // Cho phép các endpoint công khai
                     .authorizeHttpRequests(request -> request
-                            .requestMatchers(PUBLIC_ENDPOINTS_API).permitAll()  // API công khai
+                            .requestMatchers("/api/users").permitAll()  // allow user create account , Cho phép mọi method trên /api/users
+                            .requestMatchers(HttpMethod.GET ,"/api/users/*").permitAll()  // allow user display information account
+                            .requestMatchers(HttpMethod.GET ,"/api/genres/*").permitAll()  // allow user display information genre
+                            .requestMatchers("/api/genres/*").permitAll()  // allow user curd genres
+                            .requestMatchers("/ui/*").permitAll()  // allow user UI
+                            .requestMatchers("/api/postCategories/*").permitAll()  // allow user curd categories
+                            .requestMatchers("/api/postCategories").permitAll()  // allow user curd categories
                             .requestMatchers(PUBLIC_ENDPOINTS_UI).permitAll()  // UI công khai
-                            .anyRequest().permitAll()  // Mọi request khác cần xác thực
+                            .requestMatchers(PUBLIC_ENDPOINTS_API).permitAll()  // API công khai
+                            .anyRequest().authenticated()  // Mọi request khác cần xác thực
                     )
                     .csrf().disable(); // Tắt CSRF cho REST API
 

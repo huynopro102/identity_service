@@ -1,5 +1,4 @@
 package identity.TuanHuy.controller;
-import identity.TuanHuy.dto.reponse.ApiResponse;
 import identity.TuanHuy.dto.request.UserCreationRequest;
 import identity.TuanHuy.dto.request.UserUpdateRequest;
 import identity.TuanHuy.entity.Users;
@@ -12,7 +11,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/users") // Với cấu hình /api ở file .yaml , nó sẽ trở thành "/api/users"
 @CrossOrigin(origins = "*") // Allow requests from the specified domain
-public class UserController extends baseApiController{
+public class UserController{
 
     @Autowired
     private UserService userService;

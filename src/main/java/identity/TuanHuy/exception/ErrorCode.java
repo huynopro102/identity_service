@@ -23,6 +23,9 @@ public enum ErrorCode {
     PATH_REQUEST_INVALID(1009,"path request invalid , đường đẫn gửi request sai"),
     AUTHENTICATE_INVALID(1010,"authenticate invalid"),
     GENRE_EXITED(1011,"genre is already exists"),
+    POST_CATEGORY_NOT_EMPTY(1012,"Tên danh mục không được để trống") ,
+    POST_NOT_FOUND(1013,"id của bài post không tồn tại") ,
+    GENRE_NOT_FOUND(1014,"id của genre không tồn tại") ,
     ;
     private int code;
     private String message;

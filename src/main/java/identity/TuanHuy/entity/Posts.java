@@ -1,13 +1,10 @@
 package identity.TuanHuy.entity;
-
-
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.cglib.core.Local;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Getter
@@ -22,7 +19,7 @@ public class Posts {
     @Column(name = "title" , nullable = false)
     private String title;
 
-    @Column(columnDefinition = "TEXT") // Định nghĩa kiểu dữ liệu là TEXT thay vì VARCHAR
+    @Column( name = "content", columnDefinition = "TEXT") // Định nghĩa kiểu dữ liệu là TEXT thay vì VARCHAR
     private String content; // Nội dung bài viết
 
     @Column(name = "created_at")
@@ -33,6 +30,31 @@ public class Posts {
 
     @Column(name = "is_published")
     private Boolean isPublished = true;
+
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id" , nullable = false)
+    private Users user;
+
+
+    @OneToMany(mappedBy = "post" , cascade = CascadeType.ALL , orphanRemoval = true)
+    private List<PostImages> images;
+
+
+    @OneToMany(mappedBy = "post" ,  cascade = CascadeType.ALL , orphanRemoval = true)
+    private List<PostComments> comments;
+
+    @OneToMany(mappedBy = "post" , cascade = CascadeType.ALL , orphanRemoval = true)
+    private List<PostReactions> reactions;
+
+    @ManyToMany()
+    @JoinTable(
+            name = "post_categories" ,
+            joinColumns = @JoinColumn(name = "post_id") ,
+            inverseJoinColumns = @JoinColumn(name = "category_id")
+    )
+    private List<PostCategory> categories;
+
 
 
 }
