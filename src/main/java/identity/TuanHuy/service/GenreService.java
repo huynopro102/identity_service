@@ -54,7 +54,9 @@ public class GenreService {
         if (genreRepository.existsById(id)) {
             genreRepository.deleteById(id);
         } else {
-            throw new RuntimeException("Genre not found with id: " + id);
+            throw new AppException(ErrorCode.GENRE_NOT_FOUND);
         }
     }
+
+
 }
