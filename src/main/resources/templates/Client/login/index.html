@@ -1,98 +1,58 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-
-
 <head>
     <meta charset="UTF-8">
-    <title>Markdown Live Preview</title>
-
-
-    <!-- Liên kết đến Bootstrap CSS -->
+    <title>Sign Up</title>
+    <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Liên kết đến Bootstrap Icons -->
+    <!-- Bootstrap Icons -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
-    
-    <!--    -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/codemirror.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/theme/monokai.min.css" rel="stylesheet">
-    <!--    CodeMirror: Trình soạn thảo mã Markdown.-->
-    <!--    Marked.js: Chuyển đổi Markdown sang HTML để hiển thị kết quả trong chế độ xem trước. -->
-
 </head>
-
-<body>
-
-    <div th:insert="fragments/header :: header"></div>
-
-    <div class="container">
-        <div class="row justify-content-center ">
-
-            <form id="loginForm">
-                <h2>Login</h2>
-
-                <div class="mb-3">
-                    <label for="exampleInputEmail1" class="form-label">Email address</label>
-                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-                    <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+<body class="bg-dark text-white">
+<section class="pb-4">
+    <div class="border rounded-5 container p-5">
+        <div class="row justify-content-center">
+            <div class="col-md-10 col-lg-6 col-xl-5 order-1 order-lg-2 text-center">
+                <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-registration/draw1.webp" class="img-fluid mb-4" alt="Sign Up Illustration">
+            </div>
+            <div class="col-md-10 col-lg-6 col-xl-7 order-2 order-lg-1">
+                <div class="card text-black" style="border-radius: 25px; background-color: #424242;">
+                    <div class="card-body p-md-5" style="">
+                        <p class="text-center text-body h1 fw-bold mb-5 mt-4">Sign up</p>
+                        <form>
+                            <div class="d-flex flex-row align-items-center mb-4">
+                                <i class="bi bi-person-fill text-body me-3"></i>
+                                <input type="text" class="form-control" placeholder="Your Name">
+                            </div>
+                            <div class="d-flex flex-row align-items-center mb-4">
+                                <i class="bi bi-envelope-fill text-body me-3"></i>
+                                <input type="email" class="form-control" placeholder="Your Email">
+                            </div>
+                            <div class="d-flex flex-row align-items-center mb-4">
+                                <i class="bi bi-lock-fill text-body me-3"></i>
+                                <input type="password" class="form-control" placeholder="Password">
+                            </div>
+                            <div class="d-flex flex-row align-items-center mb-4">
+                                <i class="bi bi-key-fill text-body me-3"></i>
+                                <input type="password" class="form-control" placeholder="Repeat your password">
+                            </div>
+                            <div class="form-check text-body d-flex justify-content-center mb-5">
+                                <input class="form-check-input me-2" type="checkbox">
+                                <label class="form-check-label">
+                                    I agree all statements in <a href="#">Terms of service</a>
+                                </label>
+                            </div>
+                            <div class="d-flex justify-content-center">
+                                <button type="submit" class="btn btn-primary btn-lg">Register</button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
-
-                <div class="mb-3">
-                    <label for="exampleInputPassword1" class="form-label">Password</label>
-                    <input type="password" class="form-control" id="exampleInputPassword1">
-                </div>
-
-                <button type="submit" class="btn btn-primary">Submit</button>
-            </form>
-
-
+            </div>
         </div>
     </div>
-
-    <div th:insert="fragments/footer :: footer"></div>
-
-    <script>
-        document.getElementById("loginForm").addEventListener("submit", function (e) {
-            e.preventDefault();
-            let email = document.getElementById("exampleInputEmail1").value;
-            let password = document.getElementById("exampleInputPassword1").value;
-            fetch("/api/authentication/login", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                    // alert for server send data is json
-                },
-                body: JSON.stringify({
-                    email: email.trim(),
-                    password: password.trim()
-                })
-            })
-                .then(function (response) {
-                    if (response.status === 400) {
-                        return response.json().then((error) => {
-                            alert(error.message);
-                            throw new Error(error.message);
-
-                        })
-                    }
-                    return response.json();
-                })
-                .then(function (data) {
-                    if (data) {
-                        document.cookie = `auth_token=${data.result.token}; max-age=30;  path=/ui;  secure;`;
-                        alert("Login success");
-                    }
-                })
-                .catch(function (error) {
-                    console.log(error);
-                })
-
-        })
-    </script>
-
-    <!-- Bundle include popper and min .js -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
+</section>
+<!-- Bootstrap Bundle JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
-
 </html>
