@@ -6,7 +6,7 @@ pipeline {
             steps {
                 sshagent(['ssh-remote-user-ubuntu']) {
                     sh '''
-                        ssh -o StrictHostKeyChecking=no -l ubuntu 15.235.197.40 "cd /home/ubuntu && ./deploy_identity_service.sh"
+                        ssh -o StrictHostKeyChecking=no -l ubuntu 15.235.197.40 "cd /home/ubuntu && sudo ./deploy_identity_service.sh"
                     '''
                 }
             }
