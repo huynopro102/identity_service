@@ -23,8 +23,6 @@ services:
                     memory: 300m # it means using limit 30% ram
         networks:
             - network_shared
-
-
 networks:
     network_shared:
         driver: bridge

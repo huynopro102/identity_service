@@ -19,6 +19,14 @@
         @Value("${spring.jwt.signerKey}")
         private String signerKey;
 
+
+        private final String[] SWAGGER_WHITELIST={
+                "/v3/api-docs/**",
+                "/swagger-ui/**",
+                "/swagger-ui.html",
+                "/webjars/**"
+        };
+
         private final String[] PUBLIC_ENDPOINTS_API = { "/api/authentication/login",
                 "/api/mienphi",
                 "/api/cloudinary/image/upload",
@@ -33,6 +41,10 @@
             httpSecurity
                     // Cho phép các endpoint công khai
                     .authorizeHttpRequests(request -> request
+
+
+                            .requestMatchers(SWAGGER_WHITELIST).permitAll() // add whitelist for Swagger ui
+
                             .requestMatchers("/api/users").permitAll()  // allow user create account , Cho phép mọi method trên /api/users
                             .requestMatchers(HttpMethod.GET ,"/api/users/*").permitAll()  // allow user display information account
                             .requestMatchers(HttpMethod.GET ,"/api/genres/*").permitAll()  // allow user display information genre
