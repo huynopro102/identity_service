@@ -1,5 +1,7 @@
 package identity.TuanHuy.dto.request;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import identity.TuanHuy.validation.DobConstraint;
 import jakarta.validation.constraints.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -20,8 +22,10 @@ public class UserCreationRequest {
     String password;
 
     @NotNull(message = "DOB_NOT_NULL")
+    @DobConstraint(min = 18 , message = "INVALID_DOB")
+    @JsonFormat(pattern = "dd-MM-yyyy")
     LocalDate dob;
 
-    @NotNull(message = "EMAIL_NOT_NULL")
+    @NotBlank(message = "EMAIL_INVALID")
     String email;
 }

@@ -1,11 +1,11 @@
 package identity.TuanHuy.dto.reponse;
-import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Data;
 import lombok.experimental.FieldDefaults;
 
 import java.time.LocalDate;
+import java.util.Set;
 
 @Builder
 @Data
@@ -16,4 +16,6 @@ public class UserReponse {
      String password;
      LocalDate dob;
      String email;
+     Set<String> Role;
+     Set<String> Permission;
 }

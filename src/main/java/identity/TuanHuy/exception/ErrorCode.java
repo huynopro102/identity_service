@@ -26,6 +26,9 @@ public enum ErrorCode {
     POST_CATEGORY_NOT_EMPTY(1012,"Tên danh mục không được để trống") ,
     POST_NOT_FOUND(1013,"id của bài post không tồn tại") ,
     GENRE_NOT_FOUND(1014,"id của genre không tồn tại") ,
+    INVALID_DOB(1015,"AGE >= 18") ,
+    EMAIL_ALREADY_EXISTS(1016,"email already exists") ,
+    EMAIL_INVALID(1017,"email invalid") ,
     ;
     private int code;
     private String message;
