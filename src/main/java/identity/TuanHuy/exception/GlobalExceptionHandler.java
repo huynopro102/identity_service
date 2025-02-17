@@ -1,6 +1,8 @@
 package identity.TuanHuy.exception;
 
+import com.cloudinary.Api;
 import identity.TuanHuy.dto.reponse.ApiResponse;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.FieldError;
@@ -82,6 +84,15 @@ public class GlobalExceptionHandler {
         return ResponseEntity.badRequest().body(apiResponse);
     }
 
+    // exception email already exists
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    public ResponseEntity<ApiResponse> handleDataIntegrityViolationException(DataIntegrityViolationException exception){
+        ApiResponse apiResponse = ApiResponse.builder()
+                .code(ErrorCode.EMAIL_ALREADY_EXISTS.getCode())
+                .message(ErrorCode.EMAIL_ALREADY_EXISTS.getMessage())
+                .build();
+        return ResponseEntity.badRequest().body(apiResponse);
+    }
 
 
 
@@ -93,6 +104,7 @@ public class GlobalExceptionHandler {
                 .build();
         return ResponseEntity.badRequest().body(apiResponse);
     }
+
 
 
 }

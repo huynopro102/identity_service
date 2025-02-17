@@ -26,6 +26,7 @@ import java.text.ParseException;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -85,6 +86,7 @@ public class AuthenticationService {
                 .issueTime(Date.from(Instant.now()))
                 .expirationTime(Date.from(expirationTime))
                 .claim( "customClaim","đây là claim tự custom")
+                .jwtID(UUID.randomUUID().toString())
                 .build();
         Payload
                 payload = new Payload(jwtClaimNames.toJSONObject());
