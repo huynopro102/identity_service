@@ -28,6 +28,8 @@
 	</scm>
 	<properties>
 		<java.version>22</java.version>
+		<org.mapstruct.version>1.5.5.Final</org.mapstruct.version>
+
 	</properties>
 	<dependencies>
 
@@ -121,11 +123,11 @@
 			<version>6.1.11</version>
 		</dependency>
 
-		<!-- mapper -->
+		<!-- MapStruct -->
 		<dependency>
 			<groupId>org.mapstruct</groupId>
 			<artifactId>mapstruct</artifactId>
-			<version>1.4.0.Final</version>
+			<version>${org.mapstruct.version}</version>
 		</dependency>
 
 		<!--		bcrypt -->
@@ -219,10 +221,23 @@
 				<artifactId>maven-compiler-plugin</artifactId>
 				<configuration>
 					<annotationProcessorPaths>
+						<!-- MapStruct processor -->
+						<path>
+							<groupId>org.mapstruct</groupId>
+							<artifactId>mapstruct-processor</artifactId>
+							<version>${org.mapstruct.version}</version>
+						</path>
+						<!-- Lombok processor -->
 						<path>
 							<groupId>org.projectlombok</groupId>
 							<artifactId>lombok</artifactId>
 							<version>1.18.32</version>
+						</path>
+						<!-- Lombok MapStruct binding -->
+						<path>
+							<groupId>org.projectlombok</groupId>
+							<artifactId>lombok-mapstruct-binding</artifactId>
+							<version>0.2.0</version>
 						</path>
 					</annotationProcessorPaths>
 				</configuration>

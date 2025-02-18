@@ -1,4 +1,4 @@
-package identity.TuanHuy.dto.reponse;
+package identity.TuanHuy.dto.response;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -10,6 +10,6 @@ import lombok.experimental.FieldDefaults;
 @AllArgsConstructor
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-public class IntrospectReponse {
+public class IntrospectResponse {
     Boolean valid;
 }

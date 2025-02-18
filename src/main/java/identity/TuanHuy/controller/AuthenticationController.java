@@ -1,9 +1,9 @@
 package identity.TuanHuy.controller;
 
 import com.nimbusds.jose.JOSEException;
-import identity.TuanHuy.dto.reponse.ApiResponse;
-import identity.TuanHuy.dto.reponse.AuthenticationReponse;
-import identity.TuanHuy.dto.reponse.IntrospectReponse;
+import identity.TuanHuy.dto.response.ApiResponse;
+import identity.TuanHuy.dto.response.AuthenticationResponse;
+import identity.TuanHuy.dto.response.IntrospectResponse;
 import identity.TuanHuy.dto.request.AuthenticationRequest;
 import identity.TuanHuy.dto.request.IntrospectRequest;
 import identity.TuanHuy.service.AuthenticationService;
@@ -24,19 +24,19 @@ public class AuthenticationController  {
     AuthenticationService authenticationService;
 
     @PostMapping("/login")
-    public ApiResponse<AuthenticationReponse> login(@RequestBody AuthenticationRequest request) {
+    public ApiResponse<AuthenticationResponse> login(@RequestBody AuthenticationRequest request) {
         var result = authenticationService.authenticate(request);
         // .<1 đối tượng hoặc 1 kiểu dữ liệu>
-        return ApiResponse.<AuthenticationReponse>builder()
+        return ApiResponse.<AuthenticationResponse>builder()
                 .result(result)
                 .build();
     }
 
     @PostMapping("/introspect")
-    public ApiResponse<IntrospectReponse> login(@RequestBody IntrospectRequest request) throws ParseException, JOSEException {
+    public ApiResponse<IntrospectResponse> login(@RequestBody IntrospectRequest request) throws ParseException, JOSEException {
         var result = authenticationService.introspect(request);
         // .<1 đối tượng hoặc 1 kiểu dữ liệu>
-        return ApiResponse.<IntrospectReponse>builder()
+        return ApiResponse.<IntrospectResponse>builder()
                 .result(result)
                 .build();
     }

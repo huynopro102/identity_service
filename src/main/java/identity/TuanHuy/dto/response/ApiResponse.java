@@ -1,4 +1,4 @@
-package identity.TuanHuy.dto.reponse;
+package identity.TuanHuy.dto.response;
 
 
 import com.fasterxml.jackson.annotation.JsonInclude;
