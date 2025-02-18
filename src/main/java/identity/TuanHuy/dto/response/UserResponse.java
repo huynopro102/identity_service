@@ -1,4 +1,4 @@
-package identity.TuanHuy.dto.reponse;
+package identity.TuanHuy.dto.response;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Data;
@@ -10,10 +10,9 @@ import java.util.Set;
 @Builder
 @Data
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class UserReponse {
+public class UserResponse {
      String id;
      String username;
-     String password;
      LocalDate dob;
      String email;
      Set<String> Role;

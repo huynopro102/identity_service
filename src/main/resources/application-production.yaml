@@ -36,7 +36,9 @@ spring:
       org.springframework.security: DEBUG # display errors detail about spring security
       org.hibernate: DEBUG # display errors detail about query sql
   jwt:
-    signerKey: ${JWT_SIGNER_KEY:nO3a5m=U^P__4v#+yW919pVpWVcdhU$FX;FKSd@RxNvHA} # Lưu private key của JWT signer vào biến môi trường
+    signerKey: "LG2V2fO+nBUbpgWu1yMpRMCQegmSrRE4ku2xWk9b/MkwMZI1wkDZmopoCc9UfIjE" # Lưu private key của JWT signer vào biến môi trường
+    valid-duration: 60 # in second
+
 
 
 api:

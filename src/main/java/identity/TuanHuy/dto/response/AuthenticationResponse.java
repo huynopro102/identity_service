@@ -1,15 +1,14 @@
-package identity.TuanHuy.dto.reponse;
+package identity.TuanHuy.dto.response;
 
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
 @Builder
 @Data
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class AuthenticationReponse {
+public class AuthenticationResponse {
     String token;
     Boolean authenticated;
 }

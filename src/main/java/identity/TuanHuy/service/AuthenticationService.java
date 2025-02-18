@@ -5,8 +5,8 @@ import com.nimbusds.jose.crypto.MACSigner;
 import com.nimbusds.jose.crypto.MACVerifier;
 import com.nimbusds.jwt.JWTClaimsSet;
 import com.nimbusds.jwt.SignedJWT;
-import identity.TuanHuy.dto.reponse.AuthenticationReponse;
-import identity.TuanHuy.dto.reponse.IntrospectReponse;
+import identity.TuanHuy.dto.response.AuthenticationResponse;
+import identity.TuanHuy.dto.response.IntrospectResponse;
 import identity.TuanHuy.dto.request.AuthenticationRequest;
 import identity.TuanHuy.dto.request.IntrospectRequest;
 import identity.TuanHuy.exception.AppException;
@@ -38,7 +38,7 @@ public class AuthenticationService {
     @NonFinal // để không inject cái này vô contructer
     protected static final String SIGNER_KEY = "ZQM5hQ9xYRxNzMA/PsJggsQllKFiOz6mDyd372mZ52OwLlj/MbpzB6DTtCp4aWuv";
 
-    public IntrospectReponse introspect(IntrospectRequest request) throws JOSEException, ParseException {
+    public IntrospectResponse introspect(IntrospectRequest request) throws JOSEException, ParseException {
         var token = request.getToken();
 
         JWSVerifier verifier = new MACVerifier(SIGNER_KEY.getBytes());
@@ -49,13 +49,13 @@ public class AuthenticationService {
         var verified = signedJWT.verify(verifier);
 
         //
-        return IntrospectReponse.builder()
+        return IntrospectResponse.builder()
                 .valid(verified && expirytime.after(new Date()))
                 .build();
 
     }
 
-    public AuthenticationReponse authenticate(AuthenticationRequest request) {
+    public AuthenticationResponse authenticate(AuthenticationRequest request) {
         var user = userRepository.findByEmail(request.getEmail())
                 .orElseThrow(()-> new AppException(ErrorCode.USER_NOT_FOUND));
         PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
@@ -64,7 +64,7 @@ public class AuthenticationService {
             throw new AppException(ErrorCode.AUTHENTICATE_INVALID);
         }
         var token = generateToken(request.getEmail());
-        return AuthenticationReponse.builder()
+        return AuthenticationResponse.builder()
                 .token(token)
                 .authenticated(true)
                 .build();

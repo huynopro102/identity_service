@@ -1,6 +1,9 @@
 package identity.TuanHuy.controller;
+import com.cloudinary.Api;
 import identity.TuanHuy.dto.request.UserCreationRequest;
 import identity.TuanHuy.dto.request.UserUpdateRequest;
+import identity.TuanHuy.dto.response.ApiResponse;
+import identity.TuanHuy.dto.response.UserResponse;
 import identity.TuanHuy.entity.Users;
 import identity.TuanHuy.service.UserService;
 import jakarta.validation.Valid;
@@ -17,28 +20,53 @@ public class UserController{
     private UserService userService;
 
     @PostMapping()
-    Users CreateUser(@RequestBody @Valid UserCreationRequest request) {
-        return userService.CreateUser(request);
+    ApiResponse<UserResponse> CreateUser(@RequestBody @Valid UserCreationRequest request) {
+        UserResponse userResponse = userService.CreateUser(request);
+        return ApiResponse.<UserResponse>builder()
+                .code(200)
+                .message("User created successfully")
+                .result(userResponse)
+                .build();
     }
 
     @GetMapping()
-    List<Users> GetAllUsers() {
-        return userService.GetAllUsers();
+    ApiResponse<List<Users>> GetAllUsers() {
+        List<Users> listUsers = userService.GetAllUsers();
+        return ApiResponse.<List<Users>>builder()
+                .message("get all users")
+                .code(200)
+                .result(listUsers)
+                .build();
+
     }
 
     @GetMapping("/{userId}")
-    Users GetUser(@PathVariable("userId") String userId) {
-        return userService.GetUserById(userId);
+    ApiResponse<Users> GetUser(@PathVariable("userId") String userId) {
+        Users user =  userService.GetUserById(userId);
+        return ApiResponse.<Users>builder()
+                .message("get user by id successfully")
+                .code(200)
+                .result(user)
+                .build();
     }
 
     @PutMapping("/{userId}")
-    Users UpdateUser(@PathVariable String userId, @RequestBody UserUpdateRequest request) {
-        return userService.UpdateUser(request, userId);
+    ApiResponse<UserResponse> UpdateUser(@PathVariable String userId, @RequestBody UserUpdateRequest request) {
+        UserResponse userResponse = userService.UpdateUser(request, userId);
+        return ApiResponse.<UserResponse>builder()
+                .code(200)
+                .message("User updated successfully")
+                .result(userResponse)
+                .build();
     }
 
     @DeleteMapping("/{userId}")
-    Users DeleteUser(@PathVariable String userId) {
-        return userService.DeleteUser(userId);
+    ApiResponse<String> DeleteUser(@PathVariable String userId) {
+        return ApiResponse.<String>builder()
+                .result(userService.DeleteUser(userId))
+                .code(200)
+                .message("user deleted successfully")
+                .build();
     }
 
 }

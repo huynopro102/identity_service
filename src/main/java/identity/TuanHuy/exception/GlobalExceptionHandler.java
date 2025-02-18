@@ -1,7 +1,6 @@
 package identity.TuanHuy.exception;
 
-import com.cloudinary.Api;
-import identity.TuanHuy.dto.reponse.ApiResponse;
+import identity.TuanHuy.dto.response.ApiResponse;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
