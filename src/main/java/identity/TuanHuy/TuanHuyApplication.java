@@ -9,7 +9,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.ComponentScans;
 
 
-@SpringBootApplication
+@SpringBootApplication // this is an annotation automatically scans classes with @Service , @Repository , @Component,@Controller
 public class TuanHuyApplication {
 
 	public static void main(String[] args) {
@@ -17,7 +17,8 @@ public class TuanHuyApplication {
 		TuanHuyApplication app = context.getBean(TuanHuyApplication.class);
 
 		System.out.println("hello world");
-
+		Client client = new Client();
+		client.processMessage("client send");
 
 	}
 
