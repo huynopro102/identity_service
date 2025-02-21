@@ -12,7 +12,9 @@ import java.util.Set;
 @Table(name = "role")
 public class Role {
     @Id
-    private String name;
+    @Enumerated(EnumType.STRING)
+    @Column(unique = true,nullable = false)
+    private RoleEnum name;
 
     private String description;
 

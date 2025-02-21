@@ -4,20 +4,24 @@ import identity.TuanHuy.dto.request.UserCreationRequest;
 import identity.TuanHuy.dto.request.UserUpdateRequest;
 import identity.TuanHuy.dto.response.ApiResponse;
 import identity.TuanHuy.dto.response.UserResponse;
-import identity.TuanHuy.entity.Users;
 import identity.TuanHuy.service.UserService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
+@SecurityRequirement(name = "bearer-key")
 @RestController
 @RequestMapping("/api/users") // Với cấu hình /api ở file .yaml , nó sẽ trở thành "/api/users"
 @CrossOrigin(origins = "*") // Allow requests from the specified domain
 public class UserController{
 
-    @Autowired
+
     private UserService userService;
+
+    public UserController(UserService userService){
+        this.userService = userService;
+    }
 
     @PostMapping()
     ApiResponse<UserResponse> CreateUser(@RequestBody @Valid UserCreationRequest request) {
@@ -30,9 +34,9 @@ public class UserController{
     }
 
     @GetMapping()
-    ApiResponse<List<Users>> GetAllUsers() {
-        List<Users> listUsers = userService.GetAllUsers();
-        return ApiResponse.<List<Users>>builder()
+    ApiResponse<List<UserResponse>> GetAllUsers() {
+        List<UserResponse> listUsers = userService.GetAllUsers();
+        return ApiResponse.<List<UserResponse>>builder()
                 .message("get all users")
                 .code(200)
                 .result(listUsers)
@@ -41,12 +45,12 @@ public class UserController{
     }
 
     @GetMapping("/{userId}")
-    ApiResponse<Users> GetUser(@PathVariable("userId") String userId) {
-        Users user =  userService.GetUserById(userId);
-        return ApiResponse.<Users>builder()
+    ApiResponse<UserResponse> GetUser(@PathVariable("userId") String userId) {
+        UserResponse userResponse =  userService.GetUserById(userId);
+        return ApiResponse.<UserResponse>builder()
                 .message("get user by id successfully")
                 .code(200)
-                .result(user)
+                .result(userResponse)
                 .build();
     }
 

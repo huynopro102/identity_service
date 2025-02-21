@@ -1,4 +1,5 @@
     package identity.TuanHuy.configuration;
+    import org.springframework.beans.factory.annotation.Autowired;
     import org.springframework.beans.factory.annotation.Value;
     import org.springframework.context.annotation.Bean;
     import org.springframework.context.annotation.Configuration;
@@ -15,6 +16,13 @@
     @Configuration
     @EnableWebSecurity
     public class SecurityConfig {
+
+
+        private CustomAuthenticationEntryPoint authEntryPoint;
+
+        public SecurityConfig(CustomAuthenticationEntryPoint authEntryPoint){
+            this.authEntryPoint = authEntryPoint;
+        }
 
         @Value("${spring.jwt.signerKey}")
         private String signerKey;
@@ -34,11 +42,24 @@
                 "/api/genres"
         };
 
+        private final String[] PUBLIC_ENDPOINTS_API_ROLE = {
+                "/api/roles",
+                "/api/roles/{roleName}"
+
+        };
+
         private final String[] PUBLIC_ENDPOINTS_UI = {"/ui/home"};
 
         @Bean
         public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
             httpSecurity
+
+                    // custom message error code 401
+                    .exceptionHandling()
+                    .authenticationEntryPoint(authEntryPoint)
+                    .and()
+
+
                     // Cho phép các endpoint công khai
                     .authorizeHttpRequests(request -> request
 
@@ -54,6 +75,7 @@
                             .requestMatchers("/api/postCategories").permitAll()  // allow user curd categories
                             .requestMatchers(PUBLIC_ENDPOINTS_UI).permitAll()  // UI công khai
                             .requestMatchers(PUBLIC_ENDPOINTS_API).permitAll()  // API công khai
+                            .requestMatchers(PUBLIC_ENDPOINTS_API_ROLE).permitAll() // Api role
                             .anyRequest().authenticated()  // Mọi request khác cần xác thực
                     )
                     .csrf().disable(); // Tắt CSRF cho REST API

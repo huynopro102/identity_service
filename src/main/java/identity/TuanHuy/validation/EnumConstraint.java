@@ -6,19 +6,20 @@ import jakarta.validation.Payload;
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
-import static java.lang.annotation.ElementType.*;
+import static java.lang.annotation.ElementType.FIELD;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
+
 
 @Target({ FIELD })
 @Retention(RUNTIME)
-@Constraint(validatedBy = { DobValidator.class})
-public @interface DobConstraint {
+@Constraint(validatedBy = { EnumValidator.class})
+public @interface EnumConstraint {
     // this ís three basic properties of an annotation , message , group , payload
-    String message() default "{dob invalid 18 years old annotation custom}";
+    String message() default "{enum invalid annotation custom}";
 
     Class<?>[] groups() default { };
 
     Class<? extends Payload>[] payload() default { };
 
-    int min();
+    Class<? extends Enum<?>> enumClass(); // Nhận mọi enum hợp lệ
 }

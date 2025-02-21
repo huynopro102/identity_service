@@ -15,6 +15,6 @@ public class UserResponse {
      String username;
      LocalDate dob;
      String email;
-     Set<String> Role;
-     Set<String> Permission;
+     Set<String> roles;
+
 }

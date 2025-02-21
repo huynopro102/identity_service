@@ -9,7 +9,7 @@ CREATE TABLE public."permission" (
 	"name" varchar(255) NOT NULL,
 	code varchar(255) NULL,
 	description varchar(255) NULL,
-	is_active bool NULL,
+	is_active bool NULL, // Quyền này có đang được sử dụng hay không
 	CONSTRAINT permission_pkey PRIMARY KEY ("name")
 );
 

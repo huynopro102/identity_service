@@ -1,21 +1,26 @@
 package identity.TuanHuy.exception;
-
+import com.cloudinary.Api;
 import identity.TuanHuy.dto.response.ApiResponse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
-
-
 import java.util.ArrayList;
 import java.util.List;
 
 @ControllerAdvice // Add this annotation to enable global exception handling , thêm annotation này để xử lý toàn cục
 public class GlobalExceptionHandler {
+
+    private static final Logger log = LoggerFactory.getLogger(GlobalExceptionHandler.class);
 
     @ExceptionHandler(value = MethodArgumentNotValidException.class)
     ResponseEntity<List<ApiResponse<Void>>> handllingValidationException(MethodArgumentNotValidException e) {
@@ -41,11 +46,51 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(value = HttpMessageNotReadableException.class)
     ResponseEntity<ApiResponse> handleHttpMessageNotReadableExceptionDOB(HttpMessageNotReadableException e) {
+        ApiResponse.ApiResponseBuilder responseBuilder = ApiResponse.builder();
+                    if(e.getMessage().contains("Unexpected character")){
+                        responseBuilder
+                                .code(ErrorCode.INVALID_JSON_FORMAT.getCode())
+                                .message(ErrorCode.INVALID_JSON_FORMAT.getMessage());
+                    }else{
+                        responseBuilder
+                                .code(ErrorCode.INVALID_DOB.getCode())
+                                .message(ErrorCode.INVALID_DOB.getMessage());
+                    }
+        return ResponseEntity.badRequest().body(responseBuilder.build());
+    }
+
+
+
+
+    // kiểu dữ liệu enumRole ko có tên đó
+    @ExceptionHandler(value = IllegalArgumentException.class)
+    ResponseEntity<ApiResponse> handleIllegalArgumentException(IllegalArgumentException e){
         ApiResponse apiResponse = ApiResponse.builder()
-                .message(ErrorCode.INVALID_DATE_FORMAT.getMessage())
-                .code(ErrorCode.INVALID_DATE_FORMAT.getCode())
+                .code(ErrorCode.DATA_TYPE_ROLE_ENUM_NOT_FOUND.getCode())
+                .message(ErrorCode.DATA_TYPE_ROLE_ENUM_NOT_FOUND.getMessage())
                 .build();
-        return ResponseEntity.badRequest().body(apiResponse);
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(apiResponse);
+    }
+
+
+    // lỗi 401 đến từ Spring Security , cần xử lý AuthenticationException:
+    @ExceptionHandler(value = AuthenticationException.class)
+    ResponseEntity<ApiResponse> handleAuthenticationException(AuthenticationException e) {
+        ApiResponse apiResponse = ApiResponse.builder()
+                .code(ErrorCode.UNAUTHORIZED_ACCESS.getCode())
+                .message(ErrorCode.UNAUTHORIZED_ACCESS.getMessage())
+                .build();
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(apiResponse);
+    }
+
+
+    @ExceptionHandler(value = HttpClientErrorException.Unauthorized.class)
+    ResponseEntity<ApiResponse> handleUnauthorizedException(HttpClientErrorException.Unauthorized e) {
+        ApiResponse apiResponse = ApiResponse.builder()
+                .code(ErrorCode.UNAUTHORIZED_ACCESS.getCode())
+                .message(ErrorCode.UNAUTHORIZED_ACCESS.getMessage())
+                .build();
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(apiResponse);
     }
 
 
@@ -86,11 +131,26 @@ public class GlobalExceptionHandler {
     // exception email already exists
     @ExceptionHandler(DataIntegrityViolationException.class)
     public ResponseEntity<ApiResponse> handleDataIntegrityViolationException(DataIntegrityViolationException exception){
-        ApiResponse apiResponse = ApiResponse.builder()
-                .code(ErrorCode.EMAIL_ALREADY_EXISTS.getCode())
-                .message(ErrorCode.EMAIL_ALREADY_EXISTS.getMessage())
-                .build();
-        return ResponseEntity.badRequest().body(apiResponse);
+
+        ApiResponse.ApiResponseBuilder responseBuilder = ApiResponse.builder();
+
+        String message = exception.getMostSpecificCause().getMessage();
+
+        if(message.contains("violates foreign key constraint") && message.contains("user_roles")){
+            responseBuilder
+                    .code(ErrorCode.ROLE_IN_USE.getCode())
+                    .message(ErrorCode.ROLE_IN_USE.getMessage());
+        } else if(message.contains("duplicate key") && message.contains("email")){
+            responseBuilder
+                    .code(ErrorCode.EMAIL_ALREADY_EXISTS.getCode())
+                    .message(ErrorCode.EMAIL_ALREADY_EXISTS.getMessage());
+        }else{
+            responseBuilder
+                    .code(ErrorCode.UNCATEGORIZED_EXCEPTION.getCode())
+                    .message(ErrorCode.UNCATEGORIZED_EXCEPTION.getMessage());
+        }
+
+        return ResponseEntity.badRequest().body(responseBuilder.build());
     }
 
 
