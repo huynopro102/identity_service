@@ -7,6 +7,8 @@ import identity.TuanHuy.dto.response.UserResponse;
 import identity.TuanHuy.service.UserService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
@@ -17,6 +19,7 @@ import java.util.List;
 public class UserController{
 
 
+    private static final Logger log = LoggerFactory.getLogger(UserController.class);
     private UserService userService;
 
     public UserController(UserService userService){
@@ -25,6 +28,7 @@ public class UserController{
 
     @PostMapping()
     ApiResponse<UserResponse> CreateUser(@RequestBody @Valid UserCreationRequest request) {
+        log.info("Controller : create user");
         UserResponse userResponse = userService.CreateUser(request);
         return ApiResponse.<UserResponse>builder()
                 .code(200)

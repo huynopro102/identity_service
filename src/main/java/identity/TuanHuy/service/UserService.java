@@ -11,6 +11,8 @@ import identity.TuanHuy.mapper.UserMapper;
 import identity.TuanHuy.repository.RoleRepository;
 import identity.TuanHuy.repository.UserRepository;
 import lombok.Data;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -25,6 +27,7 @@ import java.util.Set;
 @Service
 public class UserService {
 
+    private static final Logger log = LoggerFactory.getLogger(UserService.class);
     private final UserRepository userRepository;
 
     private final RoleRepository roleRepository;
@@ -42,12 +45,10 @@ public class UserService {
         this.userMapper = userMapper;
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
-
-
     }
 
     public UserResponse CreateUser(UserCreationRequest request) {
-
+                log.info("Service create User");
                 userRepository.findByUsername(request.getUsername())
                         .ifPresent(user -> {
                             // thêm 1 thuộc tính cho exception này là ErrorCode lỗi lần bắt chỉ cần bắt , thuộc tính này là sẽ biết đc lỗi gì
@@ -79,8 +80,26 @@ public class UserService {
     }
 
     public UserResponse UpdateUser(UserUpdateRequest resquest , String userId) {
+
         Users user = userRepository.findById(userId)
-                        .orElseThrow(()-> new RuntimeException(String.valueOf(ErrorCode.USER_NOT_FOUND)));
+                        .orElseThrow(()-> new AppException(ErrorCode.USER_INVALID));
+
+
+                        // Kiểm tra xem email có thuộc user khác không
+                        userRepository.findByEmail(resquest.getEmail())
+                                        .filter(existingUser -> !existingUser.getId().equals(userId))
+                                .ifPresent(existingUser -> {
+                                    throw new AppException(ErrorCode.EMAIL_ALREADY_EXISTS);
+                                });
+
+
+        userRepository.findByUsername(resquest.getUsername())
+                .filter(existingUser -> !existingUser.getId().equals(userId)) // Kiểm tra tương tự với username
+                .ifPresent(existingUser -> {
+                    throw new AppException(ErrorCode.USERNAME_ALREADY_EXISTS);
+                });
+
+
         userMapper.updateUser(user,resquest);
         userRepository.save(user);
         return userMapper.toUserReponse(user);

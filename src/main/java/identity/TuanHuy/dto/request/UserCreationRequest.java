@@ -2,6 +2,7 @@ package identity.TuanHuy.dto.request;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import identity.TuanHuy.validation.DobConstraint;
+import io.swagger.v3.core.util.Json;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.*;
 import lombok.*;
@@ -26,9 +27,12 @@ public class UserCreationRequest {
 
     @NotNull(message = "DOB_NOT_NULL")
     @DobConstraint(min = 18 , message = "INVALID_DOB")
-    @JsonFormat(pattern = "dd-MM-yyyy")
-    @Schema(example = "1999-09-2",description = "enter date of birth")
+//    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
+    //shape = JsonFormat.Shape.STRING , để đảm bảo JSON trả về cũng theo format dd-MM-yyyy.
+//    @Schema(example = "02-09-1999", description = "enter date of birth (dd-MM-yyyy)")
+    @Schema(example = "1999-02-12", description = "enter date of birth (yyyy-MM-dd)")
     LocalDate dob;
+
 
     @NotBlank(message = "EMAIL_INVALID")
     @Schema(example = "nguyenvand@gmail.com",description = "enter email")

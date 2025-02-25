@@ -57,9 +57,13 @@ public class AuthenticationService {
 
     public AuthenticationResponse authenticate(AuthenticationRequest request) {
         var user = userRepository.findByEmail(request.getEmail())
+
                 .orElseThrow(()-> new AppException(ErrorCode.USER_NOT_FOUND));
+
         PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+
         Boolean authenticated = passwordEncoder.matches(request.getPassword(), user.getPassword());
+
         if(!authenticated) {
             throw new AppException(ErrorCode.AUTHENTICATE_INVALID);
         }
@@ -73,7 +77,7 @@ public class AuthenticationService {
     public String generateToken(String username) {
 
         // Tạo thời gian hết hạn cho token (1 phút từ thời điểm hiện tại) sử dụng Instant
-        Instant expirationTime = Instant.now().plus(1, ChronoUnit.MINUTES);
+        Instant expirationTime = Instant.now().plus(10, ChronoUnit.MINUTES);
 
         // tạo 1 header , JWS có tham số là thuật toán mã hóa
         JWSHeader jwsHeader = new JWSHeader(JWSAlgorithm.HS256);

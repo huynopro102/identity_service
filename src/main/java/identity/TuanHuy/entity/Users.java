@@ -2,6 +2,7 @@ package identity.TuanHuy.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -12,6 +13,7 @@ import java.util.Set;
 @Getter
 @Setter
 @Entity
+@Builder
 @Table(name = "users", uniqueConstraints = {
         @UniqueConstraint(columnNames = "username"),
         @UniqueConstraint(columnNames = "email")
@@ -30,7 +32,7 @@ public class Users {
     @Column(unique = true, nullable = false)
     private String email;
 
-    @JsonFormat(pattern = "dd-MM-yyyy")
+    @Column(columnDefinition = "DATE") // chữa DATE là 1 kiểu dữ liệu trong sql giống với LocalDate
     private LocalDate dob;
 
     @Enumerated(EnumType.STRING)

@@ -34,7 +34,9 @@ public enum ErrorCode {
     ROLE_USER_NOT_FOUND(1022, "role name không tồn tại trong danh sách ", HttpStatus.BAD_REQUEST),
     DATA_TYPE_ROLE_ENUM_NOT_FOUND(1023, "role name không tồn tại trong danh sách", HttpStatus.BAD_REQUEST),
     INVALID_JSON_FORMAT(1024, "format của kiểu dữ liệu json trong body bị sai",HttpStatus.BAD_REQUEST) ,
-    ROLE_IN_USE(1025,"Cannot delete role as it is assigned to users",HttpStatus.BAD_REQUEST)
+    ROLE_IN_USE(1025,"Cannot delete role as it is assigned to users",HttpStatus.BAD_REQUEST) ,
+    USERNAME_ALREADY_EXISTS(1003, "this username is another people used", HttpStatus.BAD_REQUEST),
+
 
 
 

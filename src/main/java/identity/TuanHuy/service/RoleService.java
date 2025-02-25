@@ -39,11 +39,10 @@ public class RoleService {
     }
 
     public RoleResponse createRole(RoleCreateRequest request){
-        Optional<Role> existingRole = roleRepository.findByName(RoleEnum.valueOf(request.getName()));
-
-        if(existingRole.isPresent()){
-            throw new AppException(ErrorCode.ROLE_NAME_ALREADY_EXISTS);
-        }
+     roleRepository.findByName(RoleEnum.valueOf(request.getName()))
+                .ifPresent(role ->{
+                    throw new AppException(ErrorCode.ROLE_NAME_ALREADY_EXISTS);
+                });
 
         Role role = new Role();
         // convert to String from EnumRole

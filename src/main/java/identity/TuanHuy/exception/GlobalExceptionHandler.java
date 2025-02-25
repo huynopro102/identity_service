@@ -94,11 +94,11 @@ public class GlobalExceptionHandler {
     }
 
 
-    // validation
+    // customer exception
     @ExceptionHandler(value = AppException.class)
     ResponseEntity<ApiResponse> handleRuntimeExceptionMyapp(AppException e) {
         ErrorCode errorCode = e.getErrorCode();
-        System.out.println(e.getErrorCode().getMessage());
+        System.out.println(errorCode.getMessage());
         ApiResponse apiResponse = ApiResponse.builder()
                 .code(errorCode.getCode())
                 .message(errorCode.getMessage())

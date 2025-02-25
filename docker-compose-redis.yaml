@@ -1,0 +1,19 @@
+services:
+  redis:
+    image: redis:alpine
+    container_name: redis
+    restart: always
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
+    networks:
+      - network_shared
+
+networks:
+  network_shared:
+    external: true
+
+volumes:
+  redis-data:
+    driver: local
