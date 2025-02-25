@@ -13,7 +13,7 @@ target/*
 
 
 # Don't ignore the jar file , not add this file because it is size 70mb
-!target/TuanHuy-0.0.1-SNAPSHOT.jar
+#!target/TuanHuy-0.0.1-SNAPSHOT.jar
 
 
 
