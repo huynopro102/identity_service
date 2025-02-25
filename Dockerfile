@@ -10,7 +10,7 @@ COPY . .
 RUN mvn clean package
 
 # using java sdk to run
-FROM eclipse-temurin:23-jdk-jammy
+FROM eclipse-temurin:23.0.2_7-jre-alpine-3.21
 
 WORKDIR /app
 
