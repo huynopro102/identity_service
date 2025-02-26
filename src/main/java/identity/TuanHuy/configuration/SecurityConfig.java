@@ -34,7 +34,8 @@
                 "/webjars/**"
         };
 
-        private final String[] PUBLIC_ENDPOINTS_API = { "/api/authentication/login",
+        private final String[] PUBLIC_ENDPOINTS_API = {
+                "/api/authentication/login",
                 "/api/mienphi",
                 "/api/cloudinary/image/upload",
                 "/api/users" ,
@@ -43,7 +44,13 @@
 
         private final String[] PUBLIC_ENDPOINTS_API_ROLE = {
                 "/api/roles",
-                "/api/roles/{roleName}"
+                "/api/roles/{roleName}",
+                "/api/roles/*"
+        };
+
+        private final String[] PUBLIC_ENDPOINTS_API_PERMISSION = {
+                "/api/permission",
+                "/api/permissions"
 
         };
 
@@ -75,6 +82,7 @@
                             .requestMatchers(PUBLIC_ENDPOINTS_UI).permitAll()  // UI công khai
                             .requestMatchers(PUBLIC_ENDPOINTS_API).permitAll()  // API công khai
                             .requestMatchers(PUBLIC_ENDPOINTS_API_ROLE).permitAll() // Api role
+                            .requestMatchers(PUBLIC_ENDPOINTS_API_PERMISSION).permitAll() // Api permission
                             .anyRequest().authenticated()  // Mọi request khác cần xác thực
                     )
                     .csrf().disable(); // Tắt CSRF cho REST API

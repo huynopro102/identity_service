@@ -21,6 +21,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 @Data
@@ -66,17 +67,21 @@ public class UserService {
 
                 userRepository.save(user);
 
-                return userMapper.toUserReponse(user);
+                return userMapper.toUserResponse(user);
     }
 
     public UserResponse GetUserById(String id) {
-        Users users = userRepository.findById(id).orElseThrow(()-> new RuntimeException("User Not Found"));
-        return userMapper.toUserReponse(users);
+        Optional<Users> optional = userRepository.findById(id);
+        if(optional.isPresent()){
+            return userMapper.toUserResponse(optional.get());
+        }else{
+            throw new AppException(ErrorCode.USER_NOT_FOUND);
+        }
     }
 
     public List<UserResponse> GetAllUsers() {
         List<Users> listUser = userRepository.findAll();
-        return userMapper.toUsersReponse(listUser);
+        return userMapper.toUsersResponse(listUser);
     }
 
     public UserResponse UpdateUser(UserUpdateRequest resquest , String userId) {
@@ -102,11 +107,11 @@ public class UserService {
 
         userMapper.updateUser(user,resquest);
         userRepository.save(user);
-        return userMapper.toUserReponse(user);
+        return userMapper.toUserResponse(user);
     }
 
     public String DeleteUser(String id) {
-        Users user = userRepository.findById(id).orElseThrow(()-> new RuntimeException("user not found"));
+        Users user = userRepository.findById(id).orElseThrow(()-> new AppException(ErrorCode.USER_NOT_FOUND));
         userRepository.deleteById(id);
         return "User deleted successfully";
     }

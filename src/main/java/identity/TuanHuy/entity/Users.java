@@ -1,6 +1,5 @@
 package identity.TuanHuy.entity;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
@@ -36,7 +35,7 @@ public class Users {
     private LocalDate dob;
 
     @Enumerated(EnumType.STRING)
-    private UserStatus status;
+    private identity.TuanHuy.entity.UserStatus status;
 
     private Boolean emailVerified;
     private String profileImage;

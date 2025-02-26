@@ -17,4 +17,5 @@ public class PermissionResponse {
         this.description = description;
         this.isActive = isActive;
     }
+
 }

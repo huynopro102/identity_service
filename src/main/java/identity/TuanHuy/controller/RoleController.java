@@ -1,14 +1,10 @@
 package identity.TuanHuy.controller;
 
-import com.cloudinary.Api;
 import identity.TuanHuy.dto.request.RoleCreateRequest;
 import identity.TuanHuy.dto.request.RoleDeleteRequest;
-import identity.TuanHuy.dto.request.UserCreationRequest;
 import identity.TuanHuy.dto.response.ApiResponse;
 import identity.TuanHuy.dto.response.RoleResponse;
 import identity.TuanHuy.dto.response.RolesResponse;
-import identity.TuanHuy.dto.response.UserResponse;
-import identity.TuanHuy.entity.Role;
 import identity.TuanHuy.service.RoleService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
@@ -21,11 +17,13 @@ import java.util.List;
 @RequestMapping("/api/roles")
 @CrossOrigin(origins = "*")
 public class RoleController {
+
     private final RoleService roleService;
 
     public RoleController(RoleService roleService){
         this.roleService = roleService;
     }
+
     @PostMapping()
     ApiResponse<RoleResponse> CreateRole(@RequestBody @Valid RoleCreateRequest request) {
         RoleResponse roleResponse = roleService.createRole(request);
@@ -55,4 +53,5 @@ public class RoleController {
                 .message("delete role successfully")
                 .build();
     }
+
 }

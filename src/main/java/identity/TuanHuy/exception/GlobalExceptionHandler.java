@@ -1,6 +1,7 @@
 package identity.TuanHuy.exception;
 import com.cloudinary.Api;
 import identity.TuanHuy.dto.response.ApiResponse;
+import org.apache.juli.logging.Log;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -44,6 +45,7 @@ public class GlobalExceptionHandler {
         return ResponseEntity.badRequest().body(apiResponses);
     }
 
+
     @ExceptionHandler(value = HttpMessageNotReadableException.class)
     ResponseEntity<ApiResponse> handleHttpMessageNotReadableExceptionDOB(HttpMessageNotReadableException e) {
         ApiResponse.ApiResponseBuilder responseBuilder = ApiResponse.builder();
@@ -60,8 +62,6 @@ public class GlobalExceptionHandler {
     }
 
 
-
-
     // kiểu dữ liệu enumRole ko có tên đó
     @ExceptionHandler(value = IllegalArgumentException.class)
     ResponseEntity<ApiResponse> handleIllegalArgumentException(IllegalArgumentException e){
@@ -73,15 +73,29 @@ public class GlobalExceptionHandler {
     }
 
 
+
+
     // lỗi 401 đến từ Spring Security , cần xử lý AuthenticationException:
     @ExceptionHandler(value = AuthenticationException.class)
     ResponseEntity<ApiResponse> handleAuthenticationException(AuthenticationException e) {
-        ApiResponse apiResponse = ApiResponse.builder()
-                .code(ErrorCode.UNAUTHORIZED_ACCESS.getCode())
-                .message(ErrorCode.UNAUTHORIZED_ACCESS.getMessage())
-                .build();
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(apiResponse);
+
+        ApiResponse.ApiResponseBuilder apiResponseBuilder = ApiResponse.builder();
+
+                if(e.getMessage().contains("User not found")){
+                    apiResponseBuilder
+                            .code(ErrorCode.USER_NOT_FOUND.getCode())
+                            .message(ErrorCode.USER_NOT_FOUND.getMessage())
+                            ;
+                }else{
+                    apiResponseBuilder
+                            .code(ErrorCode.UNAUTHORIZED_ACCESS.getCode())
+                            .message(ErrorCode.UNAUTHORIZED_ACCESS.getMessage())
+                            ;
+                }
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(apiResponseBuilder.build());
     }
+
+
 
 
     @ExceptionHandler(value = HttpClientErrorException.Unauthorized.class)
@@ -95,15 +109,27 @@ public class GlobalExceptionHandler {
 
 
     // customer exception
+    // exception custom main
     @ExceptionHandler(value = AppException.class)
     ResponseEntity<ApiResponse> handleRuntimeExceptionMyapp(AppException e) {
-        ErrorCode errorCode = e.getErrorCode();
-        System.out.println(errorCode.getMessage());
-        ApiResponse apiResponse = ApiResponse.builder()
-                .code(errorCode.getCode())
-                .message(errorCode.getMessage())
-                .build();
-        return ResponseEntity.badRequest().body(apiResponse);
+
+        ApiResponse.ApiResponseBuilder apiResponseBuilder = ApiResponse.builder();
+
+
+        System.out.println("this is message in AppException.class" + e.getMessage());
+        System.out.println("");
+        if(e.getErrorCode() == ErrorCode.USER_NOT_FOUND){
+            apiResponseBuilder
+                    .code(ErrorCode.USER_NOT_FOUND.getCode())
+                    .message(ErrorCode.USER_NOT_FOUND.getMessage())
+            ;
+        }else{
+            apiResponseBuilder
+                    .code(ErrorCode.UNAUTHORIZED_ACCESS.getCode())
+                    .message(ErrorCode.UNAUTHORIZED_ACCESS.getMessage())
+            ;
+        }
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(apiResponseBuilder.build());
     }
 
 
@@ -127,6 +153,7 @@ public class GlobalExceptionHandler {
                 .build();
         return ResponseEntity.badRequest().body(apiResponse);
     }
+
 
     // exception email already exists
     @ExceptionHandler(DataIntegrityViolationException.class)

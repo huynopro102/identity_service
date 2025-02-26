@@ -25,10 +25,10 @@ package identity.TuanHuy.mapper;
 
 
         @Mapping(target = "roles", expression = "java(mapRoles(users))") // convert roles to Set<String>
-        UserResponse toUserReponse(Users users);
+        UserResponse toUserResponse(Users users);
 
 
-        List<UserResponse> toUsersReponse(List<Users> usersList);
+        List<UserResponse> toUsersResponse(List<Users> usersList);
 
         // Hàm custom để map Set<Role> -> Set<String>
         default Set<String> mapRoles(Users users) {

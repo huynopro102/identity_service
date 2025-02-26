@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
-@SecurityRequirement(name = "bearer-key")
+
 @RestController
 @RequestMapping("/api/users") // Với cấu hình /api ở file .yaml , nó sẽ trở thành "/api/users"
 @CrossOrigin(origins = "*") // Allow requests from the specified domain
@@ -20,6 +20,7 @@ public class UserController{
 
 
     private static final Logger log = LoggerFactory.getLogger(UserController.class);
+
     private UserService userService;
 
     public UserController(UserService userService){
@@ -45,7 +46,6 @@ public class UserController{
                 .code(200)
                 .result(listUsers)
                 .build();
-
     }
 
     @GetMapping("/{userId}")

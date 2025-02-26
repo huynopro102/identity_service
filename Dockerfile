@@ -2,15 +2,19 @@
 #FROM openjdk:23-jdk
 FROM maven:3.9.6-eclipse-temurin-21 AS build
 WORKDIR /app
+
+COPY pom.xml ./
+RUN mvn dependency:go-offline # cache dependency
+
 # copy all source code into container
 COPY . .
 
 #COPY .env /app
 # run command to build maven , have test -DskipTests
-RUN mvn clean package
+RUN mvn clean package -DskipTests
 
 # using java sdk to run
-FROM eclipse-temurin:23.0.2_7-jre-alpine-3.21
+FROM eclipse-temurin:21-jre-alpine AS runtime
 
 WORKDIR /app
 
