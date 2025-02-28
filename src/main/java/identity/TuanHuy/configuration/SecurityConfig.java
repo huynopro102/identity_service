@@ -34,22 +34,28 @@
                 "/webjars/**"
         };
 
-        private final String[] PUBLIC_ENDPOINTS_API = {
+
+        private final String[] PUBLIC_ENDPOINTS_API_AUTHENTICATION = {
                 "/api/authentication/login",
                 "/api/mienphi",
                 "/api/cloudinary/image/upload",
+                "/api/genres" ,
+        };
+
+        private final String[] PUBLIC_ENDPOINTS_API_USER = {
                 "/api/users" ,
-                "/api/genres"
+                "/api/users/{userId}/role"
         };
 
         private final String[] PUBLIC_ENDPOINTS_API_ROLE = {
                 "/api/roles",
                 "/api/roles/{roleName}",
-                "/api/roles/*"
+                "/api/roles/*",
+                "/api/roles/{roleName}/details"
         };
 
         private final String[] PUBLIC_ENDPOINTS_API_PERMISSION = {
-                "/api/permission",
+                "/api/permissions/*",
                 "/api/permissions"
 
         };
@@ -80,7 +86,8 @@
                             .requestMatchers("/api/postCategories/*").permitAll()  // allow user curd categories
                             .requestMatchers("/api/postCategories").permitAll()  // allow user curd categories
                             .requestMatchers(PUBLIC_ENDPOINTS_UI).permitAll()  // UI công khai
-                            .requestMatchers(PUBLIC_ENDPOINTS_API).permitAll()  // API công khai
+                            .requestMatchers(PUBLIC_ENDPOINTS_API_USER).permitAll()  // API user
+                            .requestMatchers(PUBLIC_ENDPOINTS_API_AUTHENTICATION).permitAll()  // API authentication
                             .requestMatchers(PUBLIC_ENDPOINTS_API_ROLE).permitAll() // Api role
                             .requestMatchers(PUBLIC_ENDPOINTS_API_PERMISSION).permitAll() // Api permission
                             .anyRequest().authenticated()  // Mọi request khác cần xác thực

@@ -1,15 +1,18 @@
 package identity.TuanHuy.controller;
 
 
+import identity.TuanHuy.dto.request.PermissionCreateRequest;
 import identity.TuanHuy.dto.request.PermissionRequest;
+import identity.TuanHuy.dto.request.PermissionUpdateRequest;
 import identity.TuanHuy.dto.response.ApiResponse;
 import identity.TuanHuy.dto.response.PermissionResponse;
+import identity.TuanHuy.entity.Permission;
 import identity.TuanHuy.service.PermissionService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
+import java.util.Optional;
 
-@SecurityRequirement(name = "bearer-key")
 @RestController
 @RequestMapping("/api/permissions")
 @CrossOrigin(origins = "*")
@@ -34,7 +37,7 @@ public class PermissionController {
     }
 
     @GetMapping("/{namePermission}")
-    public ApiResponse<PermissionResponse> GetPermissionByName(@PathVariable("namePermission") PermissionRequest request){
+    public ApiResponse<PermissionResponse> GetPermissionByName(@PathVariable("namePermission") String request){
                 PermissionResponse permissionResponse = permissionService.GetByName(request);
                 return ApiResponse.<PermissionResponse>builder()
                         .code(200)
@@ -42,6 +45,41 @@ public class PermissionController {
                         .result(permissionResponse)
                         .build()
                         ;
+    }
+
+    @PutMapping("/{namePermission}")
+    public ApiResponse<PermissionResponse> UpdatePermissionByName(@PathVariable("namePermission") String namePermission , @RequestBody PermissionUpdateRequest request){
+        PermissionResponse permissionResponse = permissionService.UpdateByName(namePermission,request);
+
+        return ApiResponse.<PermissionResponse>builder()
+                .code(200)
+                .message("update permission successfully")
+                .result(permissionResponse)
+                .build()
+                ;
+    }
+
+    @PostMapping()
+    public ApiResponse<PermissionResponse> CreatePermission(PermissionCreateRequest request){
+        PermissionResponse permission = permissionService.CreatePermission(request);
+
+        return ApiResponse.<PermissionResponse>builder()
+                .result(permission)
+                .code(200)
+                .message("create permission successfully")
+                .build()
+                ;
+    }
+
+    @DeleteMapping("/{namePermission}")
+    public ApiResponse<PermissionResponse> DeletePermission(@PathVariable String namePermission){
+        PermissionResponse permission = permissionService.DeleteByName(namePermission);
+        return ApiResponse.<PermissionResponse>builder()
+                .message("delete permission successfully")
+                .code(200)
+                .result(permission)
+                .build()
+                ;
     }
 
 

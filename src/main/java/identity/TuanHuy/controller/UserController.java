@@ -1,11 +1,12 @@
 package identity.TuanHuy.controller;
 import com.cloudinary.Api;
+import identity.TuanHuy.dto.request.AddRoleToUserRequest;
+import identity.TuanHuy.dto.request.RemoveRoleFromUserRequest;
 import identity.TuanHuy.dto.request.UserCreationRequest;
 import identity.TuanHuy.dto.request.UserUpdateRequest;
 import identity.TuanHuy.dto.response.ApiResponse;
 import identity.TuanHuy.dto.response.UserResponse;
 import identity.TuanHuy.service.UserService;
-import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,13 +19,45 @@ import java.util.List;
 @CrossOrigin(origins = "*") // Allow requests from the specified domain
 public class UserController{
 
-
     private static final Logger log = LoggerFactory.getLogger(UserController.class);
 
     private UserService userService;
 
     public UserController(UserService userService){
         this.userService = userService;
+    }
+
+
+    @PutMapping("/{userId}/role")
+    ApiResponse<UserResponse> removeRoleFromUser(@PathVariable String userId , @RequestBody RemoveRoleFromUserRequest request){
+        UserResponse userResponse = userService.removeRoleFromUser(userId,request);
+        return ApiResponse.<UserResponse>builder()
+                .message("updated role to user successfully")
+                .code(200)
+                .result(userResponse)
+                .build()
+                ;
+    }
+
+    @PostMapping("/{userId}/role")
+    ApiResponse<UserResponse> addRoleToUser(@PathVariable String userId , @RequestBody AddRoleToUserRequest roleName){
+        UserResponse userResponse = userService.addRoleToUser(userId,roleName);
+            return ApiResponse.<UserResponse>builder()
+                    .message("created role to user successfully")
+                    .code(200)
+                    .result(userResponse)
+                    .build()
+                    ;
+    }
+
+    @GetMapping("/total")
+    ApiResponse<Integer> GetTotalUsers(){
+       return ApiResponse.<Integer>builder()
+                .result(userService.GetTotalUsers())
+               .code(200)
+               .message("Get Total Users successfully")
+               .build()
+               ;
     }
 
     @PostMapping()
@@ -76,5 +109,6 @@ public class UserController{
                 .message("user deleted successfully")
                 .build();
     }
+
 
 }

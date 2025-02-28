@@ -1,6 +1,6 @@
-package identity.TuanHuy.dto.response;
+package identity.TuanHuy.dto.request;
 
-import identity.TuanHuy.dto.request.PermissionUpdateRequest;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -8,10 +8,9 @@ import lombok.Setter;
 
 @Setter
 @Getter
-@AllArgsConstructor
 @NoArgsConstructor
-public class PermissionResponse {
-    private String name;
+@AllArgsConstructor
+public class PermissionUpdateRequest {
     private String code;
     private String description;
     private Boolean isActive;

@@ -48,7 +48,9 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(value = HttpMessageNotReadableException.class)
     ResponseEntity<ApiResponse> handleHttpMessageNotReadableExceptionDOB(HttpMessageNotReadableException e) {
+
         ApiResponse.ApiResponseBuilder responseBuilder = ApiResponse.builder();
+
                     if(e.getMessage().contains("Unexpected character")){
                         responseBuilder
                                 .code(ErrorCode.INVALID_JSON_FORMAT.getCode())
@@ -115,15 +117,56 @@ public class GlobalExceptionHandler {
 
         ApiResponse.ApiResponseBuilder apiResponseBuilder = ApiResponse.builder();
 
-
         System.out.println("this is message in AppException.class" + e.getMessage());
-        System.out.println("");
+
         if(e.getErrorCode() == ErrorCode.USER_NOT_FOUND){
             apiResponseBuilder
                     .code(ErrorCode.USER_NOT_FOUND.getCode())
                     .message(ErrorCode.USER_NOT_FOUND.getMessage())
             ;
-        }else{
+        }else if(e.getErrorCode() == ErrorCode.PERMISSION_NOT_FOUND){
+            apiResponseBuilder
+                    .code(ErrorCode.PERMISSION_NOT_FOUND.getCode())
+                    .message(ErrorCode.PERMISSION_NOT_FOUND.getMessage())
+                    ;
+        } else if(e.getErrorCode().equals(ErrorCode.PERMISSION_READY_EXISTS)){
+            apiResponseBuilder
+                    .code(ErrorCode.PERMISSION_READY_EXISTS.getCode())
+                    .message(ErrorCode.PERMISSION_READY_EXISTS.getMessage())
+                    ;
+        } else if(e.getErrorCode().equals(ErrorCode.ROLE_NAME_ALREADY_EXISTS)){
+            apiResponseBuilder
+                    .message(ErrorCode.ROLE_NAME_ALREADY_EXISTS.getMessage())
+                    .code(ErrorCode.ROLE_NAME_ALREADY_EXISTS.getCode())
+                    ;
+        } else if(e.getErrorCode().equals(ErrorCode.ROLE_NOT_FOUND)){
+            apiResponseBuilder
+                    .message(ErrorCode.ROLE_NOT_FOUND.getMessage())
+                    .code(ErrorCode.ROLE_NOT_FOUND.getCode())
+                    ;
+        } else if(e.getErrorCode().equals(ErrorCode.ROLE_ALREADY_ASSIGNED)){
+            apiResponseBuilder
+                    .message(ErrorCode.ROLE_ALREADY_ASSIGNED.getMessage())
+                    .code(ErrorCode.ROLE_ALREADY_ASSIGNED.getCode())
+            ;
+        } else if(e.getErrorCode().equals(ErrorCode.ROLE_NAME_NOT_FOUND_IN_THIS_USER)){
+            apiResponseBuilder
+                    .message(ErrorCode.ROLE_NAME_NOT_FOUND_IN_THIS_USER.getMessage())
+                    .code(ErrorCode.ROLE_NAME_NOT_FOUND_IN_THIS_USER.getCode())
+                    ;
+        }  else if(e.getErrorCode().equals(ErrorCode.ROLE_NEW_NOT_FOUND)){
+            apiResponseBuilder
+                    .message(ErrorCode.ROLE_NEW_NOT_FOUND.getMessage())
+                    .code(ErrorCode.ROLE_NEW_NOT_FOUND.getCode())
+            ;
+        }   else if(e.getErrorCode().equals(ErrorCode.ROLE_OLD_NOT_FOUND)){
+            apiResponseBuilder
+                    .message(ErrorCode.ROLE_OLD_NOT_FOUND.getMessage())
+                    .code(ErrorCode.ROLE_OLD_NOT_FOUND.getCode())
+            ;
+        }
+
+        else{
             apiResponseBuilder
                     .code(ErrorCode.UNAUTHORIZED_ACCESS.getCode())
                     .message(ErrorCode.UNAUTHORIZED_ACCESS.getMessage())

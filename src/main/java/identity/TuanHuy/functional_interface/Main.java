@@ -1,7 +1,11 @@
 package identity.TuanHuy.functional_interface;
 
+import identity.TuanHuy.configuration.DatabaseConnection;
+
 public class Main {
     public static void main(String[] args){
+
+
         Box box = new Box("hello");
         System.out.println(box.getValue());
 

@@ -1,18 +1,21 @@
 package identity.TuanHuy.dto.response;
 
-import identity.TuanHuy.dto.request.PermissionUpdateRequest;
+import identity.TuanHuy.entity.Permission;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
+
 @Setter
 @Getter
-@AllArgsConstructor
 @NoArgsConstructor
-public class PermissionResponse {
+@AllArgsConstructor
+
+public class RoleWithPermissionsResponse {
     private String name;
-    private String code;
     private String description;
-    private Boolean isActive;
+    private List<PermissionResponse> permissions;
 }

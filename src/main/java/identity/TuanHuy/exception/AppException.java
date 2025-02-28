@@ -9,17 +9,4 @@ import java.util.Objects;
 @Data
 public class AppException extends RuntimeException{
     private ErrorCode errorCode;
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        AppException that = (AppException) o;
-        return errorCode == that.errorCode;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(errorCode);
-    }
 }

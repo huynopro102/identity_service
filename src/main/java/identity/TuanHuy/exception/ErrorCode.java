@@ -30,17 +30,20 @@ public enum ErrorCode {
     ROLE_NAME_INVALID(1018, "Role name invalid", HttpStatus.BAD_REQUEST),
     ROLE_DESCRIPTION_INVALID(1019, "Role description invalid", HttpStatus.BAD_REQUEST),
     ROLE_NAME_ALREADY_EXISTS(1020, "Role name already exists", HttpStatus.BAD_REQUEST),
-    UNAUTHORIZED_ACCESS(1021, "spring security Unauthorized access", HttpStatus.UNAUTHORIZED) ,
-    ROLE_USER_NOT_FOUND(1022, "role name không tồn tại trong danh sách ", HttpStatus.BAD_REQUEST),
+    UNAUTHORIZED_ACCESS(1021, "AppException doesn't catch this exception", HttpStatus.UNAUTHORIZED) ,
+    ROLE_NOT_FOUND(1022, "role name không tồn tại trong danh sách ", HttpStatus.BAD_REQUEST),
     DATA_TYPE_ROLE_ENUM_NOT_FOUND(1023, "role name không tồn tại trong danh sách", HttpStatus.BAD_REQUEST),
     INVALID_JSON_FORMAT(1024, "format của kiểu dữ liệu json trong body bị sai",HttpStatus.BAD_REQUEST) ,
     ROLE_IN_USE(1025,"Cannot delete role as it is assigned to users",HttpStatus.BAD_REQUEST) ,
-    USERNAME_ALREADY_EXISTS(1003, "this username is another people used", HttpStatus.BAD_REQUEST),
-    PERMISSION_NOT_FOUND(1004, "not found this name permission", HttpStatus.BAD_REQUEST),
-
-
-
-
+    USERNAME_ALREADY_EXISTS(1026, "this username is another people used", HttpStatus.BAD_REQUEST),
+    PERMISSION_NOT_FOUND(1027, "not found this name permission", HttpStatus.BAD_REQUEST),
+    PERMISSION_READY_EXISTS(1028, "permission ready exists", HttpStatus.BAD_REQUEST),
+    ROLE_ALREADY_ASSIGNED(1029,"role this assign name with this role", HttpStatus.BAD_REQUEST) ,
+    ROLE_NAME_NOT_NULL(1030,"field role name ís not null", HttpStatus.BAD_REQUEST ),
+    FIELD_NOT_NULL(1031,"field not null",HttpStatus.BAD_REQUEST) ,
+    ROLE_NAME_NOT_FOUND_IN_THIS_USER(1030,"ROLE_NAME_NOT_FOUND_IN_THIS_USER", HttpStatus.BAD_REQUEST ),
+    ROLE_OLD_NOT_FOUND(1031,"role name old not found", HttpStatus.BAD_REQUEST) ,
+    ROLE_NEW_NOT_FOUND(1032,"role name old not found", HttpStatus.BAD_REQUEST) ,
     ;
 
     // Modifier 'public' not allowed here

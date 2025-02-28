@@ -1,5 +1,9 @@
 package identity.TuanHuy.entity;
 
+
+import lombok.Getter;
+
+@Getter
 public enum RoleEnum {
         ADMIN,
         EDITOR,
@@ -8,4 +12,6 @@ public enum RoleEnum {
         SUBSCRIBER,
         USER,
         STAFF,
+        ;
+
 }

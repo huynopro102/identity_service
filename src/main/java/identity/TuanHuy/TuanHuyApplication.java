@@ -1,16 +1,13 @@
 package identity.TuanHuy;
 
-
-import org.springframework.beans.factory.annotation.Value;
+import identity.TuanHuy.configuration.DatabaseConnection;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.ComponentScans;
 
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.Map;
+
 
 
 @SpringBootApplication // this is an annotation automatically scans classes with @Service , @Repository , @Component,@Controller
@@ -23,6 +20,9 @@ public class TuanHuyApplication {
 		System.out.println("hello world");
 		Client client = new Client();
 		client.processMessage("client send");
+
+		// take Bean DatabaseConnection
+		DatabaseConnection databaseConnection = context.getBean(DatabaseConnection.class);
 
 
 	}

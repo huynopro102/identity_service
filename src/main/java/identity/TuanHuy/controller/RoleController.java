@@ -1,9 +1,9 @@
 package identity.TuanHuy.controller;
-
 import identity.TuanHuy.dto.request.RoleCreateRequest;
 import identity.TuanHuy.dto.request.RoleDeleteRequest;
 import identity.TuanHuy.dto.response.ApiResponse;
 import identity.TuanHuy.dto.response.RoleResponse;
+import identity.TuanHuy.dto.response.RoleWithPermissionsResponse;
 import identity.TuanHuy.dto.response.RolesResponse;
 import identity.TuanHuy.service.RoleService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -53,5 +53,20 @@ public class RoleController {
                 .message("delete role successfully")
                 .build();
     }
+
+    @GetMapping("/{roleName}/details")
+    ApiResponse<RoleWithPermissionsResponse> GetRoleWithPermissions(@PathVariable String roleName){
+
+        RoleWithPermissionsResponse roleWithPermissionsResponse = roleService.roleWithPermissionsResponse(roleName);
+
+        return ApiResponse.<RoleWithPermissionsResponse>builder()
+                .code(200)
+                .message("get role with all permissions")
+                .result(roleWithPermissionsResponse)
+                .build()
+                ;
+
+    }
+
 
 }

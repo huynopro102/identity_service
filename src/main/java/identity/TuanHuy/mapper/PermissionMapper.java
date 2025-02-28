@@ -1,5 +1,6 @@
 package identity.TuanHuy.mapper;
 
+import identity.TuanHuy.dto.request.PermissionUpdateRequest;
 import identity.TuanHuy.dto.response.PermissionResponse;
 import identity.TuanHuy.entity.Permission;
 import org.mapstruct.Mapper;
@@ -21,5 +22,11 @@ public interface PermissionMapper {
     PermissionResponse toPermissionResponse(Permission permission);
 
     List<PermissionResponse> toPermissionsResponse(List<Permission> permissions);
+
+
+    @Mapping(source = "code",target = "code")
+    @Mapping(source = "isActive",target = "isActive")
+    @Mapping(source = "description",target = "description")
+    PermissionUpdateRequest toPermissionUpdateRequest(Permission permission);
 
 }

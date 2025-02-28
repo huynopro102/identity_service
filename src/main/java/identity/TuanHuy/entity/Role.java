@@ -11,10 +11,11 @@ import java.util.Set;
 @Entity
 @Table(name = "role")
 public class Role {
+
     @Id
     @Enumerated(EnumType.STRING)
     @Column(unique = true,nullable = false)
-    private RoleEnum name;
+    private identity.TuanHuy.entity.RoleEnum name;
 
     private String description;
 
@@ -28,4 +29,5 @@ public class Role {
             inverseJoinColumns = @JoinColumn(name = "permission_name")
     )
     private Set<Permission> permissions;
+
 }

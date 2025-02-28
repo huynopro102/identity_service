@@ -1,6 +1,5 @@
 package identity.TuanHuy.configuration;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import identity.TuanHuy.dto.response.ApiResponse;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

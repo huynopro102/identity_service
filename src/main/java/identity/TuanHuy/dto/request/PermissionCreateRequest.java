@@ -1,6 +1,6 @@
-package identity.TuanHuy.dto.response;
+package identity.TuanHuy.dto.request;
 
-import identity.TuanHuy.dto.request.PermissionUpdateRequest;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -8,9 +8,11 @@ import lombok.Setter;
 
 @Setter
 @Getter
-@AllArgsConstructor
 @NoArgsConstructor
-public class PermissionResponse {
+@AllArgsConstructor
+public class PermissionCreateRequest {
+
+
     private String name;
     private String code;
     private String description;

@@ -1,4 +1,5 @@
 package identity.TuanHuy.dto.response;
+import identity.TuanHuy.entity.UserStatus;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Data;
@@ -15,6 +16,9 @@ public class UserResponse {
      String username;
      LocalDate dob;
      String email;
+     UserStatus status;
+     String profileImage;
+     Boolean emailVerified;
      Set<String> roles;
-
+     Set<String> permissions;
 }

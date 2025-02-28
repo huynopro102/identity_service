@@ -1,7 +1,9 @@
 package identity.TuanHuy.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.Set;
@@ -9,6 +11,8 @@ import java.util.Set;
 @Getter
 @Setter
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "permission")
 public class Permission {
 
@@ -21,5 +25,10 @@ public class Permission {
 
     @ManyToMany(mappedBy = "permissions")
     private Set<Role> roles;
+
+    public Permission(String name, String code, String description, Boolean isActive) {
+    }
+
+
 
 }
