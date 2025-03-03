@@ -9,7 +9,12 @@
     import org.springframework.security.oauth2.jwt.JwtDecoder;
     import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
     import org.springframework.security.web.SecurityFilterChain;
+    import org.springframework.web.cors.CorsConfiguration;
+    import org.springframework.web.cors.CorsConfigurationSource;
+    import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
     import javax.crypto.spec.SecretKeySpec;
+    import java.util.Arrays;
 
 
     @Configuration
@@ -72,7 +77,6 @@
                     .authenticationEntryPoint(authEntryPoint)
                     .and()
 
-
                     // Cho phép các endpoint công khai
                     .authorizeHttpRequests(request -> request
                             .requestMatchers(SWAGGER_WHITELIST).permitAll() // add whitelist for Swagger ui
@@ -90,7 +94,11 @@
                             .requestMatchers(PUBLIC_ENDPOINTS_API_PERMISSION).permitAll() // Api permission
                             .anyRequest().authenticated()  // Mọi request khác cần xác thực
                     )
-                    .csrf().disable(); // Tắt CSRF cho REST API
+
+                    // existing configuration...
+                    .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+                    .csrf().disable();
+
 
             // Chỉ áp dụng OAuth2 Resource Server cho API
             httpSecurity
@@ -101,6 +109,30 @@
             return httpSecurity.build();
         }
 
+
+        @Bean
+        private CorsConfigurationSource corsConfigurationSource() {
+            //Tạo một đối tượng CorsConfiguration
+            CorsConfiguration configuration = new CorsConfiguration();
+
+            configuration.setAllowedOrigins(Arrays.asList("*"));
+            //configuration.setAllowedOrigins(Arrays.asList("https://example.com", "https://myapp.com"));
+
+            //Thiết lập danh sách các HTTP methods được phép
+            configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
+
+            //Thiết lập danh sách các header được phép trong request
+            configuration.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type", "X-Requested-With"));
+
+            //Cho phép gửi credentials (cookies, token, session ID)
+            configuration.setAllowCredentials(true);
+
+            //Áp dụng cấu hình CORS cho tất cả các API endpoint (/**)
+            UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+            source.registerCorsConfiguration("/**", configuration);
+            return source;
+        }
+
         @Bean
         JwtDecoder jwtdecoder() {
             SecretKeySpec secretKeySpec = new SecretKeySpec(signerKey.getBytes(), "HS256");
@@ -109,4 +141,6 @@
                     .macAlgorithm(MacAlgorithm.HS256)
                     .build();
         }
-    }
+
+
+}
