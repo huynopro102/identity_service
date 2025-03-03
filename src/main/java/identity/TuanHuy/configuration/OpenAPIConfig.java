@@ -4,12 +4,13 @@ package identity.TuanHuy.configuration;
 import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;
-import io.swagger.v3.oas.models.security.SecurityRequirement;
 import io.swagger.v3.oas.models.security.SecurityScheme;
+import io.swagger.v3.oas.models.servers.Server;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import java.security.Security;
+
+import java.util.Arrays;
 
 @Configuration
 public class OpenAPIConfig {
@@ -25,6 +26,15 @@ public class OpenAPIConfig {
     @Bean
     public OpenAPI customOpenAPI(){
         return new OpenAPI()
+
+                .servers(Arrays.asList(
+                        new Server().url("https://huynguyen-nginx.io.vn:8887").description("Production server") ,
+                        new Server().url("https://staging.api.com").description("Staging server") ,
+                        new Server().url("https://api.com").description("Production server") ,
+                        new Server().url("http://localhost:8080").description("localhost server frontend")
+
+                ))
+
                 .components( new Components()
                     .addSecuritySchemes("bearer-key",
                         new SecurityScheme()
