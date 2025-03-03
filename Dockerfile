@@ -26,4 +26,4 @@ COPY --from=build /app/target/*.jar app.jar
 EXPOSE 9000
 
 # Chạy ứng dụng Spring Boot
-CMD ["java", "-jar", "app.jar"]
+CMD ["java", "-jar", "app.jar","--server.port=9000"]
