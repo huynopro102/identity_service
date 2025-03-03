@@ -94,11 +94,9 @@
                             .requestMatchers(PUBLIC_ENDPOINTS_API_PERMISSION).permitAll() // Api permission
                             .anyRequest().authenticated()  // Mọi request khác cần xác thực
                     )
-
                     // existing configuration...
                     .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                     .csrf().disable();
-
 
             // Chỉ áp dụng OAuth2 Resource Server cho API
             httpSecurity
@@ -110,8 +108,9 @@
         }
 
 
+
         @Bean
-        private CorsConfigurationSource corsConfigurationSource() {
+        public CorsConfigurationSource corsConfigurationSource() {
             //Tạo một đối tượng CorsConfiguration
             CorsConfiguration configuration = new CorsConfiguration();
 
