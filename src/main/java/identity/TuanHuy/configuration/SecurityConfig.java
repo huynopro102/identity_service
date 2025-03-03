@@ -44,7 +44,8 @@
 
         private final String[] PUBLIC_ENDPOINTS_API_USER = {
                 "/api/users" ,
-                "/api/users/{userId}/role"
+                "/api/users/{userId}/role" ,
+                "/api/users/{userId}"
         };
 
         private final String[] PUBLIC_ENDPOINTS_API_ROLE = {
@@ -74,10 +75,7 @@
 
                     // Cho phép các endpoint công khai
                     .authorizeHttpRequests(request -> request
-
-
                             .requestMatchers(SWAGGER_WHITELIST).permitAll() // add whitelist for Swagger ui
-
                             .requestMatchers("/api/users").permitAll()  // allow user create account , Cho phép mọi method trên /api/users
                             .requestMatchers(HttpMethod.GET ,"/api/users/*").permitAll()  // allow user display information account
                             .requestMatchers(HttpMethod.GET ,"/api/genres/*").permitAll()  // allow user display information genre

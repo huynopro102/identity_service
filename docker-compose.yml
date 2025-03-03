@@ -15,6 +15,7 @@ services:
             - "9000:9000"
         volumes:
             - ./target:/app/target  # Mounts the target directory to the container, allowing for easier updates
+            - /home/ubuntu/.env:app/.env
         restart: unless-stopped    # Restart policy in case the container stops unexpectedly
         deploy:
             resources:

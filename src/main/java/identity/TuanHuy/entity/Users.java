@@ -1,8 +1,6 @@
 package identity.TuanHuy.entity;
-
 import jakarta.persistence.*;
 import lombok.*;
-
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Set;
@@ -35,7 +33,7 @@ public class Users {
     private LocalDate dob;
 
     @Enumerated(EnumType.STRING)
-    private identity.TuanHuy.entity.UserStatus status;
+    private UserStatus status;
 
     private Boolean emailVerified;
     private String profileImage;

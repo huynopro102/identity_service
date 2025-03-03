@@ -12,7 +12,6 @@ public class EnvConfig {
 
     @Bean
     public Dotenv dotenv(){
-
         Dotenv dotenv = Dotenv.configure()
                 .load();  // Không cần .filename(".env") vì mặc định là tìm .env trong thư mục gốc
 

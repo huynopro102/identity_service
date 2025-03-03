@@ -24,3 +24,7 @@ services:
 networks:
   network_shared:
     external: true
+
+
+volumes:
+  jar_storage:

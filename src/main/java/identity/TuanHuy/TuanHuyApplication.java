@@ -18,8 +18,7 @@ public class TuanHuyApplication {
 		TuanHuyApplication app = context.getBean(TuanHuyApplication.class);
 
 		System.out.println("hello world");
-		Client client = new Client();
-		client.processMessage("client send");
+
 
 		// take Bean DatabaseConnection
 		DatabaseConnection databaseConnection = context.getBean(DatabaseConnection.class);
