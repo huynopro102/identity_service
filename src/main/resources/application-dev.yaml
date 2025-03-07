@@ -1,0 +1,41 @@
+spring:
+  springdoc:
+    api-docs:
+      enabled: true
+    swagger-ui:
+      path: /swagger-ui.html
+      operations-sorter: alpha
+      tags-sorter: alpha
+  devtools:
+    restart:
+      enabled: false
+  server:
+    port: ${PORT}
+  application:
+    name: TuanHuy
+  datasource:
+    url: ${SPRING_DATASOURCE_URL}
+    username: ${SPRING_DATASOURCE_USERNAME}
+    password: ${SPRING_DATASOURCE_PASSWORD}
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+    show-sql: true
+  thymeleaf:
+    enabled: true
+    cache: true
+    prefix: "classpath:/templates/"
+    suffix: ".html"
+  logging:
+    level:
+      root: INFO
+      org.springframework.security: DEBUG # display errors detail about spring security
+      org.hibernate: DEBUG # display errors detail about query sql
+  jwt:
+    signerKey: ${JWT_SIGNERKEY}
+api:
+  base-url: ${API_BASE_URL:http://localhost:9000}

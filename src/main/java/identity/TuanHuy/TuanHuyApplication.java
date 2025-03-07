@@ -1,13 +1,18 @@
 package identity.TuanHuy;
 
 import identity.TuanHuy.configuration.DatabaseConnection;
+import io.github.cdimascio.dotenv.Dotenv;
+import io.github.cdimascio.dotenv.DotenvEntriesFilter;
+import io.github.cdimascio.dotenv.DotenvEntry;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 
 import java.util.Arrays;
 import java.util.HashMap;
-
+import java.util.Set;
 
 
 @SpringBootApplication // this is an annotation automatically scans classes with @Service , @Repository , @Component,@Controller
@@ -15,14 +20,6 @@ public class TuanHuyApplication {
 
 	public static void main(String[] args) {
 		ApplicationContext context = SpringApplication.run(TuanHuyApplication.class, args);
-		TuanHuyApplication app = context.getBean(TuanHuyApplication.class);
-
-		System.out.println("hello world");
-
-
-		// take Bean DatabaseConnection
-		DatabaseConnection databaseConnection = context.getBean(DatabaseConnection.class);
-
 
 	}
 

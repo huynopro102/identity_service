@@ -14,6 +14,7 @@ import identity.TuanHuy.exception.ErrorCode;
 import identity.TuanHuy.repository.UserRepository;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import lombok.experimental.FieldDefaults;
 import lombok.experimental.NonFinal;
 import org.slf4j.Logger;
@@ -35,8 +36,12 @@ public class AuthenticationService {
     private static final Logger log = LoggerFactory.getLogger(AuthenticationService.class);
     UserRepository userRepository;
 
+
+    @Value("${spring.jwt.signerKey}")
     @NonFinal // để không inject cái này vô contructer
-    protected static final String SIGNER_KEY = "ZQM5hQ9xYRxNzMA/PsJggsQllKFiOz6mDyd372mZ52OwLlj/MbpzB6DTtCp4aWuv";
+    protected String SIGNER_KEY ;
+
+
 
     public IntrospectResponse introspect(IntrospectRequest request) throws JOSEException, ParseException {
         var token = request.getToken();
@@ -56,6 +61,9 @@ public class AuthenticationService {
     }
 
     public AuthenticationResponse authenticate(AuthenticationRequest request) {
+
+        log.info("signer key : "+SIGNER_KEY);
+
         var user = userRepository.findByEmail(request.getEmail())
 
                 .orElseThrow(()-> new AppException(ErrorCode.USER_NOT_FOUND));

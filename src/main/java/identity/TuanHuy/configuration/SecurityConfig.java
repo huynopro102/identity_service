@@ -71,38 +71,39 @@
         @Bean
         public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
             httpSecurity
+                    // Cho phép các API không cần xác thực
+                    .authorizeHttpRequests(requests -> requests
+                            .requestMatchers(SWAGGER_WHITELIST).permitAll()
+                            .requestMatchers(PUBLIC_ENDPOINTS_UI).permitAll()
+                            .requestMatchers(PUBLIC_ENDPOINTS_API_USER).permitAll()
+                            .requestMatchers(PUBLIC_ENDPOINTS_API_AUTHENTICATION).permitAll()
+                            .requestMatchers(PUBLIC_ENDPOINTS_API_ROLE).permitAll()
 
-                    // custom message error code 401
+                            // Đặc biệt: Cho phép đăng ký user mà không cần auth
+                            .requestMatchers(HttpMethod.POST, "/api/users").permitAll()
+
+                            // Chỉ cho phép GET user nếu đã xác thực
+                            .requestMatchers(HttpMethod.GET, "/api/users/**").permitAll()
+
+                            // Các API khác yêu cầu xác thực
+                            .anyRequest().authenticated()
+                    )
+
+                    // Cấu hình OAuth2 Resource Server (JWT)
+                    .oauth2ResourceServer(oauth2 -> oauth2
+                            .jwt(jwtConfigurer -> jwtConfigurer.decoder(jwtdecoder()))
+                    )
+
+                    // Cấu hình lỗi xác thực
                     .exceptionHandling()
                     .authenticationEntryPoint(authEntryPoint)
                     .and()
 
-                    // Cho phép các endpoint công khai
-                    .authorizeHttpRequests(request -> request
-                            .requestMatchers(SWAGGER_WHITELIST).permitAll() // add whitelist for Swagger ui
-                            .requestMatchers("/api/users").permitAll()  // allow user create account , Cho phép mọi method trên /api/users
-                            .requestMatchers(HttpMethod.GET ,"/api/users/*").permitAll()  // allow user display information account
-                            .requestMatchers(HttpMethod.GET ,"/api/genres/*").permitAll()  // allow user display information genre
-                            .requestMatchers("/api/genres/*").permitAll()  // allow user curd genres
-                            .requestMatchers("/ui/*").permitAll()  // allow user UI
-                            .requestMatchers("/api/postCategories/*").permitAll()  // allow user curd categories
-                            .requestMatchers("/api/postCategories").permitAll()  // allow user curd categories
-                            .requestMatchers(PUBLIC_ENDPOINTS_UI).permitAll()  // UI công khai
-                            .requestMatchers(PUBLIC_ENDPOINTS_API_USER).permitAll()  // API user
-                            .requestMatchers(PUBLIC_ENDPOINTS_API_AUTHENTICATION).permitAll()  // API authentication
-                            .requestMatchers(PUBLIC_ENDPOINTS_API_ROLE).permitAll() // Api role
-                            .requestMatchers(PUBLIC_ENDPOINTS_API_PERMISSION).permitAll() // Api permission
-                            .anyRequest().authenticated()  // Mọi request khác cần xác thực
-                    )
-                    // existing configuration...
+                    // Cấu hình CORS
                     .cors(cors -> cors.configurationSource(corsConfigurationSource()))
-                    .csrf().disable();
 
-            // Chỉ áp dụng OAuth2 Resource Server cho API
-            httpSecurity
-                    .oauth2ResourceServer(oauth2 -> oauth2
-                            .jwt(jwtConfigurer -> jwtConfigurer.decoder(jwtdecoder()))
-                    );
+                    // Vô hiệu hóa CSRF vì API không cần
+                    .csrf().disable();
 
             return httpSecurity.build();
         }

@@ -6,7 +6,7 @@ id_rsa
 .env
 
 # ignore application.yml
-#src/main/resources/application.yaml
+#src/main/resources/application-dev.yaml
 
 # Ignore everything in target directory
 target/*

@@ -2,6 +2,8 @@ package identity.TuanHuy.configuration;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
@@ -10,6 +12,8 @@ import java.sql.SQLException;
 
 
 @Component
+
+@NoArgsConstructor
 public class DatabaseConnection {
 
     private static Environment env;
