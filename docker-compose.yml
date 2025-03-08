@@ -8,9 +8,9 @@ services:
         container_name: app_identity_service
         image: app_identity_service:latest
         environment:
-            SPRING_DATASOURCE_URL: jdbc:postgresql://15.235.197.40:5432/identity_service
-            SPRING_DATASOURCE_USERNAME: postgres
-            SPRING_DATASOURCE_PASSWORD: 12345
+            SPRING_DATASOURCE_URL: ${SPRING_DATASOURCE_URL}
+            SPRING_DATASOURCE_USERNAME: ${SPRING_DATASOURCE_USERNAME}
+            SPRING_DATASOURCE_PASSWORD: ${SPRING_DATASOURCE_PASSWORD}
         ports:
             - "9000:9000"
         volumes:
