@@ -239,22 +239,16 @@
             ApiResponse<UserResponse> userResponseApiResponse = createApiResponse(200 , "created role to user successfully",userResponse);
             Mockito.when(userService.addRoleToUser(userId,addRoleToUserRequest))
                             .thenReturn(userResponseApiResponse.getResult());
-
             // WHEN
             mockMvc.perform(
                     MockMvcRequestBuilders
-                            .post("/api/users/{userId}/role")
+                            .post("/api/users/{userId}/role",userId)
                             .contentType(MediaType.APPLICATION_JSON_VALUE))
-
                     // THEN
                     .andExpect(MockMvcResultMatchers.jsonPath("$.message").value("created role to user successfully"))
                     .andExpect(MockMvcResultMatchers.jsonPath("$.code").value(200))
                     .andExpect(MockMvcResultMatchers.jsonPath("$.result").value(userResponseApiResponse))
                     ;
-
-
-
-
         }
 
     }

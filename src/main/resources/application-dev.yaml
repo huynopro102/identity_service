@@ -36,6 +36,6 @@ spring:
       org.springframework.security: DEBUG # display errors detail about spring security
       org.hibernate: DEBUG # display errors detail about query sql
   jwt:
-    signerKey: ${JWT_SIGNERKEY}
+    signerKey: ${SPRING_JWT_SIGNERKEY}
 api:
   base-url: ${API_BASE_URL:http://localhost:9000}
