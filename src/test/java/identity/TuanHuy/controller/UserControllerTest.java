@@ -2,10 +2,12 @@
     import com.fasterxml.jackson.databind.ObjectMapper;
     import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
     import identity.TuanHuy.configuration.SecurityConfig;
+    import identity.TuanHuy.dto.request.AddRoleToUserRequest;
     import identity.TuanHuy.dto.request.UserUpdateRequest;
     import identity.TuanHuy.dto.response.ApiResponse;
     import identity.TuanHuy.dto.response.UserResponse;
     import identity.TuanHuy.dto.request.UserCreationRequest;
+    import identity.TuanHuy.service.AuthenticationService;
     import identity.TuanHuy.service.UserService;
     import org.junit.jupiter.api.BeforeEach;
     import org.junit.jupiter.api.Test;
@@ -14,8 +16,7 @@
     import org.slf4j.Logger;
     import org.slf4j.LoggerFactory;
     import org.springframework.beans.factory.annotation.Autowired;
-    import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-    import org.springframework.boot.test.context.SpringBootTest;
+    import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
     import org.springframework.boot.test.mock.mockito.MockBean;
     import org.springframework.context.annotation.Import;
     import org.springframework.http.MediaType;
@@ -30,10 +31,12 @@
 //            Act: Thực hiện hành động cần test thông qua mockMvc
 //            Assert: Kiểm tra kết quả trả về
 
-    @Import(SecurityConfig.class)
-    @SpringBootTest
-    @AutoConfigureMockMvc // create one mock request to controller , scope test just in controller
+
+    @WebMvcTest(UserController.class) // Chỉ test UserController
+    @Import(SecurityConfig.class) // Import các config cần thiết
+
     public class UserControllerTest {
+
         // hàm nhận vô T , trả ra ApiResponse<T>
         private <T> ApiResponse<T> createApiResponse(int code , String message , T result){
             return ApiResponse.<T>builder()
@@ -45,6 +48,9 @@
         }
 
         private static final Logger log = LoggerFactory.getLogger(UserControllerTest.class);
+
+        @MockBean
+        private AuthenticationService authenticationService;
 
         @Autowired
         private MockMvc mockMvc;
@@ -58,10 +64,15 @@
         private LocalDate dob;
         private String userId;
         private ApiResponse apiResponse;
+        private AddRoleToUserRequest addRoleToUserRequest;
 
 
         @BeforeEach
         void initDate(){
+            addRoleToUserRequest = AddRoleToUserRequest.builder()
+                    .roleName("USER")
+                    .build();
+
             Set<String> setRoles = new HashSet<>();
             setRoles.add("USER");
             setRoles.add("ADMIN");
@@ -83,6 +94,7 @@
                     .dob(dob)
                     .build();
 
+
             userResponse = UserResponse.builder()
                     .id(userId)
                     .username("nguyenvanf")
@@ -93,6 +105,7 @@
                     .emailVerified(false)
                     .profileImage("https://placehold.co/600x400")
                     .build();
+
 
             userUpdateRequest = UserUpdateRequest.builder()
                     .dob(dob)
@@ -220,6 +233,29 @@
                     Mockito.verify(userService,Mockito.times(1)).UpdateUser(userUpdateRequest,userId);
         }
 
+        @Test
+        void addRoleToUser_validRequest_successfully() throws Exception{
+            // GIVEN
+            ApiResponse<UserResponse> userResponseApiResponse = createApiResponse(200 , "created role to user successfully",userResponse);
+            Mockito.when(userService.addRoleToUser(userId,addRoleToUserRequest))
+                            .thenReturn(userResponseApiResponse.getResult());
+
+            // WHEN
+            mockMvc.perform(
+                    MockMvcRequestBuilders
+                            .post("/api/users/{userId}/role")
+                            .contentType(MediaType.APPLICATION_JSON_VALUE))
+
+                    // THEN
+                    .andExpect(MockMvcResultMatchers.jsonPath("$.message").value("created role to user successfully"))
+                    .andExpect(MockMvcResultMatchers.jsonPath("$.code").value(200))
+                    .andExpect(MockMvcResultMatchers.jsonPath("$.result").value(userResponseApiResponse))
+                    ;
+
+
+
+
+        }
 
     }
 

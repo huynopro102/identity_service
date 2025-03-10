@@ -1,4 +1,6 @@
     package identity.TuanHuy.configuration;
+    import lombok.AllArgsConstructor;
+    import lombok.NoArgsConstructor;
     import org.springframework.beans.factory.annotation.Value;
     import org.springframework.context.annotation.Bean;
     import org.springframework.context.annotation.Configuration;
@@ -19,6 +21,8 @@
 
     @Configuration
     @EnableWebSecurity
+    @AllArgsConstructor
+    @NoArgsConstructor
     public class SecurityConfig {
 
 
