@@ -1,29 +1,22 @@
-## use jdk
-#FROM openjdk:23-jdk
-FROM maven:3.9.6-eclipse-temurin-21 AS build
+#FROM eclipse-temurin:21-jdk-alpine
+#WORKDIR /app
+#COPY target/TuanHuy-0.0.1-SNAPSHOT.jar /app/app.jar
+#EXPOSE 9000
+#ENTRYPOINT ["java", "-jar", "/app/app.jar","--server.port=9000","--spring.profiles.active=dev"]
+#
+
+##----------------------------------------------------------------------------------------------------------------
+
+
+# Stage 1: Build ứng dụng Spring Boot
+FROM maven:3.9.6-eclipse-temurin-21-alpine AS build
 WORKDIR /app
-
-COPY pom.xml ./
-RUN mvn dependency:go-offline # cache dependency
-
-# copy all source code into container
-COPY . .
-
-#COPY .env /app
-# run command to build maven , have test -DskipTests
+COPY . /app
 RUN mvn clean package -DskipTests
 
-# using java sdk to run
-FROM eclipse-temurin:21-jre-alpine AS runtime
-
+# Stage 2: Chạy ứng dụng Spring Boot
+FROM eclipse-temurin:21-jdk-alpine
 WORKDIR /app
-
-# Copy file JAR đã build từ bước trước
-COPY --from=build /app/target/*.jar app.jar
-
-#COPY target/TuanHuy-0.0.1-SNAPSHOT.jar /app/target/TuanHuy-0.0.1-SNAPSHOT.jar
-#ENTRYPOINT ["java","-jar","/app/target/TuanHuy-0.0.1-SNAPSHOT.jar","--server.port=9000"]
+COPY --from=build /app/target/*.jar /app/app.jar
 EXPOSE 9000
-
-# Chạy ứng dụng Spring Boot
-CMD ["java", "-jar", "app.jar","--server.port=9000"]
+ENTRYPOINT ["java", "-jar", "/app/app.jar", "--server.port=9000", "--spring.profiles.active=dev"]

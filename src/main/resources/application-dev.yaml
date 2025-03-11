@@ -10,7 +10,7 @@ spring:
     restart:
       enabled: false
   server:
-    port: ${PORT}
+    port: ${PORT:9000}
   application:
     name: TuanHuy
   datasource:

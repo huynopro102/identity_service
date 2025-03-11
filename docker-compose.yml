@@ -11,11 +11,9 @@ services:
             SPRING_DATASOURCE_URL: ${SPRING_DATASOURCE_URL}
             SPRING_DATASOURCE_USERNAME: ${SPRING_DATASOURCE_USERNAME}
             SPRING_DATASOURCE_PASSWORD: ${SPRING_DATASOURCE_PASSWORD}
+            SPRING_JWT_SIGNERKEY: ${SPRING_JWT_SIGNERKEY}
         ports:
             - "9000:9000"
-        volumes:
-            - ./target:/app/target  # Mounts the target directory to the container, allowing for easier updates
-            - /home/ubuntu/.env:/app/.env
         restart: unless-stopped    # Restart policy in case the container stops unexpectedly
         deploy:
             resources:
