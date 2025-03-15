@@ -8,12 +8,10 @@ RUN mvn clean package -DskipTests
 FROM eclipse-temurin:21 AS jlink-build
 WORKDIR /app
 COPY --from=build /app/target/*.jar /app/app.jar
-# Xác định các module cần thiết cho ứng dụng
+# Xác định các module cần thiết cho ứng dụng - removed jdk.instrument
 RUN jlink --module-path $JAVA_HOME/jmods \
-    --add-modules java.base,java.logging,java.xml,java.sql,java.management,java.naming,jdk.unsupported,java.desktop,java.security.jgss,jdk.instrument \
+    --add-modules java.base,java.logging,java.xml,java.sql,java.management,java.naming,jdk.unsupported,java.desktop,java.security.jgss \
     --output /custom-runtime
-
-
 
 # Stage 3: Run ứng dụng với runtime tối ưu
 FROM alpine:latest
