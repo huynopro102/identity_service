@@ -1,9 +1,13 @@
 version: '3.8'
 
+networks:
+  network_shared:   # Định nghĩa network
+    driver: bridge
+
 services:
   kafka:
     image: bitnami/kafka:latest
-    container_name: kafka-kraft
+    container_name: kafka
     ports:
       - "9092:9092"
     environment:
@@ -11,7 +15,9 @@ services:
       KAFKA_CFG_NODE_ID: "1"
       KAFKA_CFG_PROCESS_ROLES: "controller,broker"
       KAFKA_CFG_LISTENERS: "PLAINTEXT://:9092,CONTROLLER://:9093"
-      KAFKA_CFG_ADVERTISED_LISTENERS: "PLAINTEXT://kafka:9092"   #  Dùng "kafka" thay vì "localhost"
-      KAFKA_CFG_CONTROLLER_QUORUM_VOTERS: "1@kafka:9093"         #  Dùng "kafka"
+      KAFKA_CFG_ADVERTISED_LISTENERS: "PLAINTEXT://kafka:9092"   # Dùng "kafka" thay vì "localhost"
+      KAFKA_CFG_CONTROLLER_QUORUM_VOTERS: "1@kafka:9093"         # Dùng "kafka"
       KAFKA_CFG_CONTROLLER_LISTENER_NAMES: "CONTROLLER"
       KAFKA_CLUSTER_ID: "a1b2c3d4-e5f6-7890-1234-56789abcdef0"
+    networks:
+      - network_shared  # Đưa Kafka vào network chung

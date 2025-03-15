@@ -17,7 +17,7 @@ spring:
 
   kafka:
     consumer:
-      bootstrap-servers: kafka:9092  # Dùng service name "kafka"
+      bootstrap-servers: kafka:9092  # Dùng đúng service name "kafka"
       group-id: message_java
       auto-offset-reset: earliest
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
@@ -28,7 +28,7 @@ spring:
             trusted:
               packages: "identity.TuanHuy.dto.response"
     producer:
-      bootstrap-servers: kafka:9092  #  Dùng service name "kafka"
+      bootstrap-servers: kafka:9092  # Dùng đúng service name "kafka"
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
 
