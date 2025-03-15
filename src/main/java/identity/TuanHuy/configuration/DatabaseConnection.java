@@ -2,35 +2,34 @@ package identity.TuanHuy.configuration;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-import org.springframework.core.env.Environment;
-import org.springframework.stereotype.Component;
-
+import identity.TuanHuy.exception.AppException;
+import identity.TuanHuy.exception.ErrorCode;
+import jakarta.annotation.PostConstruct;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Configuration;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-
-@Component
-
-@NoArgsConstructor
+@Configuration
 public class DatabaseConnection {
 
-    private static Environment env;
+    @Value("${spring.datasource.url}")
+    private String databaseUrl;
 
-    // Static giúp đảm bảo pool này tồn tại xuyên suốt vòng đời ứng dụng, tránh việc tạo nhiều pool không cần thiết.
+    @Value("${spring.datasource.username}")
+    private String databaseUsername;
+
+    @Value("${spring.datasource.password}")
+    private String databasePassword;
+
     private static HikariDataSource dataSource;
 
-    public DatabaseConnection(Environment env){
-        this.env = env;
-        init(); // gọi hàm init sau khi spring boot khỏi tạo bean DatabaseConnection
-    }
-
+    @PostConstruct // Hàm này sẽ được gọi tự động sau khi bean được tạo
     public void init() {
         HikariConfig hikariConfig = new HikariConfig();
-        hikariConfig.setJdbcUrl(env.getProperty("spring.datasource.url"));
-        hikariConfig.setUsername(env.getProperty("spring.datasource.username"));
-        hikariConfig.setPassword(env.getProperty("spring.datasource.password"));
+        hikariConfig.setJdbcUrl(databaseUrl);
+        hikariConfig.setUsername(databaseUsername);
+        hikariConfig.setPassword(databasePassword);
         hikariConfig.setMaximumPoolSize(10);
         hikariConfig.setMinimumIdle(2);
         hikariConfig.setIdleTimeout(30000);
@@ -41,9 +40,8 @@ public class DatabaseConnection {
 
     public static Connection getConnection() throws SQLException {
         if (dataSource == null) {
-            throw new IllegalStateException("DatabaseConnection is not initialized.");
+            throw new AppException(ErrorCode.DATABASE_CONNECTION);
         }
         return dataSource.getConnection();
     }
-
 }

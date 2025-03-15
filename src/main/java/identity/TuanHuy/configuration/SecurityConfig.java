@@ -1,6 +1,10 @@
     package identity.TuanHuy.configuration;
     import lombok.AllArgsConstructor;
     import lombok.NoArgsConstructor;
+    import lombok.RequiredArgsConstructor;
+    import org.slf4j.Logger;
+    import org.slf4j.LoggerFactory;
+    import org.springframework.beans.factory.annotation.Autowired;
     import org.springframework.beans.factory.annotation.Value;
     import org.springframework.context.annotation.Bean;
     import org.springframework.context.annotation.Configuration;
@@ -11,9 +15,7 @@
     import org.springframework.security.oauth2.jwt.JwtDecoder;
     import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
     import org.springframework.security.web.SecurityFilterChain;
-    import org.springframework.web.cors.CorsConfiguration;
     import org.springframework.web.cors.CorsConfigurationSource;
-    import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
     import javax.crypto.spec.SecretKeySpec;
     import java.util.Arrays;
@@ -21,16 +23,14 @@
 
     @Configuration
     @EnableWebSecurity
-    @AllArgsConstructor
-    @NoArgsConstructor
+    @RequiredArgsConstructor
     public class SecurityConfig {
 
 
-        private CustomAuthenticationEntryPoint authEntryPoint;
+        private final CustomAuthenticationEntryPoint customAuthenticationEntryPoint;
 
-        public SecurityConfig(CustomAuthenticationEntryPoint authEntryPoint){
-            this.authEntryPoint = authEntryPoint;
-        }
+        private final CorsConfigurationSource corsConfigurationSource;
+
 
         @Value("${spring.jwt.signerKey}")
         private String signerKey;
@@ -70,7 +70,20 @@
 
         };
 
+        private final String[] PUBLI_ENDPOINTS_API_KAFKA = {
+                "/api/v1/kafka/publish/",
+                "/api/v1/kafka/publish/**",
+        };
+
+        private final String[] PUBLI_ENDPOINTS_API_KAFKA_JSON = {
+                "/api/v1/kafka/publish/",
+                "/api/v1/kafka/publish/**",
+        };
+
         private final String[] PUBLIC_ENDPOINTS_UI = {"/ui/home"};
+
+        private Logger LOGGER = LoggerFactory.getLogger(SecurityConfig.class);
+
 
         @Bean
         public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
@@ -82,6 +95,9 @@
                             .requestMatchers(PUBLIC_ENDPOINTS_API_USER).permitAll()
                             .requestMatchers(PUBLIC_ENDPOINTS_API_AUTHENTICATION).permitAll()
                             .requestMatchers(PUBLIC_ENDPOINTS_API_ROLE).permitAll()
+                            .requestMatchers(PUBLI_ENDPOINTS_API_KAFKA).permitAll()
+                            .requestMatchers(PUBLI_ENDPOINTS_API_KAFKA_JSON).permitAll()
+                            .requestMatchers(PUBLIC_ENDPOINTS_API_PERMISSION).authenticated()
 
                             // Đặc biệt: Cho phép đăng ký user mà không cần auth
                             .requestMatchers(HttpMethod.POST, "/api/users").permitAll()
@@ -93,49 +109,32 @@
                             .anyRequest().authenticated()
                     )
 
-                    // Cấu hình OAuth2 Resource Server (JWT)
-                    .oauth2ResourceServer(oauth2 -> oauth2
-                            .jwt(jwtConfigurer -> jwtConfigurer.decoder(jwtdecoder()))
-                    )
-
                     // Cấu hình lỗi xác thực
-                    .exceptionHandling()
-                    .authenticationEntryPoint(authEntryPoint)
-                    .and()
+                    .exceptionHandling(exception -> exception.authenticationEntryPoint(customAuthenticationEntryPoint))
+
+                    // Cấu hình OAuth2 Resource Server (JWT)
+                    .oauth2ResourceServer(oauth2 -> oauth2.jwt(jwtConfigurer -> jwtConfigurer.decoder(jwtdecoder())))
+
 
                     // Cấu hình CORS
-                    .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+                    .cors(cors -> cors.configurationSource(corsConfigurationSource))
 
                     // Vô hiệu hóa CSRF vì API không cần
-                    .csrf().disable();
+                    .csrf(csrf -> csrf.disable())
+
+
+
+            ;
+            // instead of using System.out.println() , use Logger
+            LOGGER.info("SecurityFilterChain initialized successfully by LOGGER FACTORY");
+            System.out.println("SecurityFilterChain initialized successfully");
 
             return httpSecurity.build();
         }
 
 
 
-        @Bean
-        public CorsConfigurationSource corsConfigurationSource() {
-            //Tạo một đối tượng CorsConfiguration
-            CorsConfiguration configuration = new CorsConfiguration();
 
-            configuration.setAllowedOrigins(Arrays.asList("*"));
-            //configuration.setAllowedOrigins(Arrays.asList("https://example.com", "https://myapp.com"));
-
-            //Thiết lập danh sách các HTTP methods được phép
-            configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
-
-            //Thiết lập danh sách các header được phép trong request
-            configuration.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type", "X-Requested-With"));
-
-            //Cho phép gửi credentials (cookies, token, session ID)
-            configuration.setAllowCredentials(true);
-
-            //Áp dụng cấu hình CORS cho tất cả các API endpoint (/**)
-            UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-            source.registerCorsConfiguration("/**", configuration);
-            return source;
-        }
 
         @Bean
         JwtDecoder jwtdecoder() {
