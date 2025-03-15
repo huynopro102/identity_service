@@ -1,5 +1,5 @@
 # Stage 1: Build Spring Boot app with Maven
-FROM maven:3.9.6-alpine AS build
+FROM maven:3.9-alpine AS build
 WORKDIR /app
 COPY pom.xml .
 # Download dependencies first (this layer can be cached)
