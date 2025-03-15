@@ -67,6 +67,7 @@
         private AddRoleToUserRequest addRoleToUserRequest;
 
 
+
         @BeforeEach
         void initDate(){
             addRoleToUserRequest = AddRoleToUserRequest.builder()
@@ -145,7 +146,7 @@
                     .contentType(MediaType.APPLICATION_JSON_VALUE)
                     .content(content))
 
-                    // th is is THEN : andExpect là http status code
+                    // THEN : andExpect là http status code
                     .andExpect(MockMvcResultMatchers.status().isOk())
                     .andExpect(MockMvcResultMatchers.jsonPath("code")
                     .value(200))

@@ -1,5 +1,6 @@
 package identity.TuanHuy.exception;
 import com.cloudinary.Api;
+import com.nimbusds.jose.KeyLengthException;
 import identity.TuanHuy.dto.response.ApiResponse;
 import org.apache.juli.logging.Log;
 import org.slf4j.Logger;
@@ -60,6 +61,24 @@ public class GlobalExceptionHandler {
                                 .code(ErrorCode.INVALID_DOB.getCode())
                                 .message(ErrorCode.INVALID_DOB.getMessage());
                     }
+        return ResponseEntity.badRequest().body(responseBuilder.build());
+    }
+    @ExceptionHandler(value = KeyLengthException.class)
+    ResponseEntity<ApiResponse> handleKeyLengthException(KeyLengthException e){
+        ApiResponse.ApiResponseBuilder responseBuilder = ApiResponse.builder();
+        if(e.getMessage().equals("The secret length must be at least 256 bits")){
+            responseBuilder
+                    .code(ErrorCode.SIGNER_KEY_IS_TOO_SHORT.getCode())
+                    .message(ErrorCode.SIGNER_KEY_IS_TOO_SHORT.getMessage())
+                    .build()
+                    ;
+        }else{
+            responseBuilder
+                    .code(ErrorCode.SIGNER_KEY_ERROR.getCode())
+                    .message(ErrorCode.SIGNER_KEY_ERROR.getMessage())
+                    .build()
+            ;
+        }
         return ResponseEntity.badRequest().body(responseBuilder.build());
     }
 
@@ -164,6 +183,21 @@ public class GlobalExceptionHandler {
                     .message(ErrorCode.ROLE_OLD_NOT_FOUND.getMessage())
                     .code(ErrorCode.ROLE_OLD_NOT_FOUND.getCode())
             ;
+        } else if(e.getErrorCode().equals(ErrorCode.SIGNER_KEY_IS_TOO_SHORT)){
+            apiResponseBuilder
+                    .message(ErrorCode.SIGNER_KEY_IS_TOO_SHORT.getMessage())
+                    .code(ErrorCode.SIGNER_KEY_IS_TOO_SHORT.getCode())
+                    ;
+        }else if(e.getErrorCode().equals(ErrorCode.SIGNER_KEY_ERROR)){
+            apiResponseBuilder
+                    .message(ErrorCode.SIGNER_KEY_ERROR.getMessage())
+                    .code(ErrorCode.SIGNER_KEY_ERROR.getCode())
+            ;
+        }else if(e.getErrorCode().equals(ErrorCode.DATABASE_CONNECTION)){
+            apiResponseBuilder
+                    .message(ErrorCode.DATABASE_CONNECTION.getMessage())
+                    .code(ErrorCode.DATABASE_CONNECTION.getCode())
+                    ;
         }
 
         else{

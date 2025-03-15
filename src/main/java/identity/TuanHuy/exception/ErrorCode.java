@@ -44,6 +44,11 @@ public enum ErrorCode {
     ROLE_NAME_NOT_FOUND_IN_THIS_USER(1030,"ROLE_NAME_NOT_FOUND_IN_THIS_USER", HttpStatus.BAD_REQUEST ),
     ROLE_OLD_NOT_FOUND(1031,"role name old not found", HttpStatus.BAD_REQUEST) ,
     ROLE_NEW_NOT_FOUND(1032,"role name old not found", HttpStatus.BAD_REQUEST) ,
+    SIGNER_KEY_IS_TOO_SHORT(1033,"SIGNER_KEY phải có ít nhất 32 ký tự.", HttpStatus.BAD_REQUEST) ,
+    SIGNER_KEY_ERROR(1034,"SIGNER_KEY bij loi", HttpStatus.BAD_REQUEST) ,
+    GENERATE_TOKEN_FAILED(1035,"Không thể tạo token.", HttpStatus.BAD_REQUEST),
+    DATABASE_CONNECTION(1036,"wating a minutes , DatabaseConnection is not initialized.", HttpStatus.BAD_REQUEST)
+
     ;
 
     // Modifier 'public' not allowed here

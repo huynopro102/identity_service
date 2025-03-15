@@ -1,5 +1,4 @@
 package identity.TuanHuy.service;
-
 import com.nimbusds.jose.*;
 import com.nimbusds.jose.crypto.MACSigner;
 import com.nimbusds.jose.crypto.MACVerifier;
@@ -19,11 +18,13 @@ import lombok.experimental.FieldDefaults;
 import lombok.experimental.NonFinal;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
+import java.time.Duration;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
@@ -33,8 +34,12 @@ import java.util.UUID;
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class AuthenticationService {
+
     private static final Logger log = LoggerFactory.getLogger(AuthenticationService.class);
-    UserRepository userRepository;
+    private final RedisTemplate<String ,String> redisTemplate;
+    private  String SESSION_PREFIX = "session:";
+    private  Duration EXPIRATION = Duration.ofHours(2);
+    private final UserRepository userRepository;
 
 
     @Value("${spring.jwt.signerKey}")
@@ -42,6 +47,23 @@ public class AuthenticationService {
     protected String SIGNER_KEY ;
 
 
+    public void saveSession(String username , String token){
+        String key = SESSION_PREFIX + username;
+        redisTemplate.opsForHash().put(key,"token",token);
+        redisTemplate.expire(key,EXPIRATION);
+        log.info("Stored session keys: " + redisTemplate.keys("session:*"));
+        log.info("Token for user: " + redisTemplate.opsForHash().get("session:"+username, "token"));
+        log.info("redis write");
+    }
+
+    public String getSession(String username){
+        return (String) redisTemplate.opsForHash().get(SESSION_PREFIX+username,"token");
+    }
+
+
+    public void deleteSession(String username){
+        redisTemplate.delete(SESSION_PREFIX+username);
+    }
 
     public IntrospectResponse introspect(IntrospectRequest request) throws JOSEException, ParseException {
         var token = request.getToken();
@@ -76,6 +98,7 @@ public class AuthenticationService {
             throw new AppException(ErrorCode.AUTHENTICATE_INVALID);
         }
         var token = generateToken(request.getEmail());
+        saveSession(request.getEmail(),token);
         return AuthenticationResponse.builder()
                 .token(token)
                 .authenticated(true)
@@ -111,9 +134,11 @@ public class AuthenticationService {
         try {
             jwsObject.sign(new MACSigner(SIGNER_KEY.getBytes()));
             return  jwsObject.serialize();
-        } catch (JOSEException e) {
-            log.error("loi ko generate token");
-            throw new RuntimeException(e);
+        } catch (KeyLengthException e){
+            throw new AppException(ErrorCode.SIGNER_KEY_IS_TOO_SHORT);
+        }
+        catch (JOSEException e) {
+            throw new RuntimeException(e.getMessage());
         }
 
     }

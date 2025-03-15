@@ -1,4 +1,40 @@
 spring:
+
+  redis:
+#    host: ${SPRING_REDIS_HOST}
+#    port: ${SPRING_REDIS_PORT}
+#    username: ${SPRING_REDIS_USERNAME}
+#    password: ${SPRING_REDIS_PASSWORD}
+#    ssl: ${SPRING_REDIS_SSL}
+#    timeout: 60000
+    host: redis-16243.c295.ap-southeast-1-1.ec2.redns.redis-cloud.com
+    port: 16243
+    username: default
+    password: Zh1BZaMgiT1CmMZbMHE4VGNcPEdycWjZ
+    ssl: true
+    timeout: 5000
+
+
+  kafka:
+    consumer:
+#      bootstrap-servers: 192.168.1.3:9092
+      bootstrap-servers: localhost:9092
+      group-id: message_java
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring:
+          json:
+            trusted:
+              packages: "identity.TuanHuy.dto.response"
+    producer:
+#      bootstrap-servers: 192.168.1.3:9092
+      bootstrap-servers: localhost:9092
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+
+
   springdoc:
     api-docs:
       enabled: true
