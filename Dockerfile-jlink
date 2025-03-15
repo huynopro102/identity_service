@@ -1,20 +1,19 @@
-# Stage 1: Build ứng dụng Spring Boot với Maven
+# Stage 1: Build Spring Boot app with Maven
 FROM maven:3.9.6-eclipse-temurin-21-alpine AS build
 WORKDIR /app
 COPY . /app
 RUN mvn clean package -DskipTests
 
-# Stage 2: JLink để tạo runtime tối ưu
-FROM eclipse-temurin:21 AS jlink-build
+# Stage 2: JLink for optimized runtime
+FROM eclipse-temurin:21-jdk AS jlink-build
 WORKDIR /app
 COPY --from=build /app/target/*.jar /app/app.jar
-# Xác định các module cần thiết cho ứng dụng - removed jdk.instrument
 RUN jlink --module-path $JAVA_HOME/jmods \
     --add-modules java.base,java.logging,java.xml,java.sql,java.management,java.naming,jdk.unsupported,java.desktop,java.security.jgss \
     --output /custom-runtime
 
-# Stage 3: Run with optimized runtime
-FROM debian:slim
+# Stage 3: Run with compatible base image
+FROM debian:bullseye-slim
 WORKDIR /app
 RUN apt-get update && apt-get install -y --no-install-recommends libc6 && rm -rf /var/lib/apt/lists/*
 RUN groupadd -r appgroup && useradd -r -g appgroup appuser
