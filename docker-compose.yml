@@ -4,7 +4,7 @@ services:
     identity_service:
         build:
             context: .              # This specifies the build context (current directory)
-            dockerfile: Dockerfile   # Path to the Dockerfile (relative to context)
+            dockerfile: Dockerfile-jlink   # Path to the Dockerfile (relative to context)
         container_name: app_identity_service
         image: app_identity_service:latest
         environment:
@@ -12,6 +12,7 @@ services:
             SPRING_DATASOURCE_USERNAME: ${SPRING_DATASOURCE_USERNAME}
             SPRING_DATASOURCE_PASSWORD: ${SPRING_DATASOURCE_PASSWORD}
             SPRING_JWT_SIGNERKEY: ${SPRING_JWT_SIGNERKEY}
+
         ports:
             - "9000:9000"
         restart: unless-stopped    # Restart policy in case the container stops unexpectedly
