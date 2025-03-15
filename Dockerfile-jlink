@@ -10,8 +10,9 @@ WORKDIR /app
 COPY --from=build /app/target/*.jar /app/app.jar
 # Xác định các module cần thiết cho ứng dụng
 RUN jlink --module-path $JAVA_HOME/jmods \
-    --add-modules java.base,java.logging,java.xml,java.sql,java.management,java.naming,jdk.unsupported \
+    --add-modules java.base,java.logging,java.xml,java.sql,java.management,java.naming,jdk.unsupported,java.desktop \
     --output /custom-runtime
+
 
 # Stage 3: Run ứng dụng với runtime tối ưu
 FROM alpine:latest
