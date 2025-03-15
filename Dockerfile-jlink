@@ -5,13 +5,14 @@ COPY . /app
 RUN mvn clean package -DskipTests
 
 # Stage 2: JLink để tạo runtime tối ưu
-FROM eclipse-temurin:21-jdk-alpine AS jlink-build
+FROM eclipse-temurin:21-jdk AS jlink-build
 WORKDIR /app
 COPY --from=build /app/target/*.jar /app/app.jar
 # Xác định các module cần thiết cho ứng dụng
 RUN jlink --module-path $JAVA_HOME/jmods \
     --add-modules java.base,java.logging,java.xml,java.sql,java.management,java.naming,jdk.unsupported,java.desktop,java.security.jgss,jdk.instrument \
     --output /custom-runtime
+
 
 
 # Stage 3: Run ứng dụng với runtime tối ưu
