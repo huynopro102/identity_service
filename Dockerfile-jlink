@@ -1,30 +1,29 @@
 # Stage 1: Build ứng dụng Spring Boot với Maven
 FROM maven:3.9.6-eclipse-temurin-21-alpine AS build
 WORKDIR /app
-# Copy toàn bộ mã nguồn vào container
 COPY . /app
-# Build ứng dụng và tạo file JAR (bỏ qua test để build nhanh hơn)
 RUN mvn clean package -DskipTests
 
-# Stage 2: Tạo custom runtime image với jlink
+# Stage 2: JLink để tạo runtime tối ưu
 FROM eclipse-temurin:21-jdk-alpine AS jlink-build
 WORKDIR /app
-# Copy file JAR đã build từ stage build
 COPY --from=build /app/target/*.jar /app/app.jar
-# Sử dụng jlink để tạo custom runtime chứa các module cần thiết
-# (Điều chỉnh danh sách module theo nhu cầu của ứng dụng của bạn)
-RUN jlink --module-path $JAVA_HOME/jmods --add-modules java.base,java.logging,java.xml --output custom-runtime
+# Xác định các module cần thiết cho ứng dụng
+RUN jlink --module-path $JAVA_HOME/jmods \
+    --add-modules java.base,java.logging,java.xml,java.sql,java.management,java.naming,jdk.unsupported \
+    --output /custom-runtime
 
-# Stage 3: Run stage - chạy ứng dụng với custom runtime tạo bởi jlink
+# Stage 3: Run ứng dụng với runtime tối ưu
 FROM alpine:latest
 WORKDIR /app
-# Copy custom runtime từ stage jlink-build
-COPY --from=jlink-build /app/custom-runtime /custom-runtime
-# Copy file JAR của ứng dụng
+RUN apk add --no-cache libc6-compat  # Đảm bảo hỗ trợ Java trên Alpine
+RUN addgroup -S appgroup && adduser -S appuser -G appgroup
+USER appuser
+
+COPY --from=jlink-build /custom-runtime /custom-runtime
 COPY --from=jlink-build /app/app.jar app.jar
-# Mở cổng 9000
+
 EXPOSE 9000
-# Cập nhật PATH để sử dụng runtime tạo bởi jlink
 ENV PATH="/custom-runtime/bin:$PATH"
-# Chạy ứng dụng với các tham số mong muốn
+
 ENTRYPOINT ["java", "-jar", "/app/app.jar", "--server.port=9000", "--spring.profiles.active=dev"]
