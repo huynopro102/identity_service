@@ -1,22 +1,31 @@
 # Stage 1: Build Spring Boot app with Maven
-FROM maven:3.9.6-eclipse-temurin-21-alpine AS build
+FROM maven:3.9.6-alpine AS build
 WORKDIR /app
-COPY . /app
+COPY pom.xml .
+# Download dependencies first (this layer can be cached)
+RUN mvn dependency:go-offline
+COPY src ./src
 RUN mvn clean package -DskipTests
 
 # Stage 2: JLink for optimized runtime
 FROM eclipse-temurin:21-jdk AS jlink-build
 WORKDIR /app
 COPY --from=build /app/target/*.jar /app/app.jar
+# Add back jdk.instrument module
 RUN jlink --module-path $JAVA_HOME/jmods \
-    --add-modules java.base,java.logging,java.xml,java.sql,java.management,java.naming,jdk.unsupported,java.desktop,java.security.jgss \
+    --add-modules java.base,java.logging,java.xml,java.sql,java.management,java.naming,jdk.unsupported,java.desktop,java.security.jgss,java.instrument,jdk.instrument \
+    --compress=2 \
+    --no-header-files \
+    --no-man-pages \
     --output /custom-runtime
 
-# Stage 3: Run with compatible base image
+# Stage 3: Run with a minimal base image
 FROM debian:bullseye-slim
 WORKDIR /app
-RUN apt-get update && apt-get install -y --no-install-recommends libc6 && rm -rf /var/lib/apt/lists/*
-RUN groupadd -r appgroup && useradd -r -g appgroup appuser
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends libc6 && \
+    rm -rf /var/lib/apt/lists/* && \
+    groupadd -r appgroup && useradd -r -g appgroup appuser
 USER appuser
 
 COPY --from=jlink-build /custom-runtime /custom-runtime
