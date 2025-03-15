@@ -1,10 +1,11 @@
-# Stage 1: Build Spring Boot app with Maven
-FROM maven:3.9-alpine AS build
+# Stage 1: Build with OpenJDK
+FROM openjdk:21-slim AS build
 WORKDIR /app
-COPY pom.xml .
-# Download dependencies first (this layer can be cached)
-RUN mvn dependency:go-offline
-COPY src ./src
+# Install Maven
+RUN apt-get update && \
+    apt-get install -y maven && \
+    rm -rf /var/lib/apt/lists/*
+COPY . .
 RUN mvn clean package -DskipTests
 
 # Stage 2: JLink for optimized runtime
