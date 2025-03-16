@@ -1,18 +1,13 @@
 spring:
 
   redis:
-#    host: ${SPRING_REDIS_HOST}
-#    port: ${SPRING_REDIS_PORT}
-#    username: ${SPRING_REDIS_USERNAME}
-#    password: ${SPRING_REDIS_PASSWORD}
-#    ssl: ${SPRING_REDIS_SSL}
-#    timeout: 60000
-    host: redis-16243.c295.ap-southeast-1-1.ec2.redns.redis-cloud.com
-    port: 16243
-    username: default
-    password: Zh1BZaMgiT1CmMZbMHE4VGNcPEdycWjZ
-    ssl: true
+    host: ${SPRING_REDIS_HOST}
+    port: ${SPRING_REDIS_PORT}
+    username: ${SPRING_REDIS_USERNAME}
+    password: ${SPRING_REDIS_PASSWORD}
+    ssl: ${SPRING_REDIS_SSL}
     timeout: 5000
+
 
 
   kafka:

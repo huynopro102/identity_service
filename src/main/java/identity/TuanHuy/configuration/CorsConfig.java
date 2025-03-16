@@ -12,15 +12,20 @@ import java.util.List;
 @Configuration
 public class CorsConfig {
     @Bean
-    public CorsConfigurationSource corsConfigurationSource() {
+    public CorsFilter corsFilter() {
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowCredentials(true);
-        config.setAllowedOriginPatterns(List.of("http://localhost:5173", "https://blogcuahuy.netlify.app","https://adminblogcuahuy.netlify.app")); //Chỉ định rõ origin
+        config.setAllowedOriginPatterns(List.of(
+                "http://localhost:5173",
+                "https://blogcuahuy.netlify.app",
+                "https://adminblogcuahuy.netlify.app"
+        ));
         config.addAllowedMethod("*");
         config.addAllowedHeader("*");
 
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", config);
-        return source;
+        return new CorsFilter(source);
     }
+
 }

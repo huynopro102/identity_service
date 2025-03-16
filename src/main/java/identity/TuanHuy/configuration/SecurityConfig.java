@@ -88,7 +88,6 @@
         @Bean
         public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
             httpSecurity
-                    // Cho phép các API không cần xác thực
                     .authorizeHttpRequests(requests -> requests
                             .requestMatchers(SWAGGER_WHITELIST).permitAll()
                             .requestMatchers(PUBLIC_ENDPOINTS_UI).permitAll()
@@ -98,37 +97,15 @@
                             .requestMatchers(PUBLI_ENDPOINTS_API_KAFKA).permitAll()
                             .requestMatchers(PUBLI_ENDPOINTS_API_KAFKA_JSON).permitAll()
                             .requestMatchers(PUBLIC_ENDPOINTS_API_PERMISSION).authenticated()
-
-                            // Đặc biệt: Cho phép đăng ký user mà không cần auth
                             .requestMatchers(HttpMethod.POST, "/api/users").permitAll()
-
-                            // Chỉ cho phép GET user nếu đã xác thực
                             .requestMatchers(HttpMethod.GET, "/api/users/**").permitAll()
-
-                            // Các API khác yêu cầu xác thực
                             .anyRequest().authenticated()
                     )
-
-                    // Cấu hình lỗi xác thực
                     .exceptionHandling(exception -> exception.authenticationEntryPoint(customAuthenticationEntryPoint))
-
-                    // Cấu hình OAuth2 Resource Server (JWT)
                     .oauth2ResourceServer(oauth2 -> oauth2.jwt(jwtConfigurer -> jwtConfigurer.decoder(jwtdecoder())))
+                    .csrf(csrf -> csrf.disable()); // Không cần gọi `.cors()` nữa
 
-
-                    // Cấu hình CORS
-                    .cors(cors -> cors.configurationSource(corsConfigurationSource))
-
-                    // Vô hiệu hóa CSRF vì API không cần
-                    .csrf(csrf -> csrf.disable())
-
-
-
-            ;
-            // instead of using System.out.println() , use Logger
             LOGGER.info("SecurityFilterChain initialized successfully by LOGGER FACTORY");
-            System.out.println("SecurityFilterChain initialized successfully");
-
             return httpSecurity.build();
         }
 
@@ -136,8 +113,12 @@
 
 
 
+
         @Bean
         JwtDecoder jwtdecoder() {
+            if (signerKey == null || signerKey.isEmpty()) {
+                throw new IllegalArgumentException("JWT signerKey không được null hoặc rỗng");
+            }
             SecretKeySpec secretKeySpec = new SecretKeySpec(signerKey.getBytes(), "HS256");
             return NimbusJwtDecoder
                     .withSecretKey(secretKeySpec)
