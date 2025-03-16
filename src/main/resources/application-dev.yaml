@@ -8,27 +8,6 @@ spring:
     ssl: ${SPRING_REDIS_SSL}
     timeout: 5000
 
-
-
-  kafka:
-    consumer:
-      bootstrap-servers: kafka:9092  # Dùng đúng service name "kafka"
-      group-id: message_java
-      auto-offset-reset: earliest
-      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
-      properties:
-        spring:
-          json:
-            trusted:
-              packages: "identity.TuanHuy.dto.response"
-    producer:
-      bootstrap-servers: kafka:9092  # Dùng đúng service name "kafka"
-      key-serializer: org.apache.kafka.common.serialization.StringSerializer
-      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
-
-
-
     springdoc:
     api-docs:
       enabled: true
