@@ -13,7 +13,8 @@ import java.util.Set;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "permission")
+@Table(name = "permission",
+indexes = {@Index(name = "idx_permission_name", columnList = "name")})
 public class Permission {
 
     @Id

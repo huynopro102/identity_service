@@ -17,6 +17,9 @@ import lombok.Data;
 import org.apache.commons.logging.Log;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -28,6 +31,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
+
+@EnableCaching // Bật cache
 @Data
 @Service
 public class UserService {
@@ -94,7 +99,6 @@ public class UserService {
         Users user = userRepository.findById(userId)
                 .orElseThrow(()-> new AppException(ErrorCode.USER_NOT_FOUND));
 
-
         Role role = roleRepository.findByName(RoleEnum.valueOf(roleName.getRoleName().toUpperCase()))
                 .orElseThrow(() -> new AppException(ErrorCode.ROLE_NOT_FOUND));
 
@@ -139,8 +143,10 @@ public class UserService {
                 return userMapper.toUserResponse(user);
     }
 
-
+    // Lấy user từ cache (nếu chưa có thì query database)
+    @Cacheable(value = "users", key = "#id")
     public UserResponse GetUserById(String id) {
+        System.out.println("Fetching user from DB..."); // Kiểm tra cache có hoạt động hay không
         Optional<Users> optional = userRepository.findById(id);
         if(optional.isPresent()){
             return userMapper.toUserResponse(optional.get());
@@ -182,6 +188,9 @@ public class UserService {
         return userMapper.toUserResponse(user);
     }
 
+
+    // Xóa user khỏi cache khi user bị xóa
+    @CacheEvict(value = "users", key = "#id")
     public String DeleteUser(String id) {
         Users user = userRepository.findById(id).orElseThrow(()-> new AppException(ErrorCode.USER_NOT_FOUND));
         userRepository.deleteById(id);
