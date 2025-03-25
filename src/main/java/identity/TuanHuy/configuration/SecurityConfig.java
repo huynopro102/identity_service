@@ -1,10 +1,7 @@
     package identity.TuanHuy.configuration;
-    import lombok.AllArgsConstructor;
-    import lombok.NoArgsConstructor;
     import lombok.RequiredArgsConstructor;
     import org.slf4j.Logger;
     import org.slf4j.LoggerFactory;
-    import org.springframework.beans.factory.annotation.Autowired;
     import org.springframework.beans.factory.annotation.Value;
     import org.springframework.context.annotation.Bean;
     import org.springframework.context.annotation.Configuration;
@@ -16,10 +13,7 @@
     import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
     import org.springframework.security.web.SecurityFilterChain;
     import org.springframework.web.cors.CorsConfigurationSource;
-
     import javax.crypto.spec.SecretKeySpec;
-    import java.util.Arrays;
-
 
     @Configuration
     @EnableWebSecurity
@@ -46,9 +40,10 @@
 
         private final String[] PUBLIC_ENDPOINTS_API_AUTHENTICATION = {
                 "/api/authentication/login",
+                "/api/authentication/introspect",
                 "/api/mienphi",
                 "/api/cloudinary/image/upload",
-                "/api/genres" ,
+                "/api/genres",
         };
 
         private final String[] PUBLIC_ENDPOINTS_API_USER = {
@@ -80,6 +75,18 @@
                 "/api/v1/kafka/publish/**",
         };
 
+        private final String[] PUBLI_ENDPOINTS_API_CONVERSION = {
+                "/api/v1/convert/**",
+                "/api/v1/convert",
+                "/api/v1/download/**",
+                "/api/v1/health/**",
+                "/api/v1/health",
+        };
+        private final String[] PUBLI_ENDPOINTS_API_PODCASTSERIES = {
+                "/api/v1/podcastSeries/**",
+                "/api/v1/podcastSeries"
+        };
+
         private final String[] PUBLIC_ENDPOINTS_UI = {"/ui/home"};
 
         private Logger LOGGER = LoggerFactory.getLogger(SecurityConfig.class);
@@ -96,7 +103,9 @@
                             .requestMatchers(PUBLIC_ENDPOINTS_API_ROLE).permitAll()
                             .requestMatchers(PUBLI_ENDPOINTS_API_KAFKA).permitAll()
                             .requestMatchers(PUBLI_ENDPOINTS_API_KAFKA_JSON).permitAll()
+                            .requestMatchers(PUBLI_ENDPOINTS_API_CONVERSION).permitAll()
                             .requestMatchers(PUBLIC_ENDPOINTS_API_PERMISSION).authenticated()
+                            .requestMatchers(PUBLI_ENDPOINTS_API_PODCASTSERIES).permitAll()
                             .requestMatchers(HttpMethod.POST, "/api/users").permitAll()
                             .requestMatchers(HttpMethod.GET, "/api/users/**").permitAll()
                             .anyRequest().authenticated()
@@ -108,10 +117,6 @@
             LOGGER.info("SecurityFilterChain initialized successfully by LOGGER FACTORY");
             return httpSecurity.build();
         }
-
-
-
-
 
 
         @Bean

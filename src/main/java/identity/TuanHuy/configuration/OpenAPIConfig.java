@@ -29,6 +29,7 @@ public class OpenAPIConfig {
 
                 .servers(Arrays.asList(
                         new Server().url("https://huynguyen-nginx.io.vn:8887").description("Production server") ,
+                        new Server().url("https://ciri.netlify.app").description("frontend call api"),
                         new Server().url("https://staging.api.com").description("Staging server") ,
                         new Server().url("https://api.com").description("Production server") ,
                         new Server().url("http://localhost:8080").description("localhost server frontend")
