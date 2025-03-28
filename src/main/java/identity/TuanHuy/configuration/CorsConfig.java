@@ -18,8 +18,9 @@ public class CorsConfig {
         config.setAllowCredentials(true);
         config.setAllowedOriginPatterns(List.of(
                 "http://localhost:5173",
-                "https://blogcuahuy.netlify.app",
-                "https://adminblogcuahuy.netlify.app"
+                "https://ciri.netlify.app",
+                "https://severus-snape-hazel.vercel.app",
+                "https://huynguyen-nginx.io.vn:8887"
         ));
         config.addAllowedMethod("*");
         config.addAllowedHeader("*");
@@ -27,5 +28,4 @@ public class CorsConfig {
         source.registerCorsConfiguration("/**", config);
         return new CorsFilter(source);
     }
-
 }

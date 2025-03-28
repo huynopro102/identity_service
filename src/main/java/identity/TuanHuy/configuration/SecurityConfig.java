@@ -12,8 +12,12 @@
     import org.springframework.security.oauth2.jwt.JwtDecoder;
     import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
     import org.springframework.security.web.SecurityFilterChain;
+    import org.springframework.web.cors.CorsConfiguration;
     import org.springframework.web.cors.CorsConfigurationSource;
+    import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
     import javax.crypto.spec.SecretKeySpec;
+    import java.util.List;
 
     @Configuration
     @EnableWebSecurity
@@ -41,7 +45,6 @@
         private final String[] PUBLIC_ENDPOINTS_API_AUTHENTICATION = {
                 "/api/authentication/login",
                 "/api/authentication/introspect",
-                "/api/mienphi",
                 "/api/cloudinary/image/upload",
                 "/api/genres",
         };
@@ -129,6 +132,23 @@
                     .withSecretKey(secretKeySpec)
                     .macAlgorithm(MacAlgorithm.HS256)
                     .build();
+        }
+
+        @Bean
+        public CorsConfigurationSource corsConfigurationSource() {
+            UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+            CorsConfiguration config = new CorsConfiguration();
+            config.setAllowedOriginPatterns(List.of(
+                    "http://localhost:5173",
+                    "https://ciri.netlify.app",
+                    "https://severus-snape-hazel.vercel.app",
+                    "https://huynguyen-nginx.io.vn:8887"
+            ));
+            config.setAllowCredentials(true);
+            config.addAllowedMethod("*");
+            config.addAllowedHeader("*");
+            source.registerCorsConfiguration("/**", config);
+            return source;
         }
 
 
