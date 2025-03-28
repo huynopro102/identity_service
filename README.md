@@ -6,9 +6,12 @@ This Maven-based Identity Service API provides a robust solution for user authen
 
 ## 🚀 Features
 
-- **User Authentication**: Secure login and registration
-- **Role**: Fine-grained access control
-- **Podcast**: Manage podcast and episode content access
+- **User**: crud
+- **authentication**: login , register
+- **Role**: curd
+- **Permission**: crud
+- **Podcast**: 
+- **Episode**:
 
 ## 📋 Prerequisites
 
