@@ -11,4 +11,6 @@ public interface PodcastSeriesMapper {
 
     List<PodcastSeriesResponse> toPodcastsSeries(List<PodcastSeries> podcastSeriesList);
 
+    // from entity PodcastSeries to dto PodcastSeriesResponse
+    PodcastSeriesResponse toPodcastSeriesResponse(PodcastSeries podcastSeries);
 }
