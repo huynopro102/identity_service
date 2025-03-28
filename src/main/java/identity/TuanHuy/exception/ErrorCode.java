@@ -47,7 +47,9 @@ public enum ErrorCode {
     SIGNER_KEY_IS_TOO_SHORT(1033,"SIGNER_KEY phải có ít nhất 32 ký tự.", HttpStatus.BAD_REQUEST) ,
     SIGNER_KEY_ERROR(1034,"SIGNER_KEY bij loi", HttpStatus.BAD_REQUEST) ,
     GENERATE_TOKEN_FAILED(1035,"Không thể tạo token.", HttpStatus.BAD_REQUEST),
-    DATABASE_CONNECTION(1036,"wating a minutes , DatabaseConnection is not initialized.", HttpStatus.BAD_REQUEST)
+    DATABASE_CONNECTION(1036,"wating a minutes , DatabaseConnection is not initialized.", HttpStatus.BAD_REQUEST),
+    PODCAST_NAME_EXISTS(1037,"tên của cuốn sách này đã đc đặt", HttpStatus.BAD_REQUEST),
+    PODCAST_NOT_EXISTS(1037,"id podcast không tồn tại", HttpStatus.BAD_REQUEST),
 
     ;
 

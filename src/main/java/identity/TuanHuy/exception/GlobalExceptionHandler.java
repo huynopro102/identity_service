@@ -198,7 +198,18 @@ public class GlobalExceptionHandler {
                     .message(ErrorCode.DATABASE_CONNECTION.getMessage())
                     .code(ErrorCode.DATABASE_CONNECTION.getCode())
                     ;
+        }else if(e.getErrorCode().equals(ErrorCode.PODCAST_NAME_EXISTS)){
+            apiResponseBuilder
+                    .message(ErrorCode.PODCAST_NAME_EXISTS.getMessage())
+                    .code(ErrorCode.PODCAST_NAME_EXISTS.getCode())
+            ;
+        }else if(e.getErrorCode().equals(ErrorCode.PODCAST_NOT_EXISTS)){
+            apiResponseBuilder
+                    .message(ErrorCode.PODCAST_NOT_EXISTS.getMessage())
+                    .code(ErrorCode.PODCAST_NOT_EXISTS.getCode())
+            ;
         }
+
 
         else{
             apiResponseBuilder
