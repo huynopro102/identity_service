@@ -8,6 +8,7 @@ import identity.TuanHuy.dto.response.AuthenticationResponse;
 import identity.TuanHuy.dto.response.IntrospectResponse;
 import identity.TuanHuy.dto.request.AuthenticationRequest;
 import identity.TuanHuy.dto.request.IntrospectRequest;
+import identity.TuanHuy.dto.response.UserResponse;
 import identity.TuanHuy.exception.AppException;
 import identity.TuanHuy.exception.ErrorCode;
 import identity.TuanHuy.repository.UserRepository;
@@ -43,7 +44,7 @@ public class AuthenticationService {
 
 
     @Value("${spring.jwt.signerKey}")
-    @NonFinal // để không inject cái này vô contructer
+    @NonFinal // để không inject cái này vô constructor
     protected String SIGNER_KEY ;
 
 
@@ -74,12 +75,20 @@ public class AuthenticationService {
         // kiểm tra xem token hết hạn chưa
         Date expirytime = signedJWT.getJWTClaimsSet().getExpirationTime();
         var verified = signedJWT.verify(verifier);
+        var notExpired = expirytime.after(new Date());
 
         //
-        return IntrospectResponse.builder()
-                .valid(verified && expirytime.after(new Date()))
-                .build();
-
+        if(verified && notExpired){
+            String userId = signedJWT.getJWTClaimsSet().getSubject();
+           return IntrospectResponse.builder()
+                   .valid(true)
+                   .userId(userId)
+                   .build();
+        }else{
+            return IntrospectResponse.builder()
+                    .valid(false)
+                    .build();
+        }
     }
 
     public AuthenticationResponse authenticate(AuthenticationRequest request) {
@@ -97,7 +106,7 @@ public class AuthenticationService {
         if(!authenticated) {
             throw new AppException(ErrorCode.AUTHENTICATE_INVALID);
         }
-        var token = generateToken(request.getEmail());
+        var token = generateToken(user.getId());
         saveSession(request.getEmail(),token);
         return AuthenticationResponse.builder()
                 .token(token)
@@ -105,7 +114,7 @@ public class AuthenticationService {
                 .build();
     }
 
-    public String generateToken(String username) {
+    public String generateToken(String userId) {
 
         // Tạo thời gian hết hạn cho token (1 phút từ thời điểm hiện tại) sử dụng Instant
         Instant expirationTime = Instant.now().plus(10, ChronoUnit.MINUTES);
@@ -116,7 +125,7 @@ public class AuthenticationService {
 
         // tạo payload có 2 bước 1 là tạo các claim 2 là tạo payload tọa thông qua JWSObject , các data trong body goi là claim
         JWTClaimsSet jwtClaimNames = new JWTClaimsSet.Builder()
-                .subject(username) // claim này dùng để đính nghĩa người gửi token này
+                .subject(userId) // claim này dùng để đính nghĩa người gửi token này , ở đây tôi định nghĩa là id của user
                 .issuer("huynguyen-nginx") // claim này để biết là token này đc gửi đi từ ai , thường sẽ là domin của service của mình
                 .issueTime(Date.from(Instant.now()))
                 .expirationTime(Date.from(expirationTime))
@@ -142,4 +151,6 @@ public class AuthenticationService {
         }
 
     }
+
+
 }
