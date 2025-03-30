@@ -4,14 +4,11 @@ package identity.TuanHuy.mapper;
     import identity.TuanHuy.dto.request.UserUpdateRequest;
     import identity.TuanHuy.dto.response.UserResponse;
     import identity.TuanHuy.entity.Permission;
-    import identity.TuanHuy.entity.Role;
-    import identity.TuanHuy.entity.RoleEnum;
     import identity.TuanHuy.entity.Users;
     import org.mapstruct.Mapper;
     import org.mapstruct.Mapping;
     import org.mapstruct.MappingTarget;
     import org.mapstruct.factory.Mappers;
-
     import java.util.List;
     import java.util.Set;
     import java.util.stream.Collectors;
@@ -20,18 +17,12 @@ package identity.TuanHuy.mapper;
     public interface UserMapper {
         UserMapper INSTANCE = Mappers.getMapper(UserMapper.class);
 
-
         Users toUser(UserCreationRequest request);
-
 
         void updateUser(@MappingTarget Users users , UserUpdateRequest request); // map the target of the resquest to the user
 
-
-
-
         @Mapping(target = "roles", expression = "java(mapRoles(users))") // convert roles to Set<String>
         UserResponse toUserResponse(Users users);
-
 
         List<UserResponse> toUsersResponse(List<Users> usersList);
 
