@@ -40,5 +40,23 @@ public class AuthenticationController  {
                 .build();
     }
 
+    @PostMapping("/me")
+    public ApiResponse<IntrospectResponse> me(@RequestBody IntrospectRequest request) throws ParseException, JOSEException {
+        IntrospectResponse result = authenticationService.introspect(request);
+        if (result.getValid()==true){
 
+            return ApiResponse.<IntrospectResponse>builder()
+                    .code(200)
+                    .message("success")
+                    .result(result)
+                    .build()
+                    ;
+        }else{
+            return ApiResponse.<IntrospectResponse>builder()
+                    .code(404)
+                    .message("fail")
+                    .build()
+                    ;
+        }
+    }
 }

@@ -1,17 +1,12 @@
 package identity.TuanHuy.controller;
-
-
 import identity.TuanHuy.dto.request.PermissionCreateRequest;
-import identity.TuanHuy.dto.request.PermissionRequest;
 import identity.TuanHuy.dto.request.PermissionUpdateRequest;
 import identity.TuanHuy.dto.response.ApiResponse;
 import identity.TuanHuy.dto.response.PermissionResponse;
-import identity.TuanHuy.entity.Permission;
 import identity.TuanHuy.service.PermissionService;
-import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
-import java.util.Optional;
+
 
 @RestController
 @RequestMapping("/api/permissions")

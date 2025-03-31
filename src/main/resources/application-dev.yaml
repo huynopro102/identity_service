@@ -47,4 +47,7 @@ spring:
   jwt:
     signerKey: ${SPRING_JWT_SIGNERKEY}
 api:
-  base-url: ${API_BASE_URL:http://localhost:9000}
+  base-url: ${API_BASE_URL:http://localhost:8080/api/v1/download}
+app:
+  upload:
+    dir: "E:/personal_project"

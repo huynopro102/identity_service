@@ -5,10 +5,6 @@ import identity.TuanHuy.dto.request.PodcastSeriesRequest;
 import identity.TuanHuy.dto.response.ApiResponse;
 import identity.TuanHuy.dto.response.PodcastSeriesResponse;
 import identity.TuanHuy.service.PodcastSeriesService;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
-import org.springframework.boot.autoconfigure.info.ProjectInfoProperties;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
