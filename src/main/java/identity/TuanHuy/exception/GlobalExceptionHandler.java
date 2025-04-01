@@ -260,6 +260,7 @@ public class GlobalExceptionHandler {
                     .code(ErrorCode.EMAIL_ALREADY_EXISTS.getCode())
                     .message(ErrorCode.EMAIL_ALREADY_EXISTS.getMessage());
         }else{
+
             responseBuilder
                     .code(ErrorCode.UNCATEGORIZED_EXCEPTION.getCode())
                     .message(ErrorCode.UNCATEGORIZED_EXCEPTION.getMessage());
@@ -270,14 +271,14 @@ public class GlobalExceptionHandler {
 
 
 
-    @ExceptionHandler(value = Exception.class)
-    ResponseEntity<ApiResponse> handleExceptionGlobal(Exception e) {
-        ApiResponse apiResponse = ApiResponse.builder()
-                .code(ErrorCode.UNCATEGORIZED_EXCEPTION.getCode())
-                .message(ErrorCode.UNCATEGORIZED_EXCEPTION.getMessage())
-                .build();
-        return ResponseEntity.badRequest().body(apiResponse);
-    }
+//    @ExceptionHandler(value = Exception.class)
+//    ResponseEntity<ApiResponse> handleExceptionGlobal(Exception e) {
+//        ApiResponse apiResponse = ApiResponse.builder()
+//                .code(ErrorCode.UNCATEGORIZED_EXCEPTION.getCode())
+//                .message(ErrorCode.UNCATEGORIZED_EXCEPTION.getMessage())
+//                .build();
+//        return ResponseEntity.badRequest().body(apiResponse);
+//    }
 
 
 
