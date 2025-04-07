@@ -14,7 +14,7 @@ import java.util.List;
 
 
 @RestController
-@RequestMapping("/api/users") // Với cấu hình /api ở file .yaml , nó sẽ trở thành "/api/users"
+@RequestMapping("/api/v1/users") // Với cấu hình /api ở file .yaml , nó sẽ trở thành "/api/users"
 @CrossOrigin(origins = "*") // Allow requests from the specified domain
 public class UserController{
 

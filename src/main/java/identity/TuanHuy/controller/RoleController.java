@@ -14,7 +14,7 @@ import java.util.List;
 
 @SecurityRequirement(name = "bearer-key")
 @RestController
-@RequestMapping("/api/roles")
+@RequestMapping("/api/v1/roles")
 @CrossOrigin(origins = "*")
 public class RoleController {
 

@@ -43,28 +43,28 @@
 
 
         private final String[] PUBLIC_ENDPOINTS_API_AUTHENTICATION = {
-                "/api/authentication/login",
-                "/api/authentication/introspect",
-                "/api/cloudinary/image/upload",
-                "/api/genres",
+                "/api/v1/authentication/login",
+                "/api/v1/authentication/introspect",
+                "/api/v1/cloudinary/image/upload",
+                "/api/v1/genres",
         };
 
         private final String[] PUBLIC_ENDPOINTS_API_USER = {
-                "/api/users" ,
-                "/api/users/{userId}/role" ,
-                "/api/users/{userId}"
+                "/api/v1/users" ,
+                "/api/v1/users/{userId}/role" ,
+                "/api/v1/users/{userId}"
         };
 
         private final String[] PUBLIC_ENDPOINTS_API_ROLE = {
-                "/api/roles",
-                "/api/roles/{roleName}",
-                "/api/roles/*",
-                "/api/roles/{roleName}/details"
+                "/api/v1/roles",
+                "/api/v1/roles/{roleName}",
+                "/api/v1/roles/*",
+                "/api/v1/roles/{roleName}/details"
         };
 
         private final String[] PUBLIC_ENDPOINTS_API_PERMISSION = {
-                "/api/permissions/*",
-                "/api/permissions"
+                "/api/v1/permissions/*",
+                "/api/v1/permissions"
 
         };
 
@@ -134,22 +134,7 @@
                     .build();
         }
 
-        @Bean
-        public CorsConfigurationSource corsConfigurationSource() {
-            UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-            CorsConfiguration config = new CorsConfiguration();
-            config.setAllowedOriginPatterns(List.of(
-                    "http://localhost:5173",
-                    "https://ciri.netlify.app",
-                    "https://severus-snape-hazel.vercel.app",
-                    "https://huynguyen-nginx.io.vn:8887"
-            ));
-            config.setAllowCredentials(true);
-            config.addAllowedMethod("*");
-            config.addAllowedHeader("*");
-            source.registerCorsConfiguration("/**", config);
-            return source;
-        }
+
 
 
 }

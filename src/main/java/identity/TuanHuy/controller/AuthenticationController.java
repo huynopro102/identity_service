@@ -17,7 +17,7 @@ import java.text.ParseException;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/api/authentication")
+@RequestMapping("/api/v1/authentication")
 public class AuthenticationController  {
     @Autowired
     AuthenticationService authenticationService;
