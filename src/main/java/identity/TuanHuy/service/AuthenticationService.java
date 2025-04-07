@@ -107,7 +107,7 @@ public class AuthenticationService {
             throw new AppException(ErrorCode.AUTHENTICATE_INVALID);
         }
         var token = generateToken(user.getId());
-        saveSession(request.getEmail(),token);
+//        saveSession(request.getEmail(),token);
         return AuthenticationResponse.builder()
                 .token(token)
                 .authenticated(true)
