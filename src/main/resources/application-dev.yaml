@@ -1,5 +1,4 @@
 spring:
-
   redis:
     host: ${SPRING_REDIS_HOST}
     port: ${SPRING_REDIS_PORT}
@@ -23,12 +22,16 @@ spring:
   application:
     name: TuanHuy
   datasource:
-    url: ${SPRING_DATASOURCE_URL}
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/identity_service}
     # có thể viết tất cả các thông tin trên 1 url recommend là ko
     # jdbc:postgresql://<HOST>:<PORT>/<name_DB_in_server>?sslmode=require
-    username: ${SPRING_DATASOURCE_USERNAME}
-    password: ${SPRING_DATASOURCE_PASSWORD}
+    username: ${SPRING_DATASOURCE_USERNAME:postgres}
+    password: ${SPRING_DATASOURCE_PASSWORD:12345}
     driver-class-name: org.postgresql.Driver
+    hikari:
+      maximum-pool-size: 5  # Giảm từ 10 xuống 5
+      minimum-idle: 2       # Giảm từ 5 xuống 2
+      idle-timeout: 10000   # Giảm từ 30000 xuống 10000 (10 giây)
   jpa:
     hibernate:
       ddl-auto: update

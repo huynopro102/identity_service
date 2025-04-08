@@ -17,6 +17,8 @@ services:
         limits:
           cpus: '0.3'
           memory: 200m
+    volumes:
+      - ./ca.pem:/docker-entrypoint-initdb.d/ca.pem
 
     networks:
       - network_shared
