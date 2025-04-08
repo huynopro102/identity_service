@@ -17,7 +17,7 @@ import java.time.LocalDate;
 public class UserCreationRequest {
     @NotNull(message = "USERNAME_NOT_NULL")
     @Size(min = 4, message = "USER_INVALID")
-    @Schema(example = "nguyen van d",description = "enter name user")
+    @Schema(example = "nguyen tuan huy",description = "enter name user")
     String username;
 
     @NotNull(message = "PASSWORD_NOT_NULL")
@@ -30,11 +30,11 @@ public class UserCreationRequest {
 //    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
     //shape = JsonFormat.Shape.STRING , để đảm bảo JSON trả về cũng theo format dd-MM-yyyy.
 //    @Schema(example = "02-09-1999", description = "enter date of birth (dd-MM-yyyy)")
-    @Schema(example = "1999-02-12", description = "enter date of birth (yyyy-MM-dd)")
+    @Schema(example = "2003-09-16", description = "enter date of birth (yyyy-MM-dd)")
     LocalDate dob;
 
 
     @NotBlank(message = "EMAIL_INVALID")
-    @Schema(example = "nguyenvand@gmail.com",description = "enter email")
+    @Schema(example = "huynopro102@gmail.com",description = "enter email")
     String email;
 }

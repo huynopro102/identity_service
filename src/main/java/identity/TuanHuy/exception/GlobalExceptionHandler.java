@@ -25,25 +25,42 @@ public class GlobalExceptionHandler {
     private static final Logger log = LoggerFactory.getLogger(GlobalExceptionHandler.class);
 
     @ExceptionHandler(value = MethodArgumentNotValidException.class)
-    ResponseEntity<List<ApiResponse<Void>>> handllingValidationException(MethodArgumentNotValidException e) {
+    ResponseEntity<ApiResponse<Object>> handlingValidationException(MethodArgumentNotValidException e) {
         List<FieldError> fieldErrors = e.getBindingResult().getFieldErrors();
-        List<ApiResponse<Void>> apiResponses = new ArrayList<>();
-        for (FieldError fieldError : fieldErrors) {
-            ErrorCode errorCode;
-            try {
-                String enumkey = fieldError.getDefaultMessage();
-                errorCode = ErrorCode.valueOf(enumkey);
-            } catch (IllegalArgumentException exception) {
-                // Nếu không tìm thấy enum key hợp lệ, sử dụng INVALID_KEY_ENUM
-                errorCode = ErrorCode.UNCATEGORIZED_EXCEPTION;
-            }
-            ApiResponse<Void> apiResponse = ApiResponse.<Void>builder()
+//        List<ApiResponse<Void>> apiResponses = new ArrayList<>();
+
+        for (int i = 0; i < fieldErrors.size(); i++) {
+            log.info("this is a log info : "+fieldErrors.get(i).toString());
+        }
+            log.info("this is a log info size : " + fieldErrors.size());
+
+            ErrorCode errorCode =  ErrorCode.valueOf(e.getBindingResult().getFieldError().getDefaultMessage());
+
+
+            ApiResponse<Object> apiResponse = ApiResponse.builder()
                     .message(errorCode.getMessage())
                     .code(errorCode.getCode())
                     .build();
-            apiResponses.add(apiResponse);
-        }
-        return ResponseEntity.badRequest().body(apiResponses);
+
+
+
+//        for (FieldError fieldError : fieldErrors) {
+//            ErrorCode errorCode;
+//            try {
+//                String enumkey = fieldError.getDefaultMessage();
+//                errorCode = ErrorCode.valueOf(enumkey);
+//            } catch (IllegalArgumentException exception) {
+//                // Nếu không tìm thấy enum key hợp lệ, sử dụng INVALID_KEY_ENUM
+//                errorCode = ErrorCode.UNCATEGORIZED_EXCEPTION;
+//            }
+//            ApiResponse<Void> apiResponse = ApiResponse.<Void>builder()
+//                    .message(errorCode.getMessage())
+//                    .code(errorCode.getCode())
+//                    .build();
+//            apiResponses.add(apiResponse);
+//        }
+
+        return ResponseEntity.badRequest().body(apiResponse);
     }
 
 
