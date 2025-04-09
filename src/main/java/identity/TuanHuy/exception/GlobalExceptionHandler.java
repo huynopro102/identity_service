@@ -225,6 +225,11 @@ public class GlobalExceptionHandler {
                     .message(ErrorCode.PODCAST_NOT_EXISTS.getMessage())
                     .code(ErrorCode.PODCAST_NOT_EXISTS.getCode())
             ;
+        }else if (e.getErrorCode().equals(ErrorCode.USER_EXITED)){
+            apiResponseBuilder
+                    .message(ErrorCode.USER_EXITED.getMessage())
+                    .code(ErrorCode.USER_EXITED.getCode())
+                    ;
         }
 
 
