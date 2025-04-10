@@ -53,4 +53,9 @@ public class FileUploadService {
             return "auto";
     }
 
+
+    public String uploadImage(MultipartFile file){
+        return uploadFile(file , "blogcuahuy/podcasts/images");
+    }
+
 }
