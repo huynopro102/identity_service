@@ -6,4 +6,5 @@ public interface MediaStorageService {
     String uploadFile(MultipartFile multipartFile , String folder);
     String determineResourceType(String contentType);
     String uploadImage(MultipartFile file, String titlePodcast);
+    String uploadEpisode(MultipartFile audio , String nameEpisode);
 }

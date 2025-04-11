@@ -240,6 +240,11 @@ public class GlobalExceptionHandler {
                     .message(ErrorCode.EPISODE_IS_NULL.getMessage())
                     .code(ErrorCode.EPISODE_IS_NULL.getCode())
                     ;
+        }else if(e.getErrorCode().equals(ErrorCode.THIS_EPISODE_ALREADY_EXIST)){
+            apiResponseBuilder
+                    .message(ErrorCode.THIS_EPISODE_ALREADY_EXIST.getMessage())
+                    .code(ErrorCode.THIS_EPISODE_ALREADY_EXIST.getCode())
+                    ;
         }
 
 

@@ -51,7 +51,8 @@ public enum ErrorCode {
     PODCAST_NAME_EXISTS(1037,"tên của cuốn sách này đã đc đặt", HttpStatus.BAD_REQUEST),
     PODCAST_NOT_EXISTS(1037,"id podcast không tồn tại", HttpStatus.BAD_REQUEST),
     PODCAST_TITLE_ALREADY_EXITS(1038,"Podcast với tiêu đề này đã tồn tại",HttpStatus.BAD_REQUEST),
-    EPISODE_IS_NULL(1039,"episode is null",HttpStatus.BAD_REQUEST)
+    EPISODE_IS_NULL(1039,"episode is null",HttpStatus.BAD_REQUEST),
+    THIS_EPISODE_ALREADY_EXIST(1040,"This episode already exists",HttpStatus.BAD_REQUEST)
 
     ;
 

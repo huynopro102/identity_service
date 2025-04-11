@@ -56,4 +56,8 @@ public class FileUploadService implements MediaStorageService{
         return uploadFile(file , "blogcuahuy/podcasts/"+ titlePodcast );
     }
 
+    public String uploadEpisode(MultipartFile audio , String titlePodcast){
+        return uploadFile(audio,"blogcuahuy/podcasts/"+titlePodcast);
+    }
+
 }
