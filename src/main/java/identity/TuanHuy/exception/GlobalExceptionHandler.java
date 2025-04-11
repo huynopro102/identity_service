@@ -235,6 +235,11 @@ public class GlobalExceptionHandler {
                     .message(ErrorCode.PODCAST_TITLE_ALREADY_EXITS.getMessage())
                     .code(ErrorCode.PODCAST_TITLE_ALREADY_EXITS.getCode())
                     ;
+        }else if(e.getErrorCode().equals(ErrorCode.EPISODE_IS_NULL)){
+            apiResponseBuilder
+                    .message(ErrorCode.EPISODE_IS_NULL.getMessage())
+                    .code(ErrorCode.EPISODE_IS_NULL.getCode())
+                    ;
         }
 
 

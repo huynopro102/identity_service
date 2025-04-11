@@ -87,6 +87,12 @@
                 "/api/v1/podcastSeries"
         };
 
+        private final String[] PUBLIC_ENDPOINTS_API_EPISODES = {
+                "/api/v1/episodes/",
+                "/api/v1/episodes"
+
+        } ;
+
         private final String[] PUBLIC_ENDPOINTS_UI = {"/ui/home"};
 
         private Logger LOGGER = LoggerFactory.getLogger(SecurityConfig.class);
@@ -99,6 +105,7 @@
                             .requestMatchers(SWAGGER_WHITELIST).permitAll()
                             .requestMatchers(PUBLIC_ENDPOINTS_UI).permitAll()
                             .requestMatchers(PUBLIC_ENDPOINTS_API_USER).permitAll()
+                            .requestMatchers(PUBLIC_ENDPOINTS_API_EPISODES).permitAll()
                             .requestMatchers(PUBLIC_ENDPOINTS_API_AUTHENTICATION).permitAll()
                             .requestMatchers(PUBLIC_ENDPOINTS_API_ROLE).permitAll()
                             .requestMatchers(PUBLI_ENDPOINTS_API_KAFKA).permitAll()

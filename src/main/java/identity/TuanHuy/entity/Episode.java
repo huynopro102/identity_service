@@ -24,10 +24,10 @@ public class Episode {
     @Column(name = "duration")
     private Integer duration;
 
-    @Column(name = "name_episode")
+    @Column(name = "name_episode" , unique = true)
     private String nameEpisode;
 
-    @Column(name = "number_episode")
+    @Column(name = "number_episode" , unique = true)
     private Integer numberEpisode;
 
     @Column(name = "audio_url")

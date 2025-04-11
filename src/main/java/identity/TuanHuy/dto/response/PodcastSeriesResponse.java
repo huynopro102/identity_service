@@ -1,4 +1,5 @@
 package identity.TuanHuy.dto.response;
+import identity.TuanHuy.entity.Episode;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -23,4 +24,5 @@ public class PodcastSeriesResponse implements Serializable {
      private int totalDuration;
      private LocalDateTime createAt;
      private LocalDateTime updateAt;
+     Set<Episode> episodes;
 }

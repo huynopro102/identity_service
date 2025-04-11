@@ -6,6 +6,8 @@ import identity.TuanHuy.dto.response.EpisodeResponse;
 import identity.TuanHuy.entity.Episode;
 import org.mapstruct.Mapper;
 
+import java.util.List;
+
 
 @Mapper(componentModel = "spring")
 public interface EpisodeMapper {
@@ -30,4 +32,5 @@ public interface EpisodeMapper {
 
     EpisodeResponse toEpisodeResponse(Episode episode);
     Episode toEpisode(EpisodeRequest request);
+    List<EpisodeResponse> toListEpisodes(List<Episode> episodeList);
 }
