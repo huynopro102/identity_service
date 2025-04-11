@@ -230,6 +230,11 @@ public class GlobalExceptionHandler {
                     .message(ErrorCode.USER_EXITED.getMessage())
                     .code(ErrorCode.USER_EXITED.getCode())
                     ;
+        }else if(e.getErrorCode().equals(ErrorCode.PODCAST_TITLE_ALREADY_EXITS)){
+            apiResponseBuilder
+                    .message(ErrorCode.PODCAST_TITLE_ALREADY_EXITS.getMessage())
+                    .code(ErrorCode.PODCAST_TITLE_ALREADY_EXITS.getCode())
+                    ;
         }
 
 

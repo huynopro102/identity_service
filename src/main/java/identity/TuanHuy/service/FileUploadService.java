@@ -13,7 +13,7 @@ import java.util.Map;
 import java.util.UUID;
 
 @Service
-public class FileUploadService {
+public class FileUploadService implements MediaStorageService{
     @Autowired
     private Cloudinary cloudinary;
     private Logger logger = LoggerFactory.getLogger(FileUploadService.class);
@@ -31,7 +31,6 @@ public class FileUploadService {
                         "resource_type", determineResourceType(file.getContentType())
                 )
         );
-
         return (String) uploadResult.get("secure_url");
         }catch (IOException ioException){
             throw new RuntimeException("khong the upload len cloudinary ",ioException);
@@ -40,7 +39,7 @@ public class FileUploadService {
 
     // hàm này dùng để xác định loại file đó là gì ví dụ file word , pdf , video , image ,jpg ....
     // contentType là 1 String : MINE (ví dụ: "image/jpeg", "audio/mp3", "video/mp4"...)
-    private String determineResourceType(String contentType){
+    public String determineResourceType(String contentType){
             if(contentType != null){
                 if(contentType.startsWith("image/")){
                     return "image";
@@ -52,8 +51,9 @@ public class FileUploadService {
     }
 
 
-    public String uploadImage(MultipartFile file){
-        return uploadFile(file , "blogcuahuy/podcasts/images");
+
+    public String uploadImage(MultipartFile file , String titlePodcast){
+        return uploadFile(file , "blogcuahuy/podcasts/"+ titlePodcast );
     }
 
 }

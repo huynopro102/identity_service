@@ -1,5 +1,5 @@
 package identity.TuanHuy.service;
-import identity.TuanHuy.dto.request.PodcastSeriesRequest;
+import identity.TuanHuy.dto.request.PodcastSeriesFormRequest;
 import identity.TuanHuy.dto.response.PodcastSeriesResponse;
 import identity.TuanHuy.entity.PodcastSeries;
 import identity.TuanHuy.exception.AppException;
@@ -24,45 +24,31 @@ public class PodcastSeriesService {
     private final FileUploadService fileUploadService;
     private final PodcastSeriesMapper podcastSeriesMapper;
 
-//    public PodcastSeriesResponse createPodcastSeries(PodcastSeriesRequest request){
-//                if(podcastSeriesRepository.existsByTitle(request.getTitle())){
-//                    throw new AppException(ErrorCode.PODCAST_NAME_EXISTS);
-//                }
-//
-//        PodcastSeries podcastSeries = new PodcastSeries();
-//        podcastSeries.setAuthor(request.getAuthor());
-//        podcastSeries.setCoverUrl(request.getCoverUrl());
-//        podcastSeries.setNarrator(request.getNarrator());
-//        podcastSeries.setTitle(request.getTitle());
-//        podcastSeries.setTotalDuration(request.getTotalDuration());
-//
-//        podcastSeriesRepository.save(podcastSeries);
-//
-//        return podcastSeriesMapper.toPodcastSeriesResponse(podcastSeries);
-//    }
-
     public List<PodcastSeriesResponse> getAllPodcastSeries(){
         List<PodcastSeries> podcastSeriesList = new ArrayList<>(podcastSeriesRepository.findAll());
         return podcastSeriesMapper.toPodcastsSeries(podcastSeriesList);
     }
 
-    public PodcastSeriesResponse createPodcastSeries(PodcastSeriesRequest podcastSeriesRequest, MultipartFile coverImage){
-            if(podcastSeriesRepository.existsByTitle(podcastSeriesRequest.getTitle())){
+    public PodcastSeriesResponse createPodcastSeries(PodcastSeriesFormRequest podcastSeriesFormRequest){
+            if(podcastSeriesRepository.existsByTitle(podcastSeriesFormRequest.getTitle())){
                 throw new AppException(ErrorCode.PODCAST_TITLE_ALREADY_EXITS);
             }
             String urlCover = null;
+            MultipartFile coverImage = podcastSeriesFormRequest.getCoverImage();
             if(!coverImage.isEmpty() && (coverImage != null) ){
-                    urlCover = fileUploadService.uploadImage(coverImage);
+                    urlCover = fileUploadService.uploadImage(coverImage,podcastSeriesFormRequest.getTitle());
             }
 
             PodcastSeries podcastSeries = new PodcastSeries();
+
             podcastSeries.setCreatedAt(LocalDateTime.now());
-            podcastSeries.setAuthor(podcastSeriesRequest.getAuthor());
-            podcastSeries.setCoverUrl(urlCover);
-            podcastSeries.setTitle(podcastSeries.getTitle());
-            podcastSeries.setNarrator(podcastSeries.getNarrator());
             podcastSeries.setCreateUpdate(LocalDateTime.now());
-            podcastSeries.setTotalDuration(null);
+
+            podcastSeries.setAuthor(podcastSeriesFormRequest.getAuthor());
+            podcastSeries.setCoverUrl(urlCover);
+            podcastSeries.setTitle(podcastSeriesFormRequest.getTitle());
+            podcastSeries.setNarrator(podcastSeriesFormRequest.getNarrator());
+            podcastSeries.setTotalDuration(podcastSeriesFormRequest.getTotalDuration());
 
             podcastSeriesRepository.save(podcastSeries);
 

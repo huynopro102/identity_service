@@ -1,9 +1,6 @@
 package identity.TuanHuy.controller;
 
-
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import identity.TuanHuy.dto.request.PodcastSeriesRequest;
+import identity.TuanHuy.dto.request.PodcastSeriesFormRequest;
 import identity.TuanHuy.dto.response.ApiResponse;
 import identity.TuanHuy.dto.response.PodcastSeriesResponse;
 import identity.TuanHuy.service.PodcastSeriesService;
@@ -13,7 +10,6 @@ import io.swagger.v3.oas.annotations.media.Content;
 import jakarta.validation.Valid;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -27,10 +23,21 @@ public class PodcastSeriesController {
         this.podcastSeriesService = podcastSeriesService;
     }
 
+    @GetMapping("/")
+    public ApiResponse<List<PodcastSeriesResponse>> getAllPodcastSeries(){
+        List<PodcastSeriesResponse> podcastSeriesResponseList = podcastSeriesService.getAllPodcastSeries();
+        return ApiResponse.<List<PodcastSeriesResponse>>builder()
+                .message("get PodcastSeries successfully")
+                .code(200)
+                .result(podcastSeriesResponseList)
+                .build();
+
+    }
 
     //MediaType.MULTIPART_FORM_DATA_VALUE để nhận dữ liệu. Điều này có nghĩa là:
     //Header:
     //Content-Type: multipart/form-data
+    // Endpoint cho việc tạo Podcast Series với form-data gồm các field và 1 file ảnh
     @PostMapping(value = "/", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @Operation(
             summary = "Create a new Podcast Series",
@@ -41,20 +48,13 @@ public class PodcastSeriesController {
             )
     )
     public ApiResponse<PodcastSeriesResponse> createPodcastSeries(
-            @Parameter(description = "Podcast Series JSON", required = true)
-            @RequestPart("request") String requestJson,
-
-            @Parameter(description = "Cover image file", required = false)
-            @RequestPart(value = "coverImage", required = false) MultipartFile coverImage
-    ) throws JsonProcessingException {
-        ObjectMapper objectMapper = new ObjectMapper();
-        PodcastSeriesRequest request = objectMapper.readValue(requestJson, PodcastSeriesRequest.class);
-
-        PodcastSeriesResponse podcastSeriesResponse = podcastSeriesService.createPodcastSeries(request, coverImage);
-
+            @Parameter(description = "Podcast Series Form Data", required = true)
+            @Valid @ModelAttribute PodcastSeriesFormRequest formRequest
+    ) {
+        PodcastSeriesResponse podcastSeriesResponse = podcastSeriesService.createPodcastSeries(formRequest);
         return ApiResponse.<PodcastSeriesResponse>builder()
                 .code(200)
-                .message("create podcastSeries successfully")
+                .message("Create Podcast Series successfully")
                 .result(podcastSeriesResponse)
                 .build();
     }
