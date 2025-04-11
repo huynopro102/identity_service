@@ -1,6 +1,8 @@
 package identity.TuanHuy.controller;
 
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import identity.TuanHuy.dto.request.PodcastSeriesRequest;
 import identity.TuanHuy.dto.response.ApiResponse;
 import identity.TuanHuy.dto.response.PodcastSeriesResponse;
@@ -21,7 +23,7 @@ import java.util.List;
 public class PodcastSeriesController {
     private final PodcastSeriesService podcastSeriesService;
 
-    public PodcastSeriesController(PodcastSeriesService podcastSeriesService){
+    public PodcastSeriesController(PodcastSeriesService podcastSeriesService) {
         this.podcastSeriesService = podcastSeriesService;
     }
 
@@ -39,13 +41,14 @@ public class PodcastSeriesController {
             )
     )
     public ApiResponse<PodcastSeriesResponse> createPodcastSeries(
-            @Parameter(name = "request", required = true, description = "Podcast Series JSON",
-                    content = @Content(mediaType = "application/json"))
-            @RequestPart("request") @Valid PodcastSeriesRequest request,
+            @Parameter(description = "Podcast Series JSON", required = true)
+            @RequestPart("request") String requestJson,
 
-            @Parameter(name = "coverImage", required = false, description = "Cover image file",
-                    content = @Content(mediaType = "image/jpeg"))
-            @RequestPart(value = "coverImage", required = false) MultipartFile coverImage) {
+            @Parameter(description = "Cover image file", required = false)
+            @RequestPart(value = "coverImage", required = false) MultipartFile coverImage
+    ) throws JsonProcessingException {
+        ObjectMapper objectMapper = new ObjectMapper();
+        PodcastSeriesRequest request = objectMapper.readValue(requestJson, PodcastSeriesRequest.class);
 
         PodcastSeriesResponse podcastSeriesResponse = podcastSeriesService.createPodcastSeries(request, coverImage);
 
@@ -55,15 +58,5 @@ public class PodcastSeriesController {
                 .result(podcastSeriesResponse)
                 .build();
     }
-
-
-    @GetMapping("/")
-    public ApiResponse<List<PodcastSeriesResponse>> getAllPodcastsSeries(){
-        return ApiResponse.<List<PodcastSeriesResponse>>builder()
-                .code(200)
-                .message("get All podcastsSeries successfully")
-                .result(podcastSeriesService.getAllPodcastSeries())
-                .build()
-                ;
-    }
 }
+

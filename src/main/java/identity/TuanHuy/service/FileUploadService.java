@@ -4,6 +4,7 @@ import com.cloudinary.utils.ObjectUtils;
 import identity.TuanHuy.configuration.CloudinaryConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -13,13 +14,10 @@ import java.util.UUID;
 
 @Service
 public class FileUploadService {
-    private final Cloudinary cloudinary;
+    @Autowired
+    private Cloudinary cloudinary;
     private Logger logger = LoggerFactory.getLogger(FileUploadService.class);
 
-    // constructor handmade
-    public FileUploadService(Cloudinary cloudinary){
-        this.cloudinary = cloudinary;
-    }
 
     public String uploadFile(MultipartFile file , String folder){
         try{

@@ -30,8 +30,8 @@ public class CloudinaryConfig {
         LOGGER.info("this is a cloud-secret-key "+cloudApiSecret);
         Map<String,String> config = new HashMap<>();
         config.put("cloud_name",cloudName);
-        config.put("cloud_api_key",cloudApiKey);
-        config.put("cloud_api_secret",cloudApiSecret);
+        config.put("api_key",cloudApiKey);
+        config.put("api_secret",cloudApiSecret);
         return new Cloudinary(config);
     }
 
