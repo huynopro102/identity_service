@@ -23,6 +23,17 @@ public class PodcastSeriesController {
         this.podcastSeriesService = podcastSeriesService;
     }
 
+    @GetMapping("/{podcastSeriesId}")
+    public ApiResponse<PodcastSeriesResponse> getPodcastSeriesById(@PathVariable String podcastSeriesId){
+        PodcastSeriesResponse podcastSeriesResponse = podcastSeriesService.getPodcastSeriesById(podcastSeriesId);
+        return ApiResponse.<PodcastSeriesResponse>builder()
+                .message("get successfully")
+                .code(200)
+                .result(podcastSeriesResponse)
+                .build()
+                ;
+    }
+
     @GetMapping("/")
     public ApiResponse<List<PodcastSeriesResponse>> getAllPodcastSeries(){
         List<PodcastSeriesResponse> podcastSeriesResponseList = podcastSeriesService.getAllPodcastSeries();

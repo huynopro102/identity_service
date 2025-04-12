@@ -13,7 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-
+import java.util.Optional;
 
 
 @AllArgsConstructor
@@ -29,6 +29,15 @@ public class PodcastSeriesService {
         return podcastSeriesMapper.toPodcastsSeries(podcastSeriesList);
     }
 
+
+    public PodcastSeriesResponse getPodcastSeriesById(String podcastSeriesId){
+        PodcastSeries podcastSeries = podcastSeriesRepository.findById(podcastSeriesId).orElse(null);
+        if(podcastSeries == null){
+            throw new AppException(ErrorCode.PODCAST_NOT_EXISTS);
+        }
+        return podcastSeriesMapper.toPodcastSeriesResponse(podcastSeries);
+    }
+
     public PodcastSeriesResponse createPodcastSeries(PodcastSeriesFormRequest podcastSeriesFormRequest){
             if(podcastSeriesRepository.existsByTitle(podcastSeriesFormRequest.getTitle())){
                 throw new AppException(ErrorCode.PODCAST_TITLE_ALREADY_EXITS);
@@ -40,10 +49,8 @@ public class PodcastSeriesService {
             }
 
             PodcastSeries podcastSeries = new PodcastSeries();
-
             podcastSeries.setCreatedAt(LocalDateTime.now());
             podcastSeries.setCreateUpdate(LocalDateTime.now());
-
             podcastSeries.setAuthor(podcastSeriesFormRequest.getAuthor());
             podcastSeries.setCoverUrl(urlCover);
             podcastSeries.setTitle(podcastSeriesFormRequest.getTitle());
@@ -53,7 +60,6 @@ public class PodcastSeriesService {
             podcastSeriesRepository.save(podcastSeries);
 
             return podcastSeriesMapper.toPodcastSeriesResponse(podcastSeries);
-
     }
 
 
