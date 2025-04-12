@@ -1,5 +1,6 @@
 package identity.TuanHuy.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,6 +10,7 @@ import org.attoparser.dom.Text;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Set;
 
 
 @Setter
@@ -46,7 +48,8 @@ public class PodcastSeries {
     private LocalDateTime createUpdate;
 
     @OneToMany(mappedBy = "podcastSeries")
-    private List<Episode> episodes;
+    @JsonManagedReference
+    private Set<Episode> episodes;
     // mapped by có nghĩa là phía chủ ( là Episode ) podcastSeries là 1 field trong Episode
     // note : podcastSeries dự vào tên field của của entity tức là "private PodcastSeries podcastSeries" chứ ko phải @joinColumn(name ="podcast_series_id")
 }

@@ -36,7 +36,7 @@ public class PodcastSeriesService {
             String urlCover = null;
             MultipartFile coverImage = podcastSeriesFormRequest.getCoverImage();
             if(!coverImage.isEmpty() && (coverImage != null) ){
-                    urlCover = fileUploadService.uploadImage(coverImage,podcastSeriesFormRequest.getTitle());
+                    urlCover = fileUploadService.uploadCoverImagePodcast(coverImage,podcastSeriesFormRequest.getTitle());
             }
 
             PodcastSeries podcastSeries = new PodcastSeries();

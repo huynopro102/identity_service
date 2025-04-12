@@ -25,5 +25,5 @@ public class EpisodeCreateFormRequest {
     private String nameEpisode;
 
     @Schema(example = "3")
-    private String numberEpisode;
+    private int numberEpisode;
 }

@@ -1,6 +1,8 @@
 package identity.TuanHuy.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -44,5 +46,7 @@ public class Episode {
 
     @ManyToOne()
     @JoinColumn(name = "podcast_series_id" , foreignKey = @ForeignKey(name = "fk_podcast_series"))
+    @JsonBackReference
+    @JsonIgnore
     private PodcastSeries podcastSeries;
 }

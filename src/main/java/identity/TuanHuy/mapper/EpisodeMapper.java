@@ -6,6 +6,7 @@ import identity.TuanHuy.dto.request.EpisodeRequest;
 import identity.TuanHuy.dto.response.EpisodeResponse;
 import identity.TuanHuy.entity.Episode;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
 import java.util.List;
 
@@ -31,6 +32,8 @@ public interface EpisodeMapper {
 //        return episodeResponse;
 //    }
 
+    @Mapping(source = "audio_url", target = "audioUrl")
+    @Mapping(source = "coverEpisode", target = "coverEpisode")
     EpisodeResponse toEpisodeResponse(Episode episode);
     Episode toEpisode(EpisodeRequest request);
     List<EpisodeResponse> toListEpisodes(List<Episode> episodeList);
